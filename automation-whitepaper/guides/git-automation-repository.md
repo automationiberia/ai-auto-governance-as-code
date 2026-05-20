@@ -9,11 +9,18 @@
 
 Never create per-initiative repos (e.g. `deliveries/linux-ntp-sync/`). Never put delivery code at the workspace root.
 
+The **automation-home** workspace is a Git monorepo. Nested repositories are **submodules** (see root `.gitmodules`):
+
+| Submodule | URL |
+|-----------|-----|
+| `automation-good-practices/` | Upstream GPA (redhat-cop) |
+| `deliveries/automation/` | Independent delivery collection (placeholder URL until published) |
+
 ```text
-<automation-home>/
-├── automation-whitepaper/
+<automation-home>/          # Git monorepo (root)
+├── automation-whitepaper/  # tracked in monorepo
 ├── deliveries/
-│   └── automation/          # <-- AUTOMATION_REPO (Ansible collection)
+│   └── automation/          # <-- AUTOMATION_REPO (submodule)
 │       ├── galaxy.yml
 │       ├── roles/
 │       │   └── <function>/
