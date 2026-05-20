@@ -1,0 +1,16 @@
+---
+argument_specs:
+  main:
+    short_description: Configure rsyslog forwarding to a central relay
+    options:
+      rsyslog_forward_relay_host:
+        type: str
+        required: true
+        description: SIEM relay FQDN or IP
+      rsyslog_forward_use_tls:
+        type: bool
+        default: true
+      rsyslog_forward_extra_facilities:
+        type: list
+        elements: str
+        default: []

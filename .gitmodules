@@ -1,0 +1,7 @@
+[submodule "automation-good-practices"]
+	path = automation-good-practices
+	url = git@github.com:redhat-cop/automation-good-practices.git
+	branch = main
+[submodule "deliveries/automation"]
+	path = deliveries/automation
+	url = git@github.com:REPLACE_ME/deliveries-automation.git

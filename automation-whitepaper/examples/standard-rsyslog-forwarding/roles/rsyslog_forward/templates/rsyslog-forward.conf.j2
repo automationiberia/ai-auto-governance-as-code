@@ -1,0 +1,11 @@
+# {{ ansible_managed | comment }}
+# Role: rsyslog_forward
+
+{% if rsyslog_forward_use_tls %}
+*.* @@{{ rsyslog_forward_relay_host }}:6514
+{% else %}
+*.* @{{ rsyslog_forward_relay_host }}:514
+{% endif %}
+{% for line in rsyslog_forward_extra_facilities %}
+{{ line }}
+{% endfor %}

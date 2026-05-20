@@ -1,0 +1,4 @@
+---
+rsyslog_forward_relay_host: ""
+rsyslog_forward_use_tls: true
+rsyslog_forward_extra_facilities: []

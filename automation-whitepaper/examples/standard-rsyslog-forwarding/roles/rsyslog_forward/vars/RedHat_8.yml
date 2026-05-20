@@ -1,0 +1,5 @@
+---
+rsyslog_forward_packages:
+  - rsyslog
+rsyslog_forward_service: rsyslog
+rsyslog_forward_config_dropin: /etc/rsyslog.d/99-forward.conf

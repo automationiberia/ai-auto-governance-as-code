@@ -1,0 +1,6 @@
+---
+- name: Service | Enable and start rsyslog
+  ansible.builtin.service:
+    name: "{{ rsyslog_forward_service }}"
+    state: started
+    enabled: true

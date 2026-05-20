@@ -1,0 +1,7 @@
+---
+- name: Dev lab baseline packages
+  hosts: dev_linux
+  gather_facts: true
+  become: true
+  roles:
+    - dev_troubleshoot_packages

@@ -1,0 +1,15 @@
+---
+# Copy to <delivery-collection>/galaxy.yml and set namespace/name for your org.
+namespace: site
+name: automation
+version: 1.0.0
+readme: README.md
+authors:
+  - Automation Team <automation@example.com>
+description: Shared delivery automation collection (all team roles and playbooks)
+license: []
+tags:
+  - infrastructure
+  - linux
+repository: ""
+dependencies: {}

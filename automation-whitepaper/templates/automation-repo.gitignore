@@ -1,0 +1,27 @@
+# Copy to <automation-repo>/.gitignore when initializing a new automation project
+
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.molecule/
+.cache/
+*.retry
+
+# Secrets — never commit
+*.pem
+*.key
+vault-pass.txt
+.env
+.env.*
+
+# Editor / OS
+.idea/
+.vscode/
+*.swp
+*~
+.DS_Store
+
+# Ansible local artifacts (if any)
+*.log
+.ansible-tmp/

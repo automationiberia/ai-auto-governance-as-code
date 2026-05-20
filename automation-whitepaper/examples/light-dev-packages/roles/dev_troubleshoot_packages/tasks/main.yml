@@ -1,0 +1,5 @@
+---
+- name: Install troubleshooting packages
+  ansible.builtin.package:
+    name: "{{ dev_troubleshoot_packages_list }}"
+    state: present

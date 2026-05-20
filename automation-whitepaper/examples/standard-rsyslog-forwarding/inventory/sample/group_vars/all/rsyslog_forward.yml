@@ -1,0 +1,3 @@
+---
+rsyslog_forward_relay_host: siem-relay.corp.example.com
+rsyslog_forward_use_tls: true

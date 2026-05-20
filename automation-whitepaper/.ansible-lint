@@ -1,0 +1,11 @@
+---
+# Department ansible-lint profile (used by pre-commit and CI)
+profile: production
+write_list:
+  - none
+
+exclude_paths:
+  - ../automation-good-practices/
+
+skip_list:
+  - schema[version]  # allow collections without galaxy version in samples

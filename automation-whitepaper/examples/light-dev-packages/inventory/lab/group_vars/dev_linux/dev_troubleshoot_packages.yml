@@ -1,0 +1,5 @@
+---
+dev_troubleshoot_packages_list:
+  - jq
+  - vim-enhanced
+  - policycoreutils-python-utils

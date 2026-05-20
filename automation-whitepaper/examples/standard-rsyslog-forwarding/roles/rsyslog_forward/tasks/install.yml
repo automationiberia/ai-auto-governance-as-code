@@ -1,0 +1,5 @@
+---
+- name: Install | Install rsyslog packages
+  ansible.builtin.package:
+    name: "{{ rsyslog_forward_packages }}"
+    state: present

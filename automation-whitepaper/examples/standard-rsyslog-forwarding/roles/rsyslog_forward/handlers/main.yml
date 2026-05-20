@@ -1,0 +1,5 @@
+---
+- name: Rsyslog_forward restart rsyslog
+  ansible.builtin.service:
+    name: "{{ rsyslog_forward_service }}"
+    state: restarted

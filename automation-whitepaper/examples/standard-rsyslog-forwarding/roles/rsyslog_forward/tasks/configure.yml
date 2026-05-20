@@ -1,0 +1,8 @@
+---
+- name: Configure | Deploy rsyslog forward fragment
+  ansible.builtin.template:
+    src: rsyslog-forward.conf.j2
+    dest: "{{ rsyslog_forward_config_dropin }}"
+    mode: "0644"
+    backup: true
+  notify: Rsyslog_forward restart rsyslog

@@ -1,0 +1,37 @@
+# Mandatory for all Ansible automation repositories in this workspace.
+# See automation-whitepaper/quality/pre-commit.md
+
+minimum_pre_commit_version: "3.5.0"
+
+default_language_version:
+  python: python3
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-merge-conflict
+      - id: check-yaml
+        args: [--unsafe]  # Ansible tags and templates use custom YAML tags
+      - id: check-added-large-files
+        args: [--maxkb=512]
+      - id: detect-private-key
+
+  - repo: https://github.com/ansible/ansible-lint
+    rev: v24.12.2
+    hooks:
+      - id: ansible-lint
+        additional_dependencies:
+          - ansible-core>=2.15,<2.19
+        files: \.(yaml|yml|j2)$
+        exclude: ^(automation-good-practices|deliveries)/
+
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.35.1
+    hooks:
+      - id: yamllint
+        args: [-c, automation-whitepaper/.yamllint]
+        files: \.(yaml|yml)$
+        exclude: ^(automation-good-practices|deliveries)/

@@ -1,0 +1,4 @@
+---
+__rsyslog_forward_required_facts:
+  - distribution
+  - distribution_major_version

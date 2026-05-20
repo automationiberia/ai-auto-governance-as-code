@@ -1,0 +1,9 @@
+---
+argument_specs:
+  main:
+    short_description: Install standard troubleshooting packages on dev lab hosts
+    options:
+      dev_troubleshoot_packages_list:
+        type: list
+        elements: str
+        required: true
