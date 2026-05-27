@@ -7,7 +7,7 @@ Department automation standards, white paper, skills, and delivery collection la
 | `automation-whitepaper/` | Tracked in this repo |
 | `skills/` | Tracked in this repo |
 | `automation-good-practices/` | **Submodule** — [redhat-cop/automation-good-practices](https://github.com/redhat-cop/automation-good-practices) |
-| `deliveries/automation/` | **Submodule** — independent delivery collection (URL placeholder until published) |
+| `deliveries/automation/` | **Submodule** — [automationiberia/ai-auto-deliveries](https://github.com/automationiberia/ai-auto-deliveries) |
 
 ```bash
 export AUTOMATION_HOME=/path/to/your/automation-home
@@ -22,13 +22,11 @@ git clone --recurse-submodules <automation-home-url>
 git submodule update --init --recursive
 ```
 
-## Delivery collection remote
+## Delivery collection submodule
 
-When `deliveries/automation` is published to its own Git server, set the URL in `.gitmodules` and in the submodule:
+Remote: `git@github.com:automationiberia/ai-auto-deliveries.git` (path `deliveries/automation/`).
 
 ```bash
-git -C deliveries/automation remote set-url origin git@github.com:YOUR_ORG/deliveries-automation.git
 git submodule sync deliveries/automation
+git -C deliveries/automation pull origin main
 ```
-
-Then commit the `.gitmodules` URL change in this monorepo.

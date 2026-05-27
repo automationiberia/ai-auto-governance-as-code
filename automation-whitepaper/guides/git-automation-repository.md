@@ -14,7 +14,7 @@ The **automation-home** workspace is a Git monorepo. Nested repositories are **s
 | Submodule | URL |
 |-----------|-----|
 | `automation-good-practices/` | Upstream GPA (redhat-cop) |
-| `deliveries/automation/` | Independent delivery collection (placeholder URL until published) |
+| `deliveries/automation/` | [automationiberia/ai-auto-deliveries](https://github.com/automationiberia/ai-auto-deliveries) |
 
 ```text
 <automation-home>/          # Git monorepo (root)

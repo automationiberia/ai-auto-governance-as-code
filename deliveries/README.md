@@ -17,8 +17,17 @@ See [git-automation-repository.md](../automation-whitepaper/guides/git-automatio
 
 ## Git submodule
 
-`deliveries/automation/` is a **separate Git repository** (submodule of the automation-home monorepo). It is local-only until you add a remote; the monorepo `.gitmodules` entry uses a placeholder URL:
+`deliveries/automation/` is a **Git submodule** of the automation-home monorepo.
 
-`git@github.com:REPLACE_ME/deliveries-automation.git`
+| Item | Value |
+|------|--------|
+| Remote | `git@github.com:automationiberia/ai-auto-deliveries.git` |
+| GitHub | [automationiberia/ai-auto-deliveries](https://github.com/automationiberia/ai-auto-deliveries) |
 
-Replace `REPLACE_ME` with your organisation when the collection repo is created, then run `git submodule sync` from the monorepo root.
+After cloning the monorepo:
+
+```bash
+git submodule update --init deliveries/automation
+```
+
+Work on the collection inside the submodule (`cd deliveries/automation`), push to `origin`, then update the submodule pointer in the monorepo when you want to pin a new release.
