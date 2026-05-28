@@ -1,0 +1,65 @@
+---
+schemaVersion: 2.3.0
+metadata:
+  name: automation-home
+  displayName: Automation Home
+  description: >-
+    Ansible automation department monorepo — white paper, skills,
+    and delivery collection submodule.
+  tags:
+    - ansible
+    - automation
+  language: Ansible
+  projectType: Ansible
+components:
+  - name: automation-tools
+    container:
+      image: ghcr.io/ansible/ansible-devspaces:latest
+      cpuLimit: 4000m
+      cpuRequest: 250m
+      memoryRequest: 512Mi
+      memoryLimit: 8Gi
+      env:
+        - name: AUTOMATION_HOME
+          value: ${PROJECT_SOURCE}
+        - name: AUTOMATION_REPO
+          value: ${PROJECT_SOURCE}/deliveries/automation
+        - name: VSCODE_DEFAULT_WORKSPACE
+          value: ${PROJECT_SOURCE}/automation-home.code-workspace
+        - name: ANSIBLE_COLLECTIONS_PATH
+          value: >-
+            ${PROJECT_SOURCE}/deliveries/automation/.ansible/collections:
+            /usr/share/ansible/collections
+commands:
+  - id: setup-workspace
+    exec:
+      component: automation-tools
+      commandLine: bash .devfile/setup-workspace.sh
+      workingDir: ${PROJECT_SOURCE}
+      label: Setup workspace (submodules, pip, pre-commit)
+  - id: pre-commit-home
+    exec:
+      component: automation-tools
+      commandLine: pre-commit run --all-files
+      workingDir: ${PROJECT_SOURCE}
+      label: Pre-commit (automation-home)
+  - id: pre-commit-delivery
+    exec:
+      component: automation-tools
+      commandLine: bash -lc 'cd "${AUTOMATION_REPO}" && pre-commit run --all-files'
+      workingDir: ${PROJECT_SOURCE}
+      label: Pre-commit (delivery collection)
+  - id: syntax-check-delivery
+    exec:
+      component: automation-tools
+      commandLine: >-
+        bash -lc 'cd "${AUTOMATION_REPO}" && ansible-playbook --syntax-check
+        playbooks/type_linux_ntp.yml && ansible-playbook --syntax-check
+        playbooks/type_linux_ssh_home_jail.yml && ansible-playbook --syntax-check
+        playbooks/type_windows_ntp.yml'
+      workingDir: ${PROJECT_SOURCE}
+      label: Syntax-check delivery playbooks
+events:
+  postStart:
+    - type: exec
+      id: setup-workspace

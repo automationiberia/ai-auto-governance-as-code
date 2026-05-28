@@ -14,6 +14,14 @@ export AUTOMATION_HOME=/path/to/your/automation-home
 export AUTOMATION_REPO="$AUTOMATION_HOME/deliveries/automation"
 ```
 
+## OpenShift Dev Spaces
+
+Import this repository in **Dev Spaces**; it uses [`.devfile.yaml`](.devfile.yaml) and opens [`automation-home.code-workspace`](automation-home.code-workspace).
+
+On first start, `setup-workspace` initializes submodules, installs `requirements-dev.txt`, and configures pre-commit. See [automation-whitepaper/guides/devspaces-workspace.md](automation-whitepaper/guides/devspaces-workspace.md).
+
+---
+
 ## Clone with submodules
 
 ```bash

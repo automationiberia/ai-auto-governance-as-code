@@ -50,7 +50,8 @@ This white paper defines recommended processes, practices, and procedures for th
 ### Guides
 
 - [guides/create-new-automation-step-by-step.md](guides/create-new-automation-step-by-step.md) — Step-by-step for new automation
-- [guides/git-automation-repository.md](guides/git-automation-repository.md) — Initialize `<automation-repo>` under `deliveries/`
+- [guides/git-automation-repository.md](guides/git-automation-repository.md)
+- [guides/devspaces-workspace.md](guides/devspaces-workspace.md) — Dev Spaces / OpenShift Dev Spaces — Initialize `<automation-repo>` under `deliveries/`
 - [guides/extending-existing-automation.md](guides/extending-existing-automation.md) — Extend same role (new OS / servers)
 - [../deliveries/README.md](../deliveries/README.md) — Where real automation repos live
 
