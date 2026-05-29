@@ -62,5 +62,4 @@ commands:
       label: Syntax-check delivery playbooks
 events:
   postStart:
-    - type: exec
-      id: setup-workspace
+    - setup-workspace
