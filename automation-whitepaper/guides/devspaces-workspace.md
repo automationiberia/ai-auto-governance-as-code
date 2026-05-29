@@ -19,13 +19,70 @@ Run this repository as a **Dev Spaces workspace** with Ansible tooling, submodul
 1. Open your organisation **Dev Spaces** dashboard.
 2. **Create Workspace** → import this Git repository URL.
 3. Ensure **Recreate existing workspace** is used after `.devfile.yaml` changes.
-4. Wait for **postStart** (`setup-workspace`) to finish (see terminal output).
+4. Wait for **postStart** (`setup-workspace`) to finish.
 
 Environment variables (set automatically):
 
 ```bash
 AUTOMATION_HOME=${PROJECT_SOURCE}          # monorepo root
 AUTOMATION_REPO=${PROJECT_SOURCE}/deliveries/automation
+```
+
+---
+
+## View logs when startup fails
+
+On the **Starting workspace** screen (your screenshot), use the tabs at the top:
+
+| Tab | What you see |
+|-----|----------------|
+| **Progress** | High-level steps and the short error summary |
+| **Logs** | **Start here** — container and operator output (scroll to the bottom for the last lines) |
+| **Events** | Kubernetes events (`FailedPostStartHook`, etc.) |
+
+The **Progress** tab alone does not show the full `postStart` script output.
+
+### Log file in the repository
+
+`setup-workspace` writes everything to:
+
+```text
+.devfile/setup-workspace.log
+```
+
+After the pod exists (even if the IDE did not open), open that file in the project tree or run:
+
+```bash
+cat .devfile/setup-workspace.log
+```
+
+### If the workspace never opens
+
+1. **Restart with default devfile** — only to confirm it is a custom `postStart` issue; you lose this repo’s devfile until you import it again.
+2. **Debug mode** (cluster admin or advanced): add to the DevWorkspace before create:
+
+   ```yaml
+   metadata:
+     annotations:
+       controller.devfile.io/debug-start: "true"
+   ```
+
+   The pod stays up after a failed hook; then check `/tmp/poststart-stdout.txt` and `/tmp/poststart-stderr.txt` inside the container (`oc exec`).
+
+3. **OpenShift CLI** (if you have access):
+
+   ```bash
+   oc get pods -n <your-devspaces-namespace>
+   oc logs <workspace-pod> -c automation-tools
+   oc describe pod <workspace-pod>
+   ```
+
+### Typical `postStart` failure
+
+`git submodule update` on the private delivery repo without SSH/PAT in **User Preferences → Git**. Configure credentials, then in a terminal:
+
+```bash
+bash .devfile/setup-workspace.sh
 ```
 
 ---
