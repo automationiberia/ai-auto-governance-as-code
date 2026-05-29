@@ -1,0 +1,38 @@
+[tool.black]
+line-length = 88
+target-version = ["py312"]
+extend-exclude = '''
+/(
+  automation-good-practices
+  | \.ansible
+  | \.venv
+  | \.cache
+  | __pycache__
+  | build
+  | dist
+)/
+'''
+
+[tool.pylint.main]
+py-version = "3.12"
+recursive = true
+ignore-paths = [
+  "^automation-good-practices/.*$",
+  "^\\.ansible/.*$",
+  "^\\.venv/.*$",
+  "^\\.cache/.*$",
+  "^__pycache__/.*$",
+  "^build/.*$",
+  "^dist/.*$",
+]
+
+[tool.pylint.messages_control]
+# Ansible plugins often use short public names; relax docstring rules until documented.
+disable = [
+  "missing-module-docstring",
+  "missing-class-docstring",
+  "missing-function-docstring",
+]
+
+[tool.pylint.format]
+max-line-length = 88

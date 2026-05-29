@@ -45,7 +45,7 @@ Default to **light** when unsure; escalate to **standard** before production.
 
 ## 2. Delivery collection (Git) **(gate)**
 
-**Default:** all automations live in **one** Ansible collection at `deliveries/automation/`. Each new capability adds a **role** — not a new Git repo.  
+**Default:** all automations live in **one** Ansible collection at `deliveries/automation/`. Each new capability adds a **role** — not a new Git repo.
 Detail: [git-automation-repository.md](git-automation-repository.md).
 
 - [ ] `<automation-repo>` = `deliveries/automation/` (shared collection)

@@ -18,6 +18,21 @@ repos:
         args: [--maxkb=512]
       - id: detect-private-key
 
+  - repo: https://github.com/psf/black
+    rev: 24.10.0
+    hooks:
+      - id: black
+        files: \.py$
+        exclude: ^(\.ansible/|\.venv/|\.cache/|__pycache__/|build/|dist/)
+
+  - repo: https://github.com/pylint-dev/pylint
+    rev: v3.3.1
+    hooks:
+      - id: pylint
+        files: \.py$
+        exclude: ^(\.ansible/|\.venv/|\.cache/|__pycache__/|build/|dist/)
+        args: [--rcfile=pyproject.toml]
+
   - repo: https://github.com/ansible/ansible-lint
     rev: v24.12.2
     hooks:

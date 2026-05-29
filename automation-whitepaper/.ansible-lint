@@ -6,6 +6,7 @@ write_list:
 
 exclude_paths:
   - ../automation-good-practices/
+  - ../deliveries/
 
 skip_list:
   - schema[version]  # allow collections without galaxy version in samples

@@ -4,7 +4,7 @@
 minimum_pre_commit_version: "3.5.0"
 
 default_language_version:
-  python: python3
+  python: python3.12
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -19,14 +19,33 @@ repos:
         args: [--maxkb=512]
       - id: detect-private-key
 
+  # Exclude non-repo paths: .ansible (galaxy cache), venv, build artifacts.
+  - repo: https://github.com/psf/black
+    rev: 24.10.0
+    hooks:
+      - id: black
+        files: \.py$
+        exclude: ^(automation-good-practices|\.ansible/|\.venv/|\.cache/|__pycache__/|build/|dist/)
+
+  - repo: https://github.com/pylint-dev/pylint
+    rev: v3.3.1
+    hooks:
+      - id: pylint
+        files: \.py$
+        exclude: ^(automation-good-practices|\.ansible/|\.venv/|\.cache/|__pycache__/|build/|dist/)
+        args: [--rcfile=pyproject.toml]
+
   - repo: https://github.com/ansible/ansible-lint
     rev: v24.12.2
     hooks:
       - id: ansible-lint
         additional_dependencies:
           - ansible-core>=2.15,<2.19
-        files: \.(yaml|yml|j2)$
-        exclude: ^(automation-good-practices|deliveries)/
+        args:
+          - -c
+          - automation-whitepaper/.ansible-lint
+          - automation-whitepaper/
+        files: ^automation-whitepaper/.*\.(yaml|yml|j2)$
 
   - repo: https://github.com/adrienverge/yamllint
     rev: v1.35.1

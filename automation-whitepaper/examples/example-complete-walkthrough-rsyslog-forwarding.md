@@ -2,7 +2,7 @@
 
 **Profile:** **standard** (production, shared collection).
 
-Applies [create-new-automation-step-by-step.md](../guides/create-new-automation-step-by-step.md).  
+Applies [create-new-automation-step-by-step.md](../guides/create-new-automation-step-by-step.md).
 **Light** contrast: [example-light-walkthrough-dev-packages.md](example-light-walkthrough-dev-packages.md).
 
 **Reference code (verified):** [standard-rsyslog-forwarding/](standard-rsyslog-forwarding/) — copy into `<automation-repo>`.

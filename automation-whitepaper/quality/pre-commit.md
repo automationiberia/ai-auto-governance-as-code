@@ -52,10 +52,12 @@ Existing monorepo (optional): `cd "$AUTOMATION_REPO" && pre-commit install` if h
 | `end-of-file-fixer` | POSIX-friendly files |
 | `check-yaml` | Valid YAML (with Ansible allowances) |
 | `detect-private-key` | Block accidental key commits |
+| `black` | Python formatting (`plugins/`, `module_utils/`, etc.) — [`pyproject.toml`](../../pyproject.toml) |
+| `pylint` | Python static analysis (same paths) |
 | `ansible-lint` | GPA-aligned Ansible rules ([`.ansible-lint`](../.ansible-lint)) |
 | `yamllint` | Line length and YAML style ([`.yamllint`](../.yamllint)) |
 
-The upstream `automation-good-practices/` reference tree is **excluded** from lint hooks (read-only reference).
+The upstream `automation-good-practices/` reference tree is **excluded** from Ansible/yaml hooks (read-only reference). Python hooks (`black`, `pylint`) also skip that path; they **do** run on `deliveries/automation/` when plugin Python exists.
 
 ---
 
@@ -69,8 +71,10 @@ git commit -m "Add rsyslog_forward role"
 # Manual run on all files (recommended before push)
 pre-commit run --all-files
 
-# Run only ansible-lint
+# Run only ansible-lint, black, or pylint
 pre-commit run ansible-lint --all-files
+pre-commit run black --all-files
+pre-commit run pylint --all-files
 ```
 
 ---
@@ -99,6 +103,8 @@ Merge requests **blocked** on failure.
 | `no-changed-when` on `command` | Add `changed_when:` or use a module |
 | `detect-private-key` | Remove key; use Vault/Controller credential |
 | yamllint line-length | Same as ansible-lint line breaks |
+| `black` / `pylint` on `.ansible/collections/...` | Installed collection cache — excluded via `exclude` in `.pre-commit-config.yaml` and `pyproject.toml` (not part of Git) |
+| `black` would reformat `tests/...py` | Real repo file — run `black tests/` or `pre-commit run black --files <path>` and commit |
 
 Use `# noqa: rule-id` only with inline justification.
 

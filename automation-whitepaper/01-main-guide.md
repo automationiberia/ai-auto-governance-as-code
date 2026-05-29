@@ -18,11 +18,11 @@ It does **not** replace vendor documentation; it defines **our** operating model
 
 ### Creating new automation?
 
-Use the checklist (scaled by **light / standard / heavy** risk): **[guides/create-new-automation-step-by-step.md](guides/create-new-automation-step-by-step.md)**  
-**Delivery code** lives in one **shared Ansible collection** at **`deliveries/automation/`** (each capability = one role) — see [../deliveries/README.md](../deliveries/README.md).  
-**Dev Spaces:** import the monorepo and use [guides/devspaces-workspace.md](guides/devspaces-workspace.md).  
-**Extending** a capability (new OS, servers): [guides/extending-existing-automation.md](guides/extending-existing-automation.md) — extend the **same function role** (`tasks/platforms/`), do not add `role_windows` clones or new per-initiative repos.  
-Examples (walkthrough + reference code): **light** [doc](examples/example-light-walkthrough-dev-packages.md) / [code](examples/light-dev-packages/) · **standard** [doc](examples/example-complete-walkthrough-rsyslog-forwarding.md) / [code](examples/standard-rsyslog-forwarding/)  
+Use the checklist (scaled by **light / standard / heavy** risk): **[guides/create-new-automation-step-by-step.md](guides/create-new-automation-step-by-step.md)**
+**Delivery code** lives in one **shared Ansible collection** at **`deliveries/automation/`** (each capability = one role) — see [../deliveries/README.md](../deliveries/README.md).
+**Dev Spaces:** import the monorepo and use [guides/devspaces-workspace.md](guides/devspaces-workspace.md).
+**Extending** a capability (new OS, servers): [guides/extending-existing-automation.md](guides/extending-existing-automation.md) — extend the **same function role** (`tasks/platforms/`), do not add `role_windows` clones or new per-initiative repos.
+Examples (walkthrough + reference code): **light** [doc](examples/example-light-walkthrough-dev-packages.md) / [code](examples/light-dev-packages/) · **standard** [doc](examples/example-complete-walkthrough-rsyslog-forwarding.md) / [code](examples/standard-rsyslog-forwarding/)
 Cursor/agent support: **[skills/README.md](../skills/README.md)**
 
 ---

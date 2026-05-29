@@ -62,7 +62,7 @@ Every merge request requires **one approver** minimum; high-risk changes require
 | Before push | `pre-commit run --all-files` |
 | CI | `pre-commit run --all-files` — merge blocked on failure |
 
-**Tools:** `ansible-lint` ([`.ansible-lint`](../.ansible-lint)), `yamllint` ([`.yamllint`](../.yamllint)), config at repo root [`.pre-commit-config.yaml`](../../.pre-commit-config.yaml).
+**Tools:** `ansible-lint` ([`.ansible-lint`](../.ansible-lint)), `yamllint` ([`.yamllint`](../.yamllint)), `black` / `pylint` ([`pyproject.toml`](../../pyproject.toml)), config at repo root [`.pre-commit-config.yaml`](../../.pre-commit-config.yaml).
 
 | Policy | Detail |
 |--------|--------|

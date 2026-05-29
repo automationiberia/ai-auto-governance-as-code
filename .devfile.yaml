@@ -46,7 +46,8 @@ commands:
   - id: pre-commit-delivery
     exec:
       component: automation-tools
-      commandLine: bash -lc 'cd "${AUTOMATION_REPO}" && pre-commit run --all-files'
+      commandLine: >-
+        bash -lc 'cd "${AUTOMATION_REPO}" && pre-commit run --all-files'
       workingDir: ${PROJECT_SOURCE}
       label: Pre-commit (delivery collection)
   - id: syntax-check-delivery

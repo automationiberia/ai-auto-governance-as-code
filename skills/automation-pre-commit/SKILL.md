@@ -2,13 +2,13 @@
 name: automation-pre-commit
 description: >-
   Enforces mandatory pre-commit hooks for Ansible at automation-home repo root:
-  ansible-lint, yamllint, YAML checks. Use when setting up dev environment,
+  ansible-lint, yamllint, black, pylint, YAML checks. Use when setting up dev environment,
   fixing hook failures, or before commit/PR.
 ---
 
 # Pre-commit (Mandatory)
 
-Policy: `automation-whitepaper/quality/pre-commit.md`  
+Policy: `automation-whitepaper/quality/pre-commit.md`
 Config template: copy `automation-whitepaper/templates/automation-repo.pre-commit-config.yaml` to `<automation-repo>/.pre-commit-config.yaml` (not the automation-home root config — yamllint paths differ).
 
 ## Setup
@@ -29,6 +29,7 @@ pre-commit run --all-files
 - Optionally run from `<automation-home>` for examples under `automation-whitepaper/examples/`
 - No `--no-verify` without automation lead approval
 - Profile: `automation-whitepaper/.ansible-lint`
+- Python: `black` + `pylint` on `*.py` (see root `pyproject.toml`; skipped if no Python files)
 
 ## Examples to validate after edits
 

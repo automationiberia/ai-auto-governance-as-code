@@ -8,7 +8,7 @@ description: >-
 
 # New Automation (Step-by-Step)
 
-Checklist: `automation-whitepaper/guides/create-new-automation-step-by-step.md`  
+Checklist: `automation-whitepaper/guides/create-new-automation-step-by-step.md`
 Git: `automation-whitepaper/guides/git-automation-repository.md`
 
 ## Paths (never hardcode workspace name)
@@ -29,7 +29,7 @@ export AUTOMATION_REPO="$AUTOMATION_HOME/deliveries/automation"
 
 ## One function role per capability
 
-Example: NTP → `roles/ntp_sync/`. Platform tasks → `tasks/platforms/<OsFamily>.yml`.  
+Example: NTP → `roles/ntp_sync/`. Platform tasks → `tasks/platforms/<OsFamily>.yml`.
 Do **not** create `ntp_sync_windows` or a second repo.
 
 ## Required artifacts (verify before done)

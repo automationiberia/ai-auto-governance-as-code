@@ -42,7 +42,7 @@ Score initiatives (example model):
 | Strategic alignment (cloud migration, standard OS) | Medium |
 | Implementation cost | Negative |
 
-**Consulted:** Business owner, Operations manager.  
+**Consulted:** Business owner, Operations manager.
 **Informed:** PMO for large landscapes.
 
 ---
