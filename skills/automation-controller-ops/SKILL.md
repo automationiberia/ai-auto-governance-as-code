@@ -28,4 +28,5 @@ Light example: CLI from `examples/light-dev-packages/` — no prod template requ
 
 ## Agent behavior
 
-Reference example playbook path for template configuration; do not duplicate inventory YAML.
+- Declare active mode per [AGENTS.md](../../AGENTS.md).
+- Reference example playbook path for template configuration; do not duplicate inventory YAML.

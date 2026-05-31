@@ -30,4 +30,5 @@ Narrative only: `examples/example-role-interface.md`
 
 ## Agent behavior
 
-Edit files under `roles/<name>/`; cite paths in review comments.
+- Declare active mode per [AGENTS.md](../../AGENTS.md) (review → **Auditor**; new role → **Architect**).
+- Edit files under `roles/<name>/`; cite paths in review comments.

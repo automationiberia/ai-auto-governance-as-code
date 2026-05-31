@@ -28,4 +28,5 @@ Collections: `automation-whitepaper/architecture/collections-and-execution-envir
 
 ## Agent behavior
 
-Propose L/T/F/C mapping; point to example paths for copy — do not embed full role in chat.
+- Declare active mode per [AGENTS.md](../../AGENTS.md) (design work is **Mode 2 — The Architect**).
+- Propose L/T/F/C mapping; point to example paths for copy — do not embed full role in chat.

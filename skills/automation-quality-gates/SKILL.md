@@ -33,4 +33,5 @@ Lint covers `automation-whitepaper/examples/light-dev-packages/` and `standard-r
 
 ## Agent behavior
 
-Run or suggest pre-commit; checklist findings with links to files to fix.
+- Declare active mode per [AGENTS.md](../../AGENTS.md) (reviews are typically **Mode 1 — The Auditor**).
+- Run or suggest pre-commit; checklist findings with links to files to fix.

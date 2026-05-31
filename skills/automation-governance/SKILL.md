@@ -25,4 +25,5 @@ Heavy / CAB detail: `examples/example-spanish-enterprise-change-flow.md`
 
 ## Agent behavior
 
-Recommend minimal stakeholders for light; full list only for prod-bound work.
+- Declare active mode per [AGENTS.md](../../AGENTS.md) (human RACI; not Librarian unless updating governance docs).
+- Recommend minimal stakeholders for light; full list only for prod-bound work.

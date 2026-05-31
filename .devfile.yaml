@@ -4,8 +4,8 @@ metadata:
   name: automation-home
   displayName: Automation Home
   description: >-
-    Ansible automation department monorepo — white paper, skills,
-    and delivery collection submodule.
+    AI-Driven Governance-as-Code for Ansible Automation — white paper,
+    agent skills, and delivery collection submodule.
   tags:
     - ansible
     - automation

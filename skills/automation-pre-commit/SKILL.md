@@ -38,4 +38,5 @@ pre-commit run --all-files
 
 ## Agent behavior
 
-Suggest `pre-commit run --all-files` after YAML changes; point to file path fixes, not pasted snippets.
+- Declare active mode per [AGENTS.md](../../AGENTS.md) (lint fixes often follow **Mode 1 — The Auditor**).
+- Suggest `pre-commit run --all-files` after YAML changes; point to file path fixes, not pasted snippets.

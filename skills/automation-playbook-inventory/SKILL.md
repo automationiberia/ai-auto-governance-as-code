@@ -29,4 +29,5 @@ Bad vs good narrative: `examples/example-inventory-good-vs-bad.md` (GPA referenc
 
 ## Agent behavior
 
-Fix inventory/playbook files in repo; link paths instead of duplicating YAML.
+- Declare active mode per [AGENTS.md](../../AGENTS.md).
+- Fix inventory/playbook files in repo; link paths instead of duplicating YAML.

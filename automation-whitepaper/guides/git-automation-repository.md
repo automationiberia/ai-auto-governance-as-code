@@ -4,7 +4,7 @@
 
 | Repository | Purpose |
 |------------|---------|
-| `<automation-home>` | Department standards (white paper, lint templates, reference examples) |
+| `<automation-home>` | Governance standards (white paper, lint templates, reference examples) |
 | `<automation-repo>` | **Shared delivery collection** — `deliveries/automation/` |
 
 Never create per-initiative repos (e.g. `deliveries/linux-ntp-sync/`). Never put delivery code at the workspace root.
@@ -14,7 +14,7 @@ The **automation-home** workspace is a Git monorepo. Nested repositories are **s
 | Submodule | URL |
 |-----------|-----|
 | `automation-good-practices/` | Upstream GPA (redhat-cop) |
-| `deliveries/automation/` | [automationiberia/ai-auto-deliveries](https://github.com/automationiberia/ai-auto-deliveries) |
+| `deliveries/automation/` | [automationiberia/ai-auto-deliveries](https://github.com/automationiberia/ai-auto-deliveries) — **fixed**; do not edit the URL in `.gitmodules` |
 
 ```text
 <automation-home>/          # Git monorepo (root)

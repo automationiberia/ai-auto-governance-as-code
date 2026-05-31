@@ -33,6 +33,7 @@ Department coding standards aligned with GPA **Coding Style**. Agree early; expa
 
 ## 3. Ansible-specific
 
+- Use **FQCN** for modules (e.g. `ansible.builtin.package`); agents enforce via [AGENTS.md](../../AGENTS.md)
 - Idempotent tasks; prefer modules over `command`/`shell`
 - Comment justification when `command`/`shell` required
 - `when:` with bare vars: `| bool` filter

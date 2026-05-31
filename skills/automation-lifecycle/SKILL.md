@@ -44,4 +44,5 @@ export AUTOMATION_REPO="$AUTOMATION_HOME/deliveries/automation"
 
 ## Agent behavior
 
+- Declare active mode per [AGENTS.md](../../AGENTS.md).
 - Fix skills/docs if wrong, delete `deliveries/automation/` and legacy dirs, restart from new-automation task 1.

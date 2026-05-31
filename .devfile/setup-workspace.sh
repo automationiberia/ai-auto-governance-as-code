@@ -55,7 +55,7 @@ if [[ -f "${AUTOMATION_REPO}/.pre-commit-config.yaml" ]]; then
 fi
 
 if [[ -x "${AUTOMATION_HOME}/skills/scripts/link-cursor-skills.sh" ]]; then
-  echo "==> Linking Cursor skills (optional)"
+  echo "==> Linking Cursor skills (optional — see skills/TOOL-SETUP.md for Claude/Copilot/other)"
   "${AUTOMATION_HOME}/skills/scripts/link-cursor-skills.sh" || true
 fi
 

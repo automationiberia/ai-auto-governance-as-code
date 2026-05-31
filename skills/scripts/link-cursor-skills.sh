@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-# Link skills/ into .cursor/skills/ for Cursor IDE discovery.
-# Run from <automation-home>: ./skills/scripts/link-cursor-skills.sh
+# Optional — Cursor IDE only. Symlink skills/ into .cursor/skills/ for discovery.
+# Other tools: see skills/TOOL-SETUP.md (Claude, Copilot, generic — no script required).
+# Run from repo root: ./skills/scripts/link-cursor-skills.sh
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"   # <automation-home>
