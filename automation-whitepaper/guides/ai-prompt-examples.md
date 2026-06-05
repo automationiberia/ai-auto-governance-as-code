@@ -235,6 +235,33 @@ Summarize what changed in automation-good-practices submodule vs last pin.
 Which white paper sections and skills should we update? No submodule bump yet.
 ```
 
+### After Auditor + Architect — update governance (standards gap)
+
+Use when Mode 1 review or Mode 2 refactor exposed a **repeated gap** or **new pattern** that should become corporate standard (not a one-off role fix).
+
+Attach: `@AGENTS.md` `@skills/automation-librarian/SKILL.md` `@automation-whitepaper/development/roles.md`
+
+```text
+Read AGENTS.md. Use skill automation-librarian.
+I am operating in Mode 3: The Librarian.
+
+Context: I completed Mode 1 (Auditor) review and Mode 2 (Architect) refactor for
+deliveries/automation/roles/<function>/.
+
+<paste summary of recurring findings or new pattern worth standardizing>
+
+Propose a governance update only — do not edit delivery role files.
+
+Deliver:
+1. Rationale (why this belongs in standards, not only in one role)
+2. Diff plan in mandatory order: white paper → matching SKILL.md → AGENTS.md (if needed) → skills/README.md
+3. Skill sync table (section → file → under 500 lines)
+4. Whether automation-auditor or automation-role-development checklists need new rows
+5. Breaking changes for existing repos (if any)
+
+Do not apply edits until I approve the plan.
+```
+
 ---
 
 ## 6. Task skills (without naming a mode)
@@ -328,6 +355,13 @@ Minimal diffs; High/Medium first.
 ```text
 Step 3: Run pre-commit run --all-files in deliveries/automation/ and syntax-check;
 report results.
+```
+
+If refactor exposed a **standards gap** (recurring Auditor finding):
+
+```text
+Step 4 (Librarian): After Auditor + Architect — see §5 "update governance".
+Propose white paper + skill diff plan only; wait for my approval before edits.
 ```
 
 ### Design → implement → gate
