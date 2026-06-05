@@ -118,7 +118,7 @@ Use for greenfield capabilities in **`ai-auto-deliveries`** (`deliveries/automat
 
 ### Apply Auditor findings (refactor existing role)
 
-Use **after** Mode 1 role compliance review — paste or attach the Auditor output (findings table + refactor plan).
+Use **after** Mode 1 role compliance review in the **same chat thread** — the Auditor findings table and refactor plan should already be in context (or attach the Auditor message).
 
 Attach: `@AGENTS.md` `@skills/automation-architect/SKILL.md` `@skills/automation-role-development/SKILL.md` `@deliveries/automation/roles/<function>/`
 
@@ -126,10 +126,10 @@ Attach: `@AGENTS.md` `@skills/automation-architect/SKILL.md` `@skills/automation
 Read AGENTS.md. Use skills automation-architect and automation-role-development.
 I am operating in Mode 2: The Architect.
 
-I have Auditor findings for deliveries/automation/roles/<function>/ (below).
+I have Auditor findings for deliveries/automation/roles/<function>/ from the prior
+Mode 1 review in this conversation.
+Use the Auditor findings table and refactor plan that already exists in the context.
 Implement the refactor plan — minimal diffs only; do not expand scope.
-
-<paste Auditor findings table and refactor plan here>
 
 Rules:
 - Follow AGENTS.md bootstrap (FQCN, loop_control, _ / __ variable naming)
@@ -248,7 +248,8 @@ I am operating in Mode 3: The Librarian.
 Context: I completed Mode 1 (Auditor) review and Mode 2 (Architect) refactor for
 deliveries/automation/roles/<function>/.
 
-<paste summary of recurring findings or new pattern worth standardizing>
+Use the Auditor findings and Architect refactor summary already in the context
+(recurring gaps or new pattern worth standardizing).
 
 Propose a governance update only — do not edit delivery role files.
 
@@ -345,10 +346,11 @@ Step 1 (Auditor): Role compliance review — see §3 "Role compliance review (fu
 Findings only; no file edits.
 ```
 
-After review, paste findings:
+Same thread — Auditor output is already in context:
 
 ```text
 Step 2 (Architect): Apply Auditor findings — see §4 "Apply Auditor findings".
+Use the findings table and refactor plan from Step 1 in this conversation.
 Minimal diffs; High/Medium first.
 ```
 
