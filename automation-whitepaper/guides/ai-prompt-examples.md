@@ -48,15 +48,34 @@ The agent should respond with a line such as: *I am operating in Mode 1: The Aud
 
 Use for existing YAML in `$AUTOMATION_REPO` or under `automation-whitepaper/examples/`.
 
-### Full role audit
+### Role compliance review (full)
+
+Attach: `@AGENTS.md` `@skills/automation-auditor/SKILL.md` `@skills/automation-role-development/SKILL.md` `@deliveries/automation/roles/<function>/`
 
 ```text
-Use skill automation-auditor. Read AGENTS.md.
+Read AGENTS.md and use skills automation-auditor and automation-role-development.
+I am operating in Mode 1: The Auditor.
 
-Audit the role at deliveries/automation/roles/<function>/ against the white book.
-List findings by severity (High/Medium/Low) with file paths.
-Do not rewrite files yet — findings table and refactor plan only.
+Review the role at deliveries/automation/roles/<function>/ for compliance with
+this repository's standards. Do not rewrite files — findings only.
+
+Check against:
+- AGENTS.md bootstrap rules (FQCN, no with_items, task name on every task)
+- automation-whitepaper/development/roles.md and coding-style.md
+- _ prefix for internal vars; __<function>_… for loop_control.loop_var (no bare item)
+- rolename_* public vars; tasks/platforms/ for multi-OS; meta/argument_specs.yml; role README.md
+- Idempotency, handlers vs when-changed, templates with ansible_managed
+- Compare structure to automation-whitepaper/examples/standard-rsyslog-forwarding/roles/rsyslog_forward/
+
+Output:
+1. Summary (High / Medium / Low counts)
+2. Findings table: file, rule violated, suggested fix
+3. Gap list vs reference role
+4. Refactor plan (ordered steps)
+5. pre-commit / syntax-check commands to run after fixes
 ```
+
+Example: `<function>` → `ntp_sync` → `deliveries/automation/roles/ntp_sync/`.
 
 ### PR / diff review
 
@@ -96,6 +115,33 @@ and propose minimal fixes. Paths under automation-whitepaper/examples/ only unle
 ## 4. Mode 2 — The Architect (new / extend automation)
 
 Use for greenfield capabilities in **`ai-auto-deliveries`** (`deliveries/automation/`).
+
+### Apply Auditor findings (refactor existing role)
+
+Use **after** Mode 1 role compliance review — paste or attach the Auditor output (findings table + refactor plan).
+
+Attach: `@AGENTS.md` `@skills/automation-architect/SKILL.md` `@skills/automation-role-development/SKILL.md` `@deliveries/automation/roles/<function>/`
+
+```text
+Read AGENTS.md. Use skills automation-architect and automation-role-development.
+I am operating in Mode 2: The Architect.
+
+I have Auditor findings for deliveries/automation/roles/<function>/ (below).
+Implement the refactor plan — minimal diffs only; do not expand scope.
+
+<paste Auditor findings table and refactor plan here>
+
+Rules:
+- Follow AGENTS.md bootstrap (FQCN, loop_control, _ / __ variable naming)
+- Align structure to automation-whitepaper/examples/standard-rsyslog-forwarding/roles/rsyslog_forward/
+- Fix High and Medium findings first; Low only if trivial
+- Do not change unrelated files
+
+When done:
+1. List files changed
+2. Summarize what each finding resolution did
+3. Give commands: ansible-playbook --syntax-check and pre-commit run --all-files in deliveries/automation/
+```
 
 ### New capability (standard profile)
 
@@ -265,20 +311,22 @@ Flag: shell puppet commands, missing summarize, deprecated timeout param, non-FQ
 
 ## 7. Multi-step workflows (copy as a thread)
 
-### Audit → fix → verify
+### Audit → Architect refactor → verify
 
 ```text
-Step 1 (Auditor): Audit deliveries/automation/roles/<function>/ — findings only.
+Step 1 (Auditor): Role compliance review — see §3 "Role compliance review (full)".
+Findings only; no file edits.
 ```
 
-After review:
+After review, paste findings:
 
 ```text
-Step 2 (Auditor): Apply High and Medium fixes. Keep patches minimal.
+Step 2 (Architect): Apply Auditor findings — see §4 "Apply Auditor findings".
+Minimal diffs; High/Medium first.
 ```
 
 ```text
-Step 3: Run pre-commit run --all-files in ai-auto-skills and in deliveries/automation;
+Step 3: Run pre-commit run --all-files in deliveries/automation/ and syntax-check;
 report results.
 ```
 
