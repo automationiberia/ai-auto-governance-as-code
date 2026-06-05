@@ -45,6 +45,7 @@ ai-auto-skills/
 |----------|---------|
 | **[AGENTS.md](AGENTS.md)** | AI agent modes: Auditor / Architect / Librarian |
 | **[skills/TOOL-SETUP.md](skills/TOOL-SETUP.md)** | Configure Cursor / Claude / Copilot |
+| **[docs/PRE-COMMIT-GUIDE.md](docs/PRE-COMMIT-GUIDE.md)** | Pre-commit hooks setup and usage |
 | **[automation-whitepaper/](automation-whitepaper/)** | Complete standards & architecture |
 | **[CONTRIBUTING.md](CONTRIBUTING.md)** | How to contribute |
 
