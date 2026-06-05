@@ -6,7 +6,7 @@ The **`ai-auto-skills`** centralized monorepo is the **single point of entry** f
 
 **AI agents:** read [AGENTS.md](AGENTS.md) first — declare operating mode (Auditor / Architect / Librarian) before technical output. **Prompt examples:** [ai-prompt-examples.md](automation-whitepaper/guides/ai-prompt-examples.md). Program guide: [governance-as-code-ai-enforcement.md](automation-whitepaper/governance/governance-as-code-ai-enforcement.md).
 
-Full architecture narrative: [automation-whitepaper/architecture/monorepo-layout.md](automation-whitepaper/architecture/monorepo-layout.md).
+Architecture: [monorepo layout](automation-whitepaper/architecture/monorepo-layout.md) · [AAP & Puppet evolution (three phases)](automation-whitepaper/architecture/aap-puppet-coexistence-evolution.md).
 
 ---
 

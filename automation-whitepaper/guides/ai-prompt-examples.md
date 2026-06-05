@@ -201,6 +201,42 @@ The agent should still declare a mode; these shortcuts map cleanly:
 | Governance / CAB | `Use automation-governance — who must be consulted for a Standard profile prod change?` |
 | Controller / SSOT | `Use automation-controller-ops — how should inventory for <source> integrate per white book?` |
 | Enterprise change narrative | `Walk through example-enterprise-change-flow.md for a middleware role prod deploy.` |
+| Puppet → AAP migration phase | `Use automation-architecture — which phase (1/2/3) applies to <host group / function>? See aap-puppet-coexistence-evolution.md` |
+
+---
+
+## 6b. AAP & Puppet coexistence (three phases)
+
+Reference: [aap-puppet-coexistence-evolution.md](../architecture/aap-puppet-coexistence-evolution.md).
+
+### Phase assessment
+
+```text
+Read aap-puppet-coexistence-evolution.md. Mode 2 — Architect.
+
+Host group: <name>. Puppet class: <class>. Planned Ansible function: <function>.
+Which phase (1 Coexistence / 2 Just-in-time / 3 Centralized) applies today?
+List exit criteria and blockers. No YAML yet.
+```
+
+### Phase 2 — just-in-time migration
+
+```text
+Use automation-architect and automation-new-automation. Profile: Standard.
+
+Phase 2 migration: replace Puppet class `<class>` with role `<function>` in
+deliveries/automation/. Include cutover order, rollback, and Puppet noop validation.
+Align with example-enterprise-change-flow.md for prod.
+```
+
+### Phase 1 — conflict check
+
+```text
+Mode 1 — Auditor.
+
+Given Puppet manages <resource> on <group>, review deliveries/automation/roles/<function>/
+for double-management risk per aap-puppet-coexistence-evolution.md Phase 1 rules.
+```
 
 ---
 

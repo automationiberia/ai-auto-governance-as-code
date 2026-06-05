@@ -32,6 +32,7 @@ This white paper defines recommended processes, practices, and procedures for th
 ### Architecture
 
 - [architecture/monorepo-layout.md](architecture/monorepo-layout.md) — Governance monorepo (`ai-auto-skills`), white book, skills, submodules
+- [architecture/aap-puppet-coexistence-evolution.md](architecture/aap-puppet-coexistence-evolution.md) — **Three-phased** Puppet → AAP evolution (coexistence, just-in-time migration, centralized orchestration)
 - [architecture/landscape-type-function-component.md](architecture/landscape-type-function-component.md)
 - [architecture/collections-and-execution-environments.md](architecture/collections-and-execution-environments.md)
 
