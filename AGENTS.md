@@ -11,10 +11,10 @@ export AUTOMATION_REPO="$AUTOMATION_HOME/deliveries/automation"
 
 Canonical narrative: [automation-whitepaper/governance/governance-as-code-ai-enforcement.md](automation-whitepaper/governance/governance-as-code-ai-enforcement.md).
 
-Strategic proposal (AAP, Puppet, Dev Spaces, GenAI): [automation-whitepaper/governance/strategic-proposal-aap-governance-evolution.md](automation-whitepaper/governance/strategic-proposal-aap-governance-evolution.md).  
+Strategic proposal (AAP, Puppet, Dev Spaces, GenAI): [automation-whitepaper/governance/strategic-proposal-aap-governance-evolution.md](automation-whitepaper/governance/strategic-proposal-aap-governance-evolution.md).
 Monorepo layout: [automation-whitepaper/architecture/monorepo-layout.md](automation-whitepaper/architecture/monorepo-layout.md).
 
-**Skill setup (choose tool):** [skills/TOOL-SETUP.md](skills/TOOL-SETUP.md) — Cursor, Claude, Copilot, or generic.  
+**Skill setup (choose tool):** [skills/TOOL-SETUP.md](skills/TOOL-SETUP.md) — Cursor, Claude, Copilot, or generic.
 **Copy-paste prompts:** [automation-whitepaper/guides/ai-prompt-examples.md](automation-whitepaper/guides/ai-prompt-examples.md).
 
 ---

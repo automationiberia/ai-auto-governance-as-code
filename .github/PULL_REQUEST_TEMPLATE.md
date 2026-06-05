@@ -23,9 +23,9 @@
 
 <!-- Describe what you changed in detail -->
 
-- 
-- 
-- 
+-
+-
+-
 
 ## Operating Mode (for skill changes)
 
@@ -69,7 +69,7 @@ ansible-playbook playbooks/type_<category>.yml --check
 <!-- If you changed skills, test with an AI tool -->
 
 - AI tool tested: [ ] Cursor [ ] Claude [ ] Copilot [ ] Other [ ] N/A
-- Prompt used: 
+- Prompt used:
 - AI behavior validated: [ ] Yes [ ] No [ ] N/A
 
 ## Documentation Updates

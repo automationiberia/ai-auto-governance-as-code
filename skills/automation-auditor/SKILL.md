@@ -9,7 +9,7 @@ description: >-
 
 # Mode 1 — The Auditor
 
-**Type:** Retroactive  
+**Type:** Retroactive
 **Responsibility:** Scan existing playbooks and roles for technical debt.
 
 ## Execution rule
@@ -45,9 +45,9 @@ Do not rewrite large files without summarizing findings first unless the user as
 
 ## Output format
 
-1. **Summary** — counts by severity  
-2. **Findings table** — file path, line (if known), rule, suggested fix  
-3. **Refactor plan** — ordered steps; link to example roles under `automation-whitepaper/examples/`  
+1. **Summary** — counts by severity
+2. **Findings table** — file path, line (if known), rule, suggested fix
+3. **Refactor plan** — ordered steps; link to example roles under `automation-whitepaper/examples/`
 4. **Verification** — `pre-commit run --all-files`, `ansible-playbook --syntax-check`
 
 ## Cross-skill references
@@ -61,6 +61,6 @@ Do not rewrite large files without summarizing findings first unless the user as
 
 ## Agent behavior
 
-- Read files before judging; cite paths in findings.  
-- Prefer aligning to `standard-rsyslog-forwarding` for non-trivial roles.  
+- Read files before judging; cite paths in findings.
+- Prefer aligning to `standard-rsyslog-forwarding` for non-trivial roles.
 - If the user wants implementation after audit, switch statement to **Mode 2** for new files or stay in **Mode 1** for refactors only.

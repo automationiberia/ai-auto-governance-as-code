@@ -6,7 +6,8 @@ body:
   - type: markdown
     attributes:
       value: |
-        Use this template for skill-related changes. Skills encode white paper standards for AI agents.
+        Use this template for skill-related changes.
+        Skills encode white paper standards for agents.
 
   - type: dropdown
     id: update-type
@@ -25,7 +26,9 @@ body:
     id: skill-name
     attributes:
       label: Skill Name
-      description: Name of the skill (e.g., automation-architect, automation-testing)
+      description: >-
+        Name of the skill
+        (e.g., automation-architect, automation-testing)
       placeholder: automation-<name>
     validations:
       required: true
@@ -107,11 +110,19 @@ body:
     attributes:
       label: Pre-submission Checklist
       options:
-        - label: I have read the white paper section(s) this skill encodes
+        - label: >-
+            I have read the white paper section(s)
+            this skill encodes
           required: true
-        - label: This skill change maintains alignment with the white paper
+        - label: >-
+            This skill change maintains alignment
+            with the white paper
           required: true
-        - label: I understand which AI tools consume this skill (see skills/TOOL-SETUP.md)
+        - label: >-
+            I understand which AI tools consume this skill
+            (see skills/TOOL-SETUP.md)
           required: false
-        - label: I will update skills/README.md catalog if this is a new skill
+        - label: >-
+            I will update skills/README.md catalog
+            if this is a new skill
           required: false

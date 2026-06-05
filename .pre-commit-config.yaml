@@ -18,6 +18,7 @@ repos:
       - id: check-added-large-files
         args: [--maxkb=512]
       - id: detect-private-key
+        exclude: ^\.github/workflows/
 
   # Exclude non-repo paths: .ansible (galaxy cache), venv, build artifacts.
   - repo: https://github.com/psf/black

@@ -9,7 +9,7 @@ description: >-
 
 # Mode 2 — The Architect
 
-**Type:** Proactive  
+**Type:** Proactive
 **Responsibility:** Generate new roles and modules from scratch compliant from the first line of YAML.
 
 ## Execution rule
@@ -20,8 +20,8 @@ Before technical output, state:
 
 ## Bootstrap (read first)
 
-1. [AGENTS.md](../../AGENTS.md) — collection model, FQCN, naming, loops, verification  
-2. [automation-new-automation](../automation-new-automation/SKILL.md) — step-by-step artifacts checklist  
+1. [AGENTS.md](../../AGENTS.md) — collection model, FQCN, naming, loops, verification
+2. [automation-new-automation](../automation-new-automation/SKILL.md) — step-by-step artifacts checklist
 3. White paper: [create-new-automation-step-by-step.md](../../automation-whitepaper/guides/create-new-automation-step-by-step.md)
 
 ```bash
@@ -59,13 +59,13 @@ Declare the profile in the plan before generating files.
 
 ## First-line YAML rules (non-negotiable)
 
-- Modules: **FQCN** (`ansible.builtin.*` or declared collection).  
-- One function role per capability under `$AUTOMATION_REPO/roles/<function>/`.  
-- Type playbook: `playbooks/type_<category>.yml` (roles only, thin playbook).  
+- Modules: **FQCN** (`ansible.builtin.*` or declared collection).
+- One function role per capability under `$AUTOMATION_REPO/roles/<function>/`.
+- Type playbook: `playbooks/type_<category>.yml` (roles only, thin playbook).
 - Every task has an imperative `name:`.
 
 ## Agent behavior
 
-- Generate into `$AUTOMATION_REPO` unless the user asks for an example under `automation-whitepaper/examples/`.  
-- Run or instruct verification: syntax-check + pre-commit before claiming complete.  
+- Generate into `$AUTOMATION_REPO` unless the user asks for an example under `automation-whitepaper/examples/`.
+- Run or instruct verification: syntax-check + pre-commit before claiming complete.
 - Do not skip intake/design docs (`docs/<function>/INTAKE.md`, `DESIGN.md`) for **standard** / **heavy**.

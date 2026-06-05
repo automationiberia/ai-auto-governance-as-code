@@ -1,6 +1,6 @@
 # Agent Skills — tool-agnostic setup
 
-**Canonical source (all tools):** `skills/*/SKILL.md` and [AGENTS.md](../AGENTS.md) in the **`ai-auto-skills`** repository.  
+**Canonical source (all tools):** `skills/*/SKILL.md` and [AGENTS.md](../AGENTS.md) in the **`ai-auto-skills`** repository.
 Do not fork skill text into tool-specific copies unless your platform requires it — link or load from here.
 
 **Which tool are you using?** Follow exactly one row below, then use [prompt examples](../automation-whitepaper/guides/ai-prompt-examples.md).
