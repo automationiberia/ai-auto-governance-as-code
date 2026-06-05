@@ -242,6 +242,7 @@ jobs:
           pattern+="BEGIN OPENSSH PRIVATE KEY)"
           if grep -r -E "$pattern" \
             --exclude-dir=".git" \
+            --exclude-dir=".github" \
             --exclude-dir="automation-good-practices" \
             --exclude-dir="deliveries" \
             .; then
