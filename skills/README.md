@@ -69,4 +69,34 @@ Use **Mode 3 — Librarian** when updating:
 1. Update white paper markdown first
 2. Sync corresponding `SKILL.md` (keep under ~500 lines)
 3. Update [AGENTS.md](../AGENTS.md) if modes change
-4. Add entry to catalog above
+4. Run tool-specific sync per [TOOL-SETUP.md](TOOL-SETUP.md) (e.g. `link-cursor-skills.sh` **only for Cursor**)
+5. Add entry to catalog above
+
+## 📋 Complete Skill Catalog
+
+### Mode Skills
+
+| Skill | Mode |
+|-------|------|
+| [automation-auditor](automation-auditor/SKILL.md) | 1 — Auditor |
+| [automation-architect](automation-architect/SKILL.md) | 2 — Architect |
+| [automation-librarian](automation-librarian/SKILL.md) | 3 — Librarian |
+
+### Task Skills
+
+| Skill | Use when | White paper |
+|-------|----------|-------------|
+| [automation-new-automation](automation-new-automation/SKILL.md) | New automation end-to-end | [step-by-step guide](../automation-whitepaper/guides/create-new-automation-step-by-step.md) |
+| [automation-pre-commit](automation-pre-commit/SKILL.md) | Hooks, lint failures | [pre-commit.md](../automation-whitepaper/quality/pre-commit.md) |
+| [automation-lifecycle](automation-lifecycle/SKILL.md) | Intake → retire | [lifecycle/](../automation-whitepaper/lifecycle/) |
+| [automation-architecture](automation-architecture/SKILL.md) | L/T/F/C, collections | [architecture/](../automation-whitepaper/architecture/) |
+| [automation-role-development](automation-role-development/SKILL.md) | Roles | [development/roles.md](../automation-whitepaper/development/roles.md) |
+| [automation-playbook-inventory](automation-playbook-inventory/SKILL.md) | Playbooks, inventory | [development/](../automation-whitepaper/development/) |
+| [automation-quality-gates](automation-quality-gates/SKILL.md) | Review, idempotency | [quality/](../automation-whitepaper/quality/) |
+| [automation-governance](automation-governance/SKILL.md) | Stakeholders, CAB | [governance/](../automation-whitepaper/governance/) |
+| [automation-controller-ops](automation-controller-ops/SKILL.md) | Controller, SSOT | [operations/](../automation-whitepaper/operations/) |
+| [automation-puppet-orchestrate](automation-puppet-orchestrate/SKILL.md) | Phase 1 Puppet wrappers via AAP | [aap-puppet-coexistence-evolution.md](../automation-whitepaper/architecture/aap-puppet-coexistence-evolution.md) |
+
+## 📝 Language
+
+English only.

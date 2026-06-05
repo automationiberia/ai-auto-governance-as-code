@@ -31,6 +31,7 @@ automation-whitepaper/
 ### Governance
 
 - **[AI-Driven Governance](governance/governance-as-code-ai-enforcement.md)** — Auditor / Architect / Librarian modes
+- **[Strategic Proposal v1.0](governance/strategic-proposal-aap-governance-evolution.md)** — AAP, Puppet, GenAI, Dev Spaces
 - [Organizational Model](governance/organizational-model-and-stakeholders.md)
 - [Roles & Responsibilities](governance/roles-and-responsibilities.md)
 
@@ -44,7 +45,8 @@ automation-whitepaper/
 
 ### Architecture
 
-- [Monorepo Layout](architecture/monorepo-layout.md)
+- [Monorepo Layout](architecture/monorepo-layout.md) — Governance monorepo (`ai-auto-skills`), white book, skills, submodules
+- [AAP & Puppet Coexistence Evolution](architecture/aap-puppet-coexistence-evolution.md) — Three phases: centralized orchestration, on-demand refactor, native greenfield
 - [L/T/F/C Patterns](architecture/landscape-type-function-component.md)
 - [Collections & EEs](architecture/collections-and-execution-environments.md)
 

@@ -2,7 +2,13 @@
 
 > **AI-Driven Governance-as-Code for Ansible Automation**
 
-Centralized monorepo providing standards, documentation, and AI agent skills for enterprise Ansible automation. Aligned with [Red Hat CoP Automation Good Practices](https://github.com/redhat-cop/automation-good-practices).
+Centralized governance monorepo for Ansible standards, documentation, and AI Agent Skills. Aligned with [Red Hat CoP](https://github.com/redhat-cop/automation-good-practices), adaptable to enterprise change flows.
+
+**Quick start:** [AGENTS.md](AGENTS.md) for AI agent modes · [ai-prompt-examples.md](automation-whitepaper/guides/ai-prompt-examples.md) for prompts · [governance-as-code-ai-enforcement.md](automation-whitepaper/governance/governance-as-code-ai-enforcement.md) for programming guide.
+
+**Architecture:** [monorepo layout](automation-whitepaper/architecture/monorepo-layout.md) · [Strategic proposal v1.0](automation-whitepaper/governance/strategic-proposal-aap-governance-evolution.md) · [AAP & Puppet phases](automation-whitepaper/architecture/aap-puppet-coexistence-evolution.md)
+
+---
 
 ## 🚀 Quick Start
 
@@ -64,3 +70,5 @@ See [Makefile](Makefile) for all targets.
 ## 🌐 OpenShift Dev Spaces
 
 Import via [`.devfile.yaml`](.devfile.yaml). See [devspaces-workspace.md](automation-whitepaper/guides/devspaces-workspace.md).
+
+**Delivery submodule** requires SSH access to `git@github.com:automationiberia/ai-auto-deliveries.git`. See [deliveries/README.md](deliveries/README.md).

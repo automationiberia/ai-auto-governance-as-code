@@ -201,6 +201,65 @@ The agent should still declare a mode; these shortcuts map cleanly:
 | Governance / CAB | `Use automation-governance — who must be consulted for a Standard profile prod change?` |
 | Controller / SSOT | `Use automation-controller-ops — how should inventory for <source> integrate per white book?` |
 | Enterprise change narrative | `Walk through example-enterprise-change-flow.md for a middleware role prod deploy.` |
+| Strategic AAP + Puppet proposal | `Read strategic-proposal-aap-governance-evolution.md — summarize phase for <scenario>` |
+| Puppet → AAP phase | `Use automation-architecture — Phase 2.1 / 2.2 / 2.3 per aap-puppet-coexistence-evolution.md` |
+
+---
+
+## 6b. Strategic proposal — AAP, Puppet, and phases
+
+References: [strategic-proposal-aap-governance-evolution.md](../governance/strategic-proposal-aap-governance-evolution.md) · [aap-puppet-coexistence-evolution.md](../architecture/aap-puppet-coexistence-evolution.md).
+
+### Phase 2.1 — Centralized orchestration (wrapper playbook)
+
+```text
+Use skill automation-puppet-orchestrate. Read AGENTS.md. Mode 2 — Architect.
+
+Create a Phase 1 wrapper type playbook in deliveries/automation/ that runs Puppet
+class `<class>` via community.general.puppet with:
+- noop: "{{ ansible_check_mode }}"
+- summarize: true
+- environment from _puppet_environment
+- tags / skip_tags support
+No shell puppet agent. No Phase 2 native refactor.
+```
+
+### Phase 2.2 — On-demand refactor (trigger required)
+
+```text
+Use automation-architect and automation-new-automation. Profile: Standard.
+
+Official trigger: <major functional change | architectural rewrite | scope expansion>.
+Refactor Puppet module `<module>` to native role `<function>` in deliveries/automation/.
+Human-in-the-loop: propose design before YAML. Phase 1 wrapper remains for other classes.
+```
+
+### Phase 2.3 — Greenfield (native Ansible only)
+
+```text
+Mode 2 — Architect. Phase 2.3 native new development.
+
+New capability `<function>` — greenfield only. Native collection role + type playbook.
+Do not create Puppet modules. Follow AGENTS.md bootstrap rules.
+```
+
+### Phase assessment
+
+```text
+Read strategic-proposal-aap-governance-evolution.md §2.
+
+Scenario: <describe>. Which phase (2.1 Centralized orchestration / 2.2 On-demand refactor /
+2.3 Native new developments) applies? List triggers, exit criteria, and human gates. No YAML yet.
+```
+
+### Auditor — wrapper compliance
+
+```text
+Mode 1 — Auditor. Use automation-puppet-orchestrate guardrails.
+
+Review playbooks under deliveries/automation/ that invoke Puppet.
+Flag: shell puppet commands, missing summarize, deprecated timeout param, non-FQCN.
+```
 
 ---
 
