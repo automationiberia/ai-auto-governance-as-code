@@ -1,0 +1,99 @@
+name: Feature Request
+description: Suggest a new feature or enhancement
+title: "[Feature]: "
+labels: ["enhancement", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a feature! Please help us understand your use case.
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component
+      description: Which part should be enhanced?
+      options:
+        - White Paper Documentation (automation-whitepaper/)
+        - Agent Skills (skills/)
+        - Reference Examples (examples/)
+        - Tooling & Scripts
+        - CI/CD & Pre-commit
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Operating Mode (if applicable)
+      description: Which AI agent mode does this relate to?
+      options:
+        - Not applicable
+        - Mode 1 - The Auditor (retroactive review)
+        - Mode 2 - The Architect (proactive creation)
+        - Mode 3 - The Librarian (maintenance)
+        - Cross-cutting (multiple modes)
+    validations:
+      required: false
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or Use Case
+      description: What problem does this feature solve? What is the use case?
+      placeholder: Describe the problem or use case...
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: How would you like this to work?
+      placeholder: Describe your proposed solution...
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: What other approaches have you considered?
+      placeholder: Describe alternative solutions...
+    validations:
+      required: false
+
+  - type: textarea
+    id: benefits
+    attributes:
+      label: Expected Benefits
+      description: How will this improve the governance framework or AI agent behavior?
+      placeholder: |
+        - Improved accuracy of AI-generated code
+        - Better alignment with white paper standards
+        - Reduced manual review time
+        - etc.
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Any other context, mockups, or references
+      placeholder: Add any other context here...
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Pre-submission Checklist
+      options:
+        - label: I have searched existing issues and discussions to avoid duplicates
+          required: true
+        - label: This feature aligns with the AI-driven governance goals of this project
+          required: true
+        - label: I have considered how this affects existing white paper documentation
+          required: false

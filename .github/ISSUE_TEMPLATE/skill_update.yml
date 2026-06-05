@@ -1,0 +1,117 @@
+name: Skill Update
+description: Propose updates to an existing skill or create a new skill
+title: "[Skill]: "
+labels: ["skill-update", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template for skill-related changes. Skills encode white paper standards for AI agents.
+
+  - type: dropdown
+    id: update-type
+    attributes:
+      label: Update Type
+      description: What kind of skill change is this?
+      options:
+        - Update existing skill
+        - Create new skill
+        - Deprecate/remove skill
+        - Sync skill with white paper
+    validations:
+      required: true
+
+  - type: input
+    id: skill-name
+    attributes:
+      label: Skill Name
+      description: Name of the skill (e.g., automation-architect, automation-testing)
+      placeholder: automation-<name>
+    validations:
+      required: true
+
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Operating Mode
+      description: Which AI agent mode does this skill target?
+      options:
+        - Mode 1 - The Auditor (retroactive review)
+        - Mode 2 - The Architect (proactive creation)
+        - Mode 3 - The Librarian (maintenance)
+        - Task Skill (used within other modes)
+    validations:
+      required: true
+
+  - type: textarea
+    id: rationale
+    attributes:
+      label: Rationale
+      description: Why is this skill update needed?
+      placeholder: |
+        - White paper section updated: [link]
+        - New pattern adopted: [description]
+        - Gap identified: [description]
+        - AI agents are generating incorrect code: [example]
+    validations:
+      required: true
+
+  - type: textarea
+    id: white-paper-ref
+    attributes:
+      label: White Paper Reference
+      description: Which white paper sections does this skill encode?
+      placeholder: |
+        - automation-whitepaper/architecture/...
+        - automation-whitepaper/quality/...
+    validations:
+      required: true
+
+  - type: textarea
+    id: changes
+    attributes:
+      label: Proposed Changes
+      description: What specific changes should be made to the skill?
+      placeholder: |
+        - Add guidance for X pattern
+        - Update examples to use Y
+        - Remove deprecated Z instruction
+    validations:
+      required: true
+
+  - type: textarea
+    id: examples
+    attributes:
+      label: Example AI Behavior
+      description: How should AI agents behave with this skill update?
+      placeholder: |
+        Before: AI generates code with legacy pattern...
+        After: AI generates code following new pattern...
+    validations:
+      required: false
+
+  - type: textarea
+    id: testing
+    attributes:
+      label: Testing Approach
+      description: How will you validate this skill update works correctly?
+      placeholder: |
+        - Test with Cursor using prompt: "..."
+        - Verify AI generates compliant code
+        - Check against white paper examples
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Pre-submission Checklist
+      options:
+        - label: I have read the white paper section(s) this skill encodes
+          required: true
+        - label: This skill change maintains alignment with the white paper
+          required: true
+        - label: I understand which AI tools consume this skill (see skills/TOOL-SETUP.md)
+          required: false
+        - label: I will update skills/README.md catalog if this is a new skill
+          required: false

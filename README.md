@@ -1,61 +1,66 @@
-# ai-auto-skills — Ansible governance monorepo
+# ai-auto-skills
 
-**AI-Driven Governance-as-Code for Ansible Automation**
+> **AI-Driven Governance-as-Code for Ansible Automation**
 
-The **`ai-auto-skills`** centralized monorepo is the **single point of entry** for standards, documentation, and the **intelligence layer** (AI Agent Skills) that drives automation operations. By moving away from **loose playbooks** scattered across repositories, this layout establishes a **unified framework** aligned with the [Red Hat Community of Practice (CoP)](https://github.com/redhat-cop/automation-good-practices) while remaining adaptable to **enterprise-grade change flows** (see [example-enterprise-change-flow.md](automation-whitepaper/examples/example-enterprise-change-flow.md)).
+Centralized monorepo providing standards, documentation, and AI agent skills for enterprise Ansible automation. Aligned with [Red Hat CoP Automation Good Practices](https://github.com/redhat-cop/automation-good-practices).
 
-**AI agents:** read [AGENTS.md](AGENTS.md) first — declare operating mode (Auditor / Architect / Librarian) before technical output. **Prompt examples:** [ai-prompt-examples.md](automation-whitepaper/guides/ai-prompt-examples.md). Program guide: [governance-as-code-ai-enforcement.md](automation-whitepaper/governance/governance-as-code-ai-enforcement.md).
-
-Full architecture narrative: [automation-whitepaper/architecture/monorepo-layout.md](automation-whitepaper/architecture/monorepo-layout.md).
-
----
-
-## Monorepo components
-
-| Directory | Function |
-|-----------|----------|
-| **`automation-whitepaper/`** | The **white book** — authoritative guide for lifecycle, architecture, quality, and **executable examples** (light / standard / heavy). |
-| **`skills/`** | **AI Agent Skills** (`SKILL.md` markdown; some tooling uses `.mdc` or equivalent). Instruct agents how to **create**, **review**, and **govern** code according to the white book. |
-| **`automation-good-practices/`** | **Git submodule** — upstream reference from the Red Hat CoP GPA. |
-| **`deliveries/automation/`** | **Git submodule** → [`automationiberia/ai-auto-deliveries`](https://github.com/automationiberia/ai-auto-deliveries). **Do not change** the URL in [`.gitmodules`](.gitmodules) — submodule init will fail. |
-
-| Root artifact | Function |
-|---------------|----------|
-| **`AGENTS.md`** | Agent bootstrap, three operating modes, Architect compliance rules. |
-| **`requirements-dev.txt`**, **`.pre-commit-config.yaml`** | Lint and hook profile for this repository and examples. |
+## 🚀 Quick Start
 
 ```bash
-export AUTOMATION_HOME=/path/to/this/repository
+# Clone with submodules
+git clone --recurse-submodules <repo-url>
+cd ai-auto-skills
+
+# Setup (or use 'make setup')
+pip install -r requirements-dev.txt
+pre-commit install
+git submodule update --init deliveries/automation
+
+# Set environment
+export AUTOMATION_HOME=$(pwd)
 export AUTOMATION_REPO="$AUTOMATION_HOME/deliveries/automation"
 ```
 
-`<automation-home>` in the white book means the governance repository root (this monorepo).
+## 📁 Repository Structure
 
----
-
-## Adopting or cloning
-
-```bash
-git clone --recurse-submodules <ai-auto-skills-url>
-cd ai-auto-skills
-pip install -r requirements-dev.txt
-pre-commit install
+```
+ai-auto-skills/
+├── automation-whitepaper/    # Standards, architecture, examples
+├── skills/                   # AI agent skills (SKILL.md files)
+├── automation-good-practices/# Red Hat CoP submodule
+├── deliveries/automation/    # Actual Ansible collection (submodule)
+├── AGENTS.md                 # AI agent operating modes
+└── Makefile                  # Common tasks (make help)
 ```
 
-Configure Agent Skills for **your AI tool** (Cursor, Claude, Copilot, or other): **[skills/TOOL-SETUP.md](skills/TOOL-SETUP.md)** — then see [ai-prompt-examples.md](automation-whitepaper/guides/ai-prompt-examples.md).
+## 📚 Key Documentation
 
-Initialize the delivery submodule (remote is fixed in `.gitmodules`):
+| Document | Purpose |
+|----------|---------|
+| **[AGENTS.md](AGENTS.md)** | AI agent modes: Auditor / Architect / Librarian |
+| **[skills/TOOL-SETUP.md](skills/TOOL-SETUP.md)** | Configure Cursor / Claude / Copilot |
+| **[automation-whitepaper/](automation-whitepaper/)** | Complete standards & architecture |
+| **[CONTRIBUTING.md](CONTRIBUTING.md)** | How to contribute |
+
+## 🤖 For AI Agents
+
+**Start here:** [AGENTS.md](AGENTS.md) — Declare your mode before generating code.
+
+**Prompt examples:** [ai-prompt-examples.md](automation-whitepaper/guides/ai-prompt-examples.md)
+
+**Skills catalog:** [skills/README.md](skills/README.md)
+
+## 🛠️ Common Tasks
 
 ```bash
-git submodule update --init deliveries/automation
+make help              # List all available commands
+make validate          # Run all validation checks
+make test              # Run tests (lint + validate)
+make info              # Show environment info
 ```
 
-Requires Git access to `git@github.com:automationiberia/ai-auto-deliveries.git` (SSH key or equivalent in Dev Spaces).
+See [Makefile](Makefile) for all targets.
 
-See [deliveries/README.md](deliveries/README.md) and [automation-whitepaper/guides/git-automation-repository.md](automation-whitepaper/guides/git-automation-repository.md).
+## 🌐 OpenShift Dev Spaces
 
----
-
-## Optional: OpenShift Dev Spaces
-
-Import in **Dev Spaces** via [`.devfile.yaml`](.devfile.yaml) and [`automation-home.code-workspace`](automation-home.code-workspace). Post-start runs [`.devfile/setup-workspace.sh`](.devfile/setup-workspace.sh). Details: [automation-whitepaper/guides/devspaces-workspace.md](automation-whitepaper/guides/devspaces-workspace.md).
+Import via [`.devfile.yaml`](.devfile.yaml). See [devspaces-workspace.md](automation-whitepaper/guides/devspaces-workspace.md).

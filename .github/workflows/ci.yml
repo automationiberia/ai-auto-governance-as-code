@@ -1,0 +1,306 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  PYTHON_VERSION: "3.12"
+  ANSIBLE_VERSION: ">=2.15,<2.19"
+
+jobs:
+  pre-commit:
+    name: Pre-commit Hooks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: false  # Skip submodules for pre-commit
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+
+      - name: Run pre-commit hooks
+        run: pre-commit run --all-files --show-diff-on-failure
+
+  validate-yaml:
+    name: Validate YAML and Ansible
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+          pip install ansible-core${{ env.ANSIBLE_VERSION }}
+
+      - name: Run yamllint
+        run: |
+          yamllint -c automation-whitepaper/.yamllint automation-whitepaper/
+        continue-on-error: false
+
+      - name: Run ansible-lint
+        run: |
+          ansible-lint -c automation-whitepaper/.ansible-lint automation-whitepaper/
+        continue-on-error: true  # Warn but don't fail (examples may be WIP)
+
+      - name: Ansible syntax check
+        run: |
+          find automation-whitepaper/examples -type f \( -name "*.yml" -o -name "*.yaml" \) | while read playbook; do
+            echo "Checking syntax: $playbook"
+            ansible-playbook --syntax-check "$playbook" || true
+          done
+
+  validate-skills:
+    name: Validate SKILL.md Structure
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: false
+
+      - name: Check SKILL.md files
+        run: |
+          echo "==> Validating SKILL.md files"
+          skills_found=0
+          skills_valid=0
+          skills_invalid=()
+
+          for skill in $(find skills -name "SKILL.md" 2>/dev/null); do
+            skills_found=$((skills_found + 1))
+            echo "Checking: $skill"
+
+            # Check for title (# header)
+            if ! grep -q "^# " "$skill"; then
+              echo "  ❌ Missing title (# header)"
+              skills_invalid+=("$skill: missing title")
+              continue
+            fi
+
+            # Check minimum length (should have content)
+            lines=$(wc -l < "$skill")
+            if [ "$lines" -lt 10 ]; then
+              echo "  ⚠️  Very short file ($lines lines)"
+              skills_invalid+=("$skill: only $lines lines")
+              continue
+            fi
+
+            skills_valid=$((skills_valid + 1))
+            echo "  ✅ Valid"
+          done
+
+          echo ""
+          echo "==> Summary"
+          echo "Found: $skills_found SKILL.md files"
+          echo "Valid: $skills_valid files"
+          echo "Issues: ${#skills_invalid[@]} files"
+
+          if [ ${#skills_invalid[@]} -gt 0 ]; then
+            echo ""
+            echo "Files with issues:"
+            printf '%s\n' "${skills_invalid[@]}"
+            exit 1
+          fi
+
+  validate-documentation:
+    name: Validate Documentation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: false
+
+      - name: Check required files
+        run: |
+          echo "==> Checking for required documentation files"
+          required_files=(
+            "README.md"
+            "AGENTS.md"
+            "CONTRIBUTING.md"
+            "SECURITY.md"
+            "skills/README.md"
+            "skills/TOOL-SETUP.md"
+            "automation-whitepaper/README.md"
+          )
+
+          missing=()
+          for file in "${required_files[@]}"; do
+            if [ -f "$file" ]; then
+              echo "  ✅ $file"
+            else
+              echo "  ❌ $file (missing)"
+              missing+=("$file")
+            fi
+          done
+
+          if [ ${#missing[@]} -gt 0 ]; then
+            echo ""
+            echo "Missing required files: ${missing[*]}"
+            exit 1
+          fi
+
+      - name: Check for hardcoded paths
+        run: |
+          echo "==> Checking for hardcoded absolute paths in documentation"
+          # Find markdown files with potential hardcoded paths
+          if grep -r -n --include="*.md" \
+            -e "/home/" \
+            -e "/Users/" \
+            -e "C:\\\\" \
+            --exclude-dir=".git" \
+            --exclude-dir="automation-good-practices" \
+            --exclude-dir="deliveries" \
+            . | grep -v "\$AUTOMATION_HOME" | grep -v "\$AUTOMATION_REPO" | grep -v "CONTRIBUTING.md"; then
+            echo "⚠️  Found potential hardcoded paths (should use \$AUTOMATION_HOME or \$AUTOMATION_REPO)"
+            echo "Review the above findings - some may be acceptable (examples in CONTRIBUTING.md, etc.)"
+          else
+            echo "✅ No hardcoded paths found"
+          fi
+
+  validate-python:
+    name: Validate Python Code
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+
+      - name: Check Python formatting with black
+        run: |
+          black --check --diff .
+        continue-on-error: true
+
+      - name: Lint Python with pylint
+        run: |
+          find . -name "*.py" \
+            -not -path "*/\.*" \
+            -not -path "*/automation-good-practices/*" \
+            -not -path "*/deliveries/*" \
+            -not -path "*/__pycache__/*" \
+            -not -path "*/build/*" \
+            -not -path "*/dist/*" \
+            | xargs -r pylint --rcfile=pyproject.toml || true
+
+  check-security:
+    name: Security Checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: false
+          fetch-depth: 0  # Full history for secret scanning
+
+      - name: Run secret detection
+        run: |
+          echo "==> Checking for accidentally committed secrets"
+          # Use pre-commit's detect-private-key hook
+          if grep -r -E "(BEGIN RSA PRIVATE KEY|BEGIN PRIVATE KEY|BEGIN OPENSSH PRIVATE KEY)" \
+            --exclude-dir=".git" \
+            --exclude-dir="automation-good-practices" \
+            --exclude-dir="deliveries" \
+            .; then
+            echo "❌ Found private keys in repository!"
+            exit 1
+          fi
+          echo "✅ No private keys detected"
+
+      - name: Check for common secrets patterns
+        run: |
+          echo "==> Checking for common secret patterns"
+          patterns=(
+            "password\s*=\s*['\"][^'\"]{8,}"
+            "api_key\s*=\s*['\"][^'\"]{16,}"
+            "secret\s*=\s*['\"][^'\"]{8,}"
+            "token\s*=\s*['\"][^'\"]{16,}"
+          )
+
+          found=0
+          for pattern in "${patterns[@]}"; do
+            if grep -r -i -E "$pattern" \
+              --include="*.yml" \
+              --include="*.yaml" \
+              --exclude-dir=".git" \
+              --exclude-dir="automation-good-practices" \
+              --exclude-dir="deliveries" \
+              . ; then
+              found=1
+            fi
+          done
+
+          if [ $found -eq 1 ]; then
+            echo "⚠️  Found potential secrets - review if these are examples/placeholders"
+            echo "Ensure production secrets use Ansible Vault or external secret management"
+          else
+            echo "✅ No obvious secret patterns found"
+          fi
+
+  summary:
+    name: CI Summary
+    runs-on: ubuntu-latest
+    needs:
+      - pre-commit
+      - validate-yaml
+      - validate-skills
+      - validate-documentation
+      - validate-python
+      - check-security
+    if: always()
+    steps:
+      - name: Check job results
+        run: |
+          echo "==> CI Summary"
+          echo "Pre-commit: ${{ needs.pre-commit.result }}"
+          echo "YAML validation: ${{ needs.validate-yaml.result }}"
+          echo "Skills validation: ${{ needs.validate-skills.result }}"
+          echo "Documentation validation: ${{ needs.validate-documentation.result }}"
+          echo "Python validation: ${{ needs.validate-python.result }}"
+          echo "Security checks: ${{ needs.check-security.result }}"
+
+          if [ "${{ needs.pre-commit.result }}" != "success" ] || \
+             [ "${{ needs.validate-skills.result }}" != "success" ] || \
+             [ "${{ needs.validate-documentation.result }}" != "success" ] || \
+             [ "${{ needs.check-security.result }}" != "success" ]; then
+            echo ""
+            echo "❌ CI failed - review errors above"
+            exit 1
+          fi
+
+          echo ""
+          echo "✅ All required checks passed!"

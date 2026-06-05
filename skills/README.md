@@ -1,91 +1,72 @@
-# Automation White Paper — Agent Skills
+# AI Agent Skills
 
-Tool-agnostic skills encoding the [automation white paper](../automation-whitepaper/README.md). **Canonical source:** `skills/` — maintain only here.
+> Tool-agnostic skills that encode [automation white paper](../automation-whitepaper/) standards for AI agents.
 
-Skills implement **[AI-Driven Governance-as-Code for Ansible Automation](../automation-whitepaper/governance/governance-as-code-ai-enforcement.md)** together with [AGENTS.md](../AGENTS.md). They are the **intelligence layer** of the governance monorepo — see [monorepo layout](../automation-whitepaper/architecture/monorepo-layout.md). Agents must **state their active mode** before technical output.
+**First time?** Read [TOOL-SETUP.md](TOOL-SETUP.md) to configure your AI tool (Cursor/Claude/Copilot).
 
-Skills are stored as **`SKILL.md`** (markdown). Some agent environments accept **`.mdc`** or other skill file formats; maintain canonical content under `skills/` here.
+## 🎭 Operating Modes
 
-## Operating modes
+AI agents must declare their mode before generating code — see [AGENTS.md](../AGENTS.md).
 
-| Mode | Skill | When |
-|------|-------|------|
-| **1 — Auditor** (retroactive) | [automation-auditor](automation-auditor/SKILL.md) | Review, refactor, debt scan on existing YAML |
-| **2 — Architect** (proactive) | [automation-architect](automation-architect/SKILL.md) | New roles, playbooks, greenfield capabilities |
-| **3 — Librarian** (maintenance) | [automation-librarian](automation-librarian/SKILL.md) | Update white paper ↔ skills; GPA upstream sync |
+| Mode | Skill | Purpose |
+|------|-------|---------|
+| **1 — Auditor** | [automation-auditor](automation-auditor/SKILL.md) | Review & refactor existing code |
+| **2 — Architect** | [automation-architect](automation-architect/SKILL.md) | Create new automation from scratch |
+| **3 — Librarian** | [automation-librarian](automation-librarian/SKILL.md) | Maintain governance layer |
 
-Task skills below are used **inside** Mode 1 or 2 as needed.
+## 🛠️ Task Skills
 
-## Path conventions
+Used within Auditor or Architect modes as needed.
 
-| Symbol | Meaning |
-|--------|---------|
-| `<automation-home>` | Governance monorepo root (`ai-auto-skills`; white paper, lint templates) |
-| `<automation-repo>` | **`deliveries/automation/`** — shared Ansible collection (Git submodule; new capabilities = new roles) |
-| `<example-root>` | Reference under `automation-whitepaper/examples/<name>/` — copy into `<automation-repo>` |
+| Skill | When to Use |
+|-------|-------------|
+| [automation-new-automation](automation-new-automation/SKILL.md) | Creating new automation end-to-end |
+| [automation-role-development](automation-role-development/SKILL.md) | Developing Ansible roles |
+| [automation-playbook-inventory](automation-playbook-inventory/SKILL.md) | Playbooks & inventory |
+| [automation-quality-gates](automation-quality-gates/SKILL.md) | Code review & validation |
+| [automation-pre-commit](automation-pre-commit/SKILL.md) | Pre-commit hooks & linting |
+| [automation-architecture](automation-architecture/SKILL.md) | L/T/F/C patterns & collections |
+| [automation-lifecycle](automation-lifecycle/SKILL.md) | Automation lifecycle management |
+| [automation-governance](automation-governance/SKILL.md) | Stakeholder & CAB processes |
+| [automation-controller-ops](automation-controller-ops/SKILL.md) | Controller operations |
+
+## ⚙️ Setup
+
+**Choose your AI tool:**
+
+| Tool | Setup Guide |
+|------|-------------|
+| Cursor | [TOOL-SETUP.md#cursor](TOOL-SETUP.md#cursor) |
+| Claude | [TOOL-SETUP.md#claude](TOOL-SETUP.md#claude) |
+| GitHub Copilot | [TOOL-SETUP.md#github-copilot](TOOL-SETUP.md#github-copilot) |
+| Other | [TOOL-SETUP.md#generic](TOOL-SETUP.md#generic-any-agent) |
+
+**Prompt examples:** [ai-prompt-examples.md](../automation-whitepaper/guides/ai-prompt-examples.md)
+
+## 📂 Path Variables
 
 ```bash
-export AUTOMATION_HOME=/path/to/this/repository
+export AUTOMATION_HOME=/path/to/ai-auto-skills
+export AUTOMATION_REPO="$AUTOMATION_HOME/deliveries/automation"
 ```
 
-## Setup — which AI tool?
+| Variable | Points to |
+|----------|-----------|
+| `$AUTOMATION_HOME` | This governance repo |
+| `$AUTOMATION_REPO` | Shared Ansible collection |
 
-Skills are **tool-agnostic** (`SKILL.md` under `skills/`). Configuration depends on your environment:
+## 📚 Reference Examples
 
-| If you use… | Read |
-|-------------|------|
-| **Cursor** | [TOOL-SETUP.md → Cursor](TOOL-SETUP.md#cursor) |
-| **Claude** (Desktop, Code, Projects, API) | [TOOL-SETUP.md → Claude](TOOL-SETUP.md#claude) |
-| **GitHub Copilot** | [TOOL-SETUP.md → Copilot](TOOL-SETUP.md#github-copilot) |
-| **Other / any agent** | [TOOL-SETUP.md → Generic](TOOL-SETUP.md#generic-any-agent) |
+| Profile | Location | Walkthrough |
+|---------|----------|-------------|
+| Light | [light-dev-packages/](../automation-whitepaper/examples/light-dev-packages/) | [walkthrough](../automation-whitepaper/examples/example-light-walkthrough-dev-packages.md) |
+| Standard | [standard-rsyslog-forwarding/](../automation-whitepaper/examples/standard-rsyslog-forwarding/) | [walkthrough](../automation-whitepaper/examples/example-complete-walkthrough-rsyslog-forwarding.md) |
 
-**Start here:** [TOOL-SETUP.md](TOOL-SETUP.md) — pick one row, then follow only that section.
+## 🔧 Maintaining Skills
 
-**Prompt examples (all tools):** [../automation-whitepaper/guides/ai-prompt-examples.md](../automation-whitepaper/guides/ai-prompt-examples.md).
+Use **Mode 3 — Librarian** when updating:
 
-## Skill catalog
-
-### Mode skills
-
-| Skill | Mode |
-|-------|------|
-| [automation-auditor](automation-auditor/SKILL.md) | 1 — Auditor |
-| [automation-architect](automation-architect/SKILL.md) | 2 — Architect |
-| [automation-librarian](automation-librarian/SKILL.md) | 3 — Librarian |
-
-### Task skills
-
-| Skill | Use when | White paper |
-|-------|----------|-------------|
-| [automation-new-automation](automation-new-automation/SKILL.md) | New automation end-to-end | [step-by-step guide](../automation-whitepaper/guides/create-new-automation-step-by-step.md) |
-| [automation-pre-commit](automation-pre-commit/SKILL.md) | Hooks, lint failures | [pre-commit.md](../automation-whitepaper/quality/pre-commit.md) |
-| [automation-lifecycle](automation-lifecycle/SKILL.md) | Intake → retire | [lifecycle/](../automation-whitepaper/lifecycle/) |
-| [automation-architecture](automation-architecture/SKILL.md) | L/T/F/C, collections | [architecture/](../automation-whitepaper/architecture/) |
-| [automation-role-development](automation-role-development/SKILL.md) | Roles | [development/roles.md](../automation-whitepaper/development/roles.md) |
-| [automation-playbook-inventory](automation-playbook-inventory/SKILL.md) | Playbooks, inventory | [development/](../automation-whitepaper/development/) |
-| [automation-quality-gates](automation-quality-gates/SKILL.md) | Review, idempotency | [quality/](../automation-whitepaper/quality/) |
-| [automation-governance](automation-governance/SKILL.md) | Stakeholders, CAB | [governance/](../automation-whitepaper/governance/) |
-| [automation-controller-ops](automation-controller-ops/SKILL.md) | Controller, SSOT | [operations/](../automation-whitepaper/operations/) |
-
-## Runnable examples (prefer over duplicating code)
-
-| Profile | Code directory | Walkthrough |
-|---------|----------------|-------------|
-| Light | `automation-whitepaper/examples/light-dev-packages/` | `example-light-walkthrough-dev-packages.md` |
-| Standard | `automation-whitepaper/examples/standard-rsyslog-forwarding/` | `example-complete-walkthrough-rsyslog-forwarding.md` |
-
-When implementing or reviewing: **read and edit files in `<example-root>`**; link from docs, do not paste large blocks into markdown.
-
-## Maintaining skills (Librarian mode)
-
-Use **Mode 3 — The Librarian** ([automation-librarian](automation-librarian/SKILL.md)):
-
-1. Update white paper markdown first.
-2. Sync matching `SKILL.md` (keep under ~500 lines).
-3. Update [AGENTS.md](../AGENTS.md) if bootstrap or mode rules change.
-4. Run tool-specific sync per [TOOL-SETUP.md](TOOL-SETUP.md) (e.g. `link-cursor-skills.sh` **only for Cursor**).
-5. Add catalog row above.
-
-## Language
-
-English only.
+1. Update white paper markdown first
+2. Sync corresponding `SKILL.md` (keep under ~500 lines)
+3. Update [AGENTS.md](../AGENTS.md) if modes change
+4. Add entry to catalog above

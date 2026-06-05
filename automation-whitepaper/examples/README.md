@@ -1,47 +1,33 @@
-# Runnable examples
+# Reference Examples
 
-Reference trees for walkthroughs. **Real delivery code** lives in the shared collection `deliveries/automation/`; copy example patterns into new roles there.
+> Runnable Ansible code demonstrating white paper patterns. Copy into `$AUTOMATION_REPO` for real delivery.
 
-| Profile | Walkthrough | Reference code |
-|---------|-------------|----------------|
-| Light | [example-light-walkthrough-dev-packages.md](example-light-walkthrough-dev-packages.md) | [light-dev-packages/](light-dev-packages/) |
-| Standard | [example-complete-walkthrough-rsyslog-forwarding.md](example-complete-walkthrough-rsyslog-forwarding.md) | [standard-rsyslog-forwarding/](standard-rsyslog-forwarding/) |
+## 📦 Available Examples
 
-## Path conventions
+| Profile | Code | Walkthrough |
+|---------|------|-------------|
+| **Light** | [light-dev-packages/](light-dev-packages/) | [Walkthrough](example-light-walkthrough-dev-packages.md) |
+| **Standard** | [standard-rsyslog-forwarding/](standard-rsyslog-forwarding/) | [Walkthrough](example-complete-walkthrough-rsyslog-forwarding.md) |
 
-| Symbol | Meaning |
-|--------|---------|
-| `<automation-home>` | Department standards repo |
-| `<automation-repo>` | **`deliveries/automation/`** — shared Ansible collection |
+## ✅ Validation
 
-```bash
-export AUTOMATION_HOME=/path/to/your/automation-home
-export AUTOMATION_REPO="$AUTOMATION_HOME/deliveries/automation"
-```
-
-Git flow: [git-automation-repository.md](../guides/git-automation-repository.md).
-
-## Verify reference examples
-
-From `<automation-home>` with `ansible-core` and dev requirements installed:
+All examples pass `ansible-playbook --syntax-check` and `ansible-lint`.
 
 ```bash
-# Light
-cd "$AUTOMATION_HOME/automation-whitepaper/examples/light-dev-packages"
+# Validate Light example
+cd $AUTOMATION_HOME/automation-whitepaper/examples/light-dev-packages
 ansible-playbook --syntax-check playbooks/type_dev_linux.yml
 
-# Standard
-cd "$AUTOMATION_HOME/automation-whitepaper/examples/standard-rsyslog-forwarding"
+# Validate Standard example
+cd $AUTOMATION_HOME/automation-whitepaper/examples/standard-rsyslog-forwarding
 ansible-playbook --syntax-check playbooks/type_linux_logging.yml
 ```
 
-Each tree includes `ansible.cfg` with `roles_path = roles`.
+## 📂 Environment
 
-**Last verified** (syntax-check + `ansible-lint` production profile on `playbooks/` and `roles/`):
+```bash
+export AUTOMATION_HOME=/path/to/ai-auto-skills
+export AUTOMATION_REPO="$AUTOMATION_HOME/deliveries/automation"
+```
 
-| Example | Syntax-check | ansible-lint |
-|---------|--------------|--------------|
-| `light-dev-packages` | Pass | Pass |
-| `standard-rsyslog-forwarding` | Pass | Pass |
-
-Host pattern warnings during `--syntax-check` without a live inventory are expected.
+See [git-automation-repository.md](../guides/git-automation-repository.md) for workflow.
