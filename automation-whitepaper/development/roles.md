@@ -95,6 +95,22 @@ Use `lookup('first_found')` for **one** task file per host (most specific wins),
 
 Variable: `rolename_provider`. If unset, detect running provider; respect existing install. Export `rolename_provider_os_default` for OS-wide consistency.
 
+### 4.4 Accessing gathered facts
+
+Use `ansible_facts['fact_name']` bracket notation — not the injected `ansible_*` top-level shortcuts (`ansible_distribution`, `ansible_date_time`, etc.). Fact injection via `INJECT_FACTS_AS_VARS` is deprecated (removal in ansible-core 2.24).
+
+```yaml
+# Good
+when: ansible_facts['os_family'] == 'RedHat'
+__started_at: "{{ ansible_facts['date_time']['iso8601'] }}"
+
+# Avoid
+when: ansible_os_family == 'RedHat'
+__started_at: "{{ ansible_date_time.iso8601 }}"
+```
+
+Requires `gather_facts: true` (or equivalent) when using `date_time` or other setup facts.
+
 ---
 
 ## 5. Quality attributes
