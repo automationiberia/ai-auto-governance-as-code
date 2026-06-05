@@ -9,6 +9,21 @@
 
 ---
 
+## TL;DR
+
+**Goal:** AAP as centralized automation control plane + AI-driven governance.
+
+**Approach:** Three-phase evolution (not rip-and-replace):
+- **Phase 1:** AAP orchestrates existing Puppet (wrapper playbooks)
+- **Phase 2:** Trigger-based refactor (only when business demands change)
+- **Phase 3:** Greenfield = native Ansible only
+
+**Tools:** OpenShift Dev Spaces, AI Agent Skills, centralized logging/RBAC.
+
+**Key rule:** No bulk migrations. Puppet stays until business triggers change.
+
+---
+
 ## 1. Executive summary
 
 The primary objective is to establish **Ansible Automation Platform (AAP)** as the centralized **orchestration and automation control plane**. The enterprise unifies operations, enforces consistent security policies, and implements a **single source of truth** for reporting and auditing.

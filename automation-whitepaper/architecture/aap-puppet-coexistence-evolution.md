@@ -32,6 +32,30 @@ flowchart LR
 
 ---
 
+## Decision tree: Which phase?
+
+```mermaid
+flowchart TD
+  Start[New automation work?] -->|Yes| New{Greenfield or legacy?}
+  Start -->|No| Exist{Existing Puppet code}
+  
+  New -->|New capability| P3[Phase 2.3: Native Ansible]
+  New -->|Wrapping Puppet| P1[Phase 2.1: Wrapper playbook]
+  
+  Exist --> Trigger{Business trigger?}
+  Trigger -->|No trigger| P1w[Phase 2.1: Keep wrapper]
+  Trigger -->|Major change/rewrite/expansion| P2[Phase 2.2: Refactor to Ansible]
+```
+
+| If... | Then phase | Action |
+|-------|------------|--------|
+| New capability, no legacy | **2.3** | Native Ansible only |
+| Existing Puppet, no change needed | **2.1** | Keep wrapper indefinitely |
+| Existing Puppet + business trigger | **2.2** | Refactor specific module |
+| Need to centralize Puppet tracking | **2.1** | Add wrapper playbook |
+
+---
+
 ## 2.1. Phase 1: Centralized orchestration (short-term)
 
 Existing Puppet manifests and modules remain active (tight integration with parallel infrastructure teams). **Execution control moves to AAP.**
@@ -150,6 +174,21 @@ All new content lives in **`ai-auto-deliveries`** (`deliveries/automation/`). Do
 | Any | Update strategy | Librarian | [automation-librarian](../../skills/automation-librarian/SKILL.md) |
 
 Prompts: [ai-prompt-examples.md](../guides/ai-prompt-examples.md).
+
+---
+
+## Quick reference card
+
+| Question | Answer |
+|----------|--------|
+| **Can I migrate all Puppet to Ansible now?** | No. Bulk migrations prohibited. Use Phase 1 wrappers. |
+| **When can I refactor Puppet to Ansible?** | Phase 2 — only with approved business trigger (major change/rewrite/expansion). |
+| **New capability for greenfield?** | Phase 3 — native Ansible only, no Puppet. |
+| **Puppet works fine, no change needed?** | Phase 1 — keep wrapper indefinitely. |
+| **Module for wrapper playbooks?** | `community.general.puppet` with FQCN, `summarize: true`, `noop: "{{ ansible_check_mode }}"`. |
+| **Where do wrappers live?** | `$AUTOMATION_REPO` (deliveries/automation/). |
+| **AI skill for wrappers?** | [automation-puppet-orchestrate](../../skills/automation-puppet-orchestrate/SKILL.md). |
+| **AI skill for refactoring?** | [automation-new-automation](../../skills/automation-new-automation/SKILL.md) + human review. |
 
 ---
 
