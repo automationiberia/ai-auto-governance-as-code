@@ -209,7 +209,8 @@ Expanded checklists: [quality/](quality/).
 | Who to involve and RACI | [governance/](governance/) |
 | Phase-by-phase lifecycle | [lifecycle/](lifecycle/) |
 | Monorepo layout (governance + delivery) | [architecture/monorepo-layout.md](architecture/monorepo-layout.md) |
-| AAP & Puppet coexistence / migration | [architecture/aap-puppet-coexistence-evolution.md](architecture/aap-puppet-coexistence-evolution.md) |
+| Strategic proposal (AAP, Puppet, GenAI) | [governance/strategic-proposal-aap-governance-evolution.md](governance/strategic-proposal-aap-governance-evolution.md) |
+| AAP & Puppet three phases (§2) | [architecture/aap-puppet-coexistence-evolution.md](architecture/aap-puppet-coexistence-evolution.md) |
 | How to structure repos | [architecture/](architecture/) |
 | Role/playbook/inventory rules | [development/](development/) |
 | Lint, review, idempotency | [quality/](quality/) |

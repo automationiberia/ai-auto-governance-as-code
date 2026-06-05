@@ -1,12 +1,14 @@
 # Coding Style
 
-Department coding standards aligned with GPA **Coding Style**. Agree early; expand gradually.
+Coding standards aligned with GPA **Coding Style** and the [strategic proposal](../governance/strategic-proposal-aap-governance-evolution.md). Agree early; expand gradually.
 
 ---
 
 ## 1. Naming
 
 - Valid Python identifiers: `snake_case` for files, variables, keys
+- **`_` prefix (internal):** Variables for internal task logic, private tuning, or backend computations use a leading underscore (e.g. `_puppet_environment`, `_internal_retry_count`). **Public** variables intended for inventory or operator override **omit** the prefix.
+- **`__` prefix (role loops):** In roles, `loop_control.loop_var` uses `__<function>_…` — see §3 Ansible-specific.
 - No special characters in variable names (even if YAML allows)
 - Descriptive names; pattern `object[_feature]_action` for roles/playbooks
 - **No numbered** roles/playbooks (`web_01`)

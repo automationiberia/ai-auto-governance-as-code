@@ -11,7 +11,8 @@ export AUTOMATION_REPO="$AUTOMATION_HOME/deliveries/automation"
 
 Canonical narrative: [automation-whitepaper/governance/governance-as-code-ai-enforcement.md](automation-whitepaper/governance/governance-as-code-ai-enforcement.md).
 
-Monorepo layout (white book, `skills/`, GPA submodule, delivery collection): [automation-whitepaper/architecture/monorepo-layout.md](automation-whitepaper/architecture/monorepo-layout.md).
+Strategic proposal (AAP, Puppet, Dev Spaces, GenAI): [automation-whitepaper/governance/strategic-proposal-aap-governance-evolution.md](automation-whitepaper/governance/strategic-proposal-aap-governance-evolution.md).  
+Monorepo layout: [automation-whitepaper/architecture/monorepo-layout.md](automation-whitepaper/architecture/monorepo-layout.md).
 
 **Skill setup (choose tool):** [skills/TOOL-SETUP.md](skills/TOOL-SETUP.md) — Cursor, Claude, Copilot, or generic.  
 **Copy-paste prompts:** [automation-whitepaper/guides/ai-prompt-examples.md](automation-whitepaper/guides/ai-prompt-examples.md).
@@ -42,7 +43,7 @@ If the task spans modes (e.g. audit then refactor), state the **current** mode f
 |-------------|------|----------------|
 | Review, lint fix, refactor, PR comment on existing YAML | **1 — Auditor** | [automation-auditor](skills/automation-auditor/SKILL.md) |
 | New capability, greenfield role/playbook, extend OS platform | **2 — Architect** | [automation-architect](skills/automation-architect/SKILL.md) + task skills below |
-| Sync skills with white paper, GPA submodule, new department pattern | **3 — Librarian** | [automation-librarian](skills/automation-librarian/SKILL.md) |
+| Sync skills with white paper, GPA submodule, new governance pattern | **3 — Librarian** | [automation-librarian](skills/automation-librarian/SKILL.md) |
 
 Task skills (use **inside** Architect or Auditor as needed): see [skills/README.md](skills/README.md).
 
@@ -56,7 +57,7 @@ Apply on **every** new or generated Ansible artifact:
 |------|-------------|
 | **Collection model** | One shared collection at `$AUTOMATION_REPO`; one **function role** per capability; no per-initiative Git repos. |
 | **FQCN** | Use fully qualified collection names for modules (e.g. `ansible.builtin.package`, not bare `package`). |
-| **Naming** | `snake_case`; `rolename_*` public vars; `__rolename_*` internal; imperative task `name:` on every task. |
+| **Naming** | `snake_case`; public vars without `_` prefix; internal/tuning vars with `_` prefix (e.g. `_puppet_environment`); role loops `__<function>_…`; imperative `name:` on every task. |
 | **Loops** | `loop_control.loop_var` with `__<function>_…`; never bare `item` in roles. |
 | **Legacy** | Do not introduce `with_items` / `with_dict`; use `loop` + `loop_control`. |
 | **Structure** | Platform tasks under `tasks/platforms/<OsFamily>.yml`; type playbooks under `playbooks/type_<category>.yml`. |

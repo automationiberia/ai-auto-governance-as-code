@@ -1,6 +1,6 @@
 # AI-Driven Governance-as-Code for Ansible Automation
 
-Department program that replaces static style guides with an **active AI enforcement engine** for Ansible content. By encoding white paper standards into **Agent Skills**, AI agents act as **Senior Lead Engineers** rather than mere assistants.
+Open standard that replaces static style guides with an **active AI enforcement engine** for Ansible content. By encoding white paper rules into **Agent Skills**, AI agents act as **Senior Lead Engineers** rather than mere assistants. Enterprise strategy: [strategic-proposal-aap-governance-evolution.md](strategic-proposal-aap-governance-evolution.md).
 
 **Short name:** AI-Driven Governance-as-Code (use in prose after first mention in a document).
 

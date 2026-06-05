@@ -17,6 +17,7 @@ This white paper defines recommended processes, practices, and procedures for th
 
 ### Governance and people
 
+- [governance/strategic-proposal-aap-governance-evolution.md](governance/strategic-proposal-aap-governance-evolution.md) — **Strategic Proposal v1.0** (AAP, Puppet, GenAI, Dev Spaces)
 - [governance/governance-as-code-ai-enforcement.md](governance/governance-as-code-ai-enforcement.md) — **AI-Driven Governance-as-Code for Ansible Automation** (Auditor / Architect / Librarian)
 - [governance/organizational-model-and-stakeholders.md](governance/organizational-model-and-stakeholders.md) — Who participates, when, and why
 - [governance/roles-and-responsibilities.md](governance/roles-and-responsibilities.md) — RACI-style responsibilities for automation work
@@ -32,7 +33,7 @@ This white paper defines recommended processes, practices, and procedures for th
 ### Architecture
 
 - [architecture/monorepo-layout.md](architecture/monorepo-layout.md) — Governance monorepo (`ai-auto-skills`), white book, skills, submodules
-- [architecture/aap-puppet-coexistence-evolution.md](architecture/aap-puppet-coexistence-evolution.md) — **Three-phased** Puppet → AAP evolution (coexistence, just-in-time migration, centralized orchestration)
+- [architecture/aap-puppet-coexistence-evolution.md](architecture/aap-puppet-coexistence-evolution.md) — §2 three phases: centralized orchestration, on-demand refactor, native greenfield
 - [architecture/landscape-type-function-component.md](architecture/landscape-type-function-component.md)
 - [architecture/collections-and-execution-environments.md](architecture/collections-and-execution-environments.md)
 

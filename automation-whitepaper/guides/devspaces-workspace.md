@@ -115,10 +115,25 @@ For the **private** delivery repo, configure Git credentials in Dev Spaces (**Us
 
 `ghcr.io/ansible/ansible-devspaces:latest` — Ansible VS Code extension, `ansible-core`, `ansible-lint`, and related ADT tools ([ansible-devspaces](https://github.com/redhat-cop/ansible-devspaces)).
 
+### Dual stack (AAP + Puppet strategy)
+
+Per [strategic-proposal-aap-governance-evolution.md](../governance/strategic-proposal-aap-governance-evolution.md), workspaces should support **both**:
+
+| Stack | Purpose in workspace |
+|-------|----------------------|
+| **Ansible** | ansible-navigator, execution environments, ansible-lint, native collection development |
+| **Puppet** | Ruby runtime, Puppet CLI, manifest validation — inspect legacy code **before** Phase 2 refactor |
+
+The default devfile image is Ansible-first. Extend the devfile or use a custom image when Puppet CLI is required on-cluster; document the choice in your platform team runbook. Goal: **identical runtime** for humans and AI agents (zero-configuration onboarding).
+
+**Roadmap:** This layout prepares integration with **Red Hat Developer Hub** as the developer portal.
+
 ---
 
 ## Related
 
+- [strategic-proposal-aap-governance-evolution.md](../governance/strategic-proposal-aap-governance-evolution.md)
+- [aap-puppet-coexistence-evolution.md](../architecture/aap-puppet-coexistence-evolution.md)
 - [git-automation-repository.md](git-automation-repository.md)
 - [pre-commit.md](../quality/pre-commit.md)
 - [README.md](../../README.md)

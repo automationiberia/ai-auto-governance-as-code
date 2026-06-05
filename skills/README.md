@@ -66,6 +66,7 @@ Skills are **tool-agnostic** (`SKILL.md` under `skills/`). Configuration depends
 | [automation-quality-gates](automation-quality-gates/SKILL.md) | Review, idempotency | [quality/](../automation-whitepaper/quality/) |
 | [automation-governance](automation-governance/SKILL.md) | Stakeholders, CAB | [governance/](../automation-whitepaper/governance/) |
 | [automation-controller-ops](automation-controller-ops/SKILL.md) | Controller, SSOT | [operations/](../automation-whitepaper/operations/) |
+| [automation-puppet-orchestrate](automation-puppet-orchestrate/SKILL.md) | Phase 1 Puppet wrappers via AAP | [aap-puppet-coexistence-evolution.md](../automation-whitepaper/architecture/aap-puppet-coexistence-evolution.md) |
 
 ## Runnable examples (prefer over duplicating code)
 

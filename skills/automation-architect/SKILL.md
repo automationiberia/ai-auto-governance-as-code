@@ -43,7 +43,8 @@ Declare the profile in the plan before generating files.
 
 | Building | Skill |
 |----------|--------|
-| End-to-end new capability | [automation-new-automation](../automation-new-automation/SKILL.md) |
+| Phase 1 Puppet wrapper (no Puppet code change) | [automation-puppet-orchestrate](../automation-puppet-orchestrate/SKILL.md) |
+| End-to-end new capability (Phase 2.3 greenfield / Phase 2.2 refactor) | [automation-new-automation](../automation-new-automation/SKILL.md) |
 | L/T/F/C placement | [automation-architecture](../automation-architecture/SKILL.md) |
 | Role bodies | [automation-role-development](../automation-role-development/SKILL.md) |
 | Playbooks + inventory | [automation-playbook-inventory](../automation-playbook-inventory/SKILL.md) |
