@@ -174,10 +174,10 @@ Runnable implementations demonstrating patterns.
    ```bash
    # Run pre-commit hooks
    pre-commit run --all-files
-   
+
    # Validate YAML syntax
    ansible-playbook --syntax-check <playbook>.yml
-   
+
    # Test in examples
    cd automation-whitepaper/examples/<example>/
    ansible-playbook playbooks/type_<category>.yml --check
@@ -222,7 +222,7 @@ All Ansible code must follow [automation-whitepaper/quality/](automation-whitepa
   - name: Install package
     ansible.builtin.package:
       name: httpd
-  
+
   # Bad
   - name: Install package
     package:
@@ -244,7 +244,7 @@ All Ansible code must follow [automation-whitepaper/quality/](automation-whitepa
     loop: "{{ myfunction_list }}"
     loop_control:
       loop_var: __myfunction_item
-  
+
   # Bad - bare 'item'
   - name: Process items
     ansible.builtin.debug:

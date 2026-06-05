@@ -38,10 +38,10 @@ flowchart LR
 flowchart TD
   Start[New automation work?] -->|Yes| New{Greenfield or legacy?}
   Start -->|No| Exist{Existing Puppet code}
-  
+
   New -->|New capability| P3[Phase 2.3: Native Ansible]
   New -->|Wrapping Puppet| P1[Phase 2.1: Wrapper playbook]
-  
+
   Exist --> Trigger{Business trigger?}
   Trigger -->|No trigger| P1w[Phase 2.1: Keep wrapper]
   Trigger -->|Major change/rewrite/expansion| P2[Phase 2.2: Refactor to Ansible]

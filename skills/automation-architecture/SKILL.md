@@ -8,7 +8,7 @@ description: >-
 
 # Automation Architecture
 
-Docs: `automation-whitepaper/architecture/landscape-type-function-component.md`  
+Docs: `automation-whitepaper/architecture/landscape-type-function-component.md`
 Puppet → AAP evolution (three phases): `architecture/aap-puppet-coexistence-evolution.md`
 
 ## Hierarchy

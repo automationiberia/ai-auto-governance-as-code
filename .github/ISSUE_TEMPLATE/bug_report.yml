@@ -93,5 +93,7 @@ body:
           required: true
         - label: I have provided enough information to reproduce the issue
           required: true
-        - label: This is not a security vulnerability (those should be reported privately)
+        - label: >-
+            This is not a security vulnerability
+            (those should be reported privately)
           required: true

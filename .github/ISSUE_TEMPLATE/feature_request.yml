@@ -68,7 +68,9 @@ body:
     id: benefits
     attributes:
       label: Expected Benefits
-      description: How will this improve the governance framework or AI agent behavior?
+      description: >-
+        How will this improve the governance framework
+        or AI agent behavior?
       placeholder: |
         - Improved accuracy of AI-generated code
         - Better alignment with white paper standards
@@ -91,9 +93,15 @@ body:
     attributes:
       label: Pre-submission Checklist
       options:
-        - label: I have searched existing issues and discussions to avoid duplicates
+        - label: >-
+            I have searched existing issues and discussions
+            to avoid duplicates
           required: true
-        - label: This feature aligns with the AI-driven governance goals of this project
+        - label: >-
+            This feature aligns with AI-driven governance
+            goals of this project
           required: true
-        - label: I have considered how this affects existing white paper documentation
+        - label: >-
+            I have considered how this affects existing
+            white paper documentation
           required: false

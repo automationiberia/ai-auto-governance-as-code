@@ -9,7 +9,7 @@ description: >-
 
 # Mode 3 — The Librarian
 
-**Type:** Maintenance  
+**Type:** Maintenance
 **Responsibility:** Continuous evolution of the governance layer (white paper + Agent Skills).
 
 ## Execution rule
@@ -20,10 +20,10 @@ Before technical output, state:
 
 ## When to use this mode
 
-- Department adopts a new pattern (e.g. Molecule required on **standard** profile)  
-- Red Hat CoP [automation-good-practices](https://github.com/redhat-cop/automation-good-practices) submodule should be updated  
-- New task skill needed or catalog out of sync with `skills/automation-*/`  
-- `AGENTS.md` bootstrap rules need extension (e.g. new lint rule, FQCN policy)  
+- Department adopts a new pattern (e.g. Molecule required on **standard** profile)
+- Red Hat CoP [automation-good-practices](https://github.com/redhat-cop/automation-good-practices) submodule should be updated
+- New task skill needed or catalog out of sync with `skills/automation-*/`
+- `AGENTS.md` bootstrap rules need extension (e.g. new lint rule, FQCN policy)
 - Examples README “Last verified” process should be automated in docs
 
 ## Update order (mandatory)
@@ -65,6 +65,6 @@ git submodule update --remote automation-good-practices
 
 ## Agent behavior
 
-- Propose changes; do not merge-breaking renames without explicit user approval.  
-- If a pattern is only used once, prefer documenting in an example walkthrough before elevating to mandatory SKILL text.  
+- Propose changes; do not merge-breaking renames without explicit user approval.
+- If a pattern is only used once, prefer documenting in an example walkthrough before elevating to mandatory SKILL text.
 - After edits, remind user to apply [TOOL-SETUP.md](../TOOL-SETUP.md) for their AI tool (Cursor script optional).

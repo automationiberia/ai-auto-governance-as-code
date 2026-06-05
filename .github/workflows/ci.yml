@@ -1,10 +1,10 @@
 name: CI
 
-on:
+'on':
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
   workflow_dispatch:
 
 env:
@@ -63,12 +63,16 @@ jobs:
 
       - name: Run ansible-lint
         run: |
-          ansible-lint -c automation-whitepaper/.ansible-lint automation-whitepaper/
-        continue-on-error: true  # Warn but don't fail (examples may be WIP)
+          ansible-lint -c automation-whitepaper/.ansible-lint \
+            automation-whitepaper/
+        # Warn but don't fail (examples may be WIP)
+        continue-on-error: true
 
       - name: Ansible syntax check
         run: |
-          find automation-whitepaper/examples -type f \( -name "*.yml" -o -name "*.yaml" \) | while read playbook; do
+          find automation-whitepaper/examples -type f \
+            \( -name "*.yml" -o -name "*.yaml" \) | \
+          while read playbook; do
             echo "Checking syntax: $playbook"
             ansible-playbook --syntax-check "$playbook" || true
           done
@@ -165,7 +169,7 @@ jobs:
 
       - name: Check for hardcoded paths
         run: |
-          echo "==> Checking for hardcoded absolute paths in documentation"
+          echo "==> Checking for hardcoded absolute paths"
           # Find markdown files with potential hardcoded paths
           if grep -r -n --include="*.md" \
             -e "/home/" \
@@ -174,9 +178,11 @@ jobs:
             --exclude-dir=".git" \
             --exclude-dir="automation-good-practices" \
             --exclude-dir="deliveries" \
-            . | grep -v "\$AUTOMATION_HOME" | grep -v "\$AUTOMATION_REPO" | grep -v "CONTRIBUTING.md"; then
-            echo "⚠️  Found potential hardcoded paths (should use \$AUTOMATION_HOME or \$AUTOMATION_REPO)"
-            echo "Review the above findings - some may be acceptable (examples in CONTRIBUTING.md, etc.)"
+            . | grep -v "\$AUTOMATION_HOME" | \
+              grep -v "\$AUTOMATION_REPO" | \
+              grep -v "CONTRIBUTING.md"; then
+            echo "⚠️  Found paths (use \$AUTOMATION_HOME)"
+            echo "Review findings - some may be acceptable"
           else
             echo "✅ No hardcoded paths found"
           fi
@@ -229,14 +235,17 @@ jobs:
 
       - name: Run secret detection
         run: |
-          echo "==> Checking for accidentally committed secrets"
+          echo "==> Checking for committed secrets"
           # Use pre-commit's detect-private-key hook
-          if grep -r -E "(BEGIN RSA PRIVATE KEY|BEGIN PRIVATE KEY|BEGIN OPENSSH PRIVATE KEY)" \
+          pattern="(BEGIN RSA PRIVATE KEY|"
+          pattern+="BEGIN PRIVATE KEY|"
+          pattern+="BEGIN OPENSSH PRIVATE KEY)"
+          if grep -r -E "$pattern" \
             --exclude-dir=".git" \
             --exclude-dir="automation-good-practices" \
             --exclude-dir="deliveries" \
             .; then
-            echo "❌ Found private keys in repository!"
+            echo "❌ Found private keys!"
             exit 1
           fi
           echo "✅ No private keys detected"
@@ -265,10 +274,11 @@ jobs:
           done
 
           if [ $found -eq 1 ]; then
-            echo "⚠️  Found potential secrets - review if these are examples/placeholders"
-            echo "Ensure production secrets use Ansible Vault or external secret management"
+            echo "⚠️  Found potential secrets"
+            echo "Review if examples/placeholders"
+            echo "Use Ansible Vault for production"
           else
-            echo "✅ No obvious secret patterns found"
+            echo "✅ No secret patterns found"
           fi
 
   summary:
@@ -286,21 +296,27 @@ jobs:
       - name: Check job results
         run: |
           echo "==> CI Summary"
-          echo "Pre-commit: ${{ needs.pre-commit.result }}"
-          echo "YAML validation: ${{ needs.validate-yaml.result }}"
-          echo "Skills validation: ${{ needs.validate-skills.result }}"
-          echo "Documentation validation: ${{ needs.validate-documentation.result }}"
-          echo "Python validation: ${{ needs.validate-python.result }}"
-          echo "Security checks: ${{ needs.check-security.result }}"
+          pc="${{ needs.pre-commit.result }}"
+          yaml="${{ needs.validate-yaml.result }}"
+          skills="${{ needs.validate-skills.result }}"
+          docs="${{ needs.validate-documentation.result }}"
+          py="${{ needs.validate-python.result }}"
+          sec="${{ needs.check-security.result }}"
+          echo "Pre-commit: $pc"
+          echo "YAML: $yaml"
+          echo "Skills: $skills"
+          echo "Documentation: $docs"
+          echo "Python: $py"
+          echo "Security: $sec"
 
-          if [ "${{ needs.pre-commit.result }}" != "success" ] || \
-             [ "${{ needs.validate-skills.result }}" != "success" ] || \
-             [ "${{ needs.validate-documentation.result }}" != "success" ] || \
-             [ "${{ needs.check-security.result }}" != "success" ]; then
+          if [ "$pc" != "success" ] || \
+             [ "$skills" != "success" ] || \
+             [ "$docs" != "success" ] || \
+             [ "$sec" != "success" ]; then
             echo ""
-            echo "❌ CI failed - review errors above"
+            echo "❌ CI failed"
             exit 1
           fi
 
           echo ""
-          echo "✅ All required checks passed!"
+          echo "✅ All checks passed!"
