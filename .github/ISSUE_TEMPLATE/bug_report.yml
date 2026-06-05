@@ -1,0 +1,97 @@
+name: Bug Report
+description: Report a bug in documentation, skills, or examples
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug! Please provide as much detail as possible.
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component
+      description: Which part of the repository is affected?
+      options:
+        - White Paper Documentation (automation-whitepaper/)
+        - Agent Skills (skills/)
+        - Reference Examples (examples/)
+        - Tooling & Scripts
+        - CI/CD & Pre-commit
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear and concise description of what the bug is.
+      placeholder: Describe the issue...
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: How can we reproduce this issue?
+      placeholder: |
+        1. Go to file '...'
+        2. Run command '...'
+        3. See error...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What should happen instead?
+      placeholder: Describe the expected behavior...
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      description: What actually happens?
+      placeholder: Describe what actually happens...
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Provide details about your environment
+      value: |
+        - OS: [e.g., Ubuntu 22.04, RHEL 9, macOS]
+        - Python version: [e.g., 3.12]
+        - Ansible version: [e.g., 2.15.0]
+        - AI tool: [e.g., Cursor, Claude, Copilot]
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Add any other context, screenshots, or logs
+      placeholder: Add any other context here...
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Pre-submission Checklist
+      options:
+        - label: I have searched existing issues to avoid duplicates
+          required: true
+        - label: I have provided enough information to reproduce the issue
+          required: true
+        - label: This is not a security vulnerability (those should be reported privately)
+          required: true
