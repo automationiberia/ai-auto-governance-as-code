@@ -20,7 +20,7 @@ Before technical output, state:
 
 ## When to use this mode
 
-- Department adopts a new pattern (e.g. Molecule required on **standard** profile)
+- Team adopts a new pattern (e.g. Molecule required on **standard** profile)
 - Red Hat CoP [automation-good-practices](https://github.com/redhat-cop/automation-good-practices) submodule should be updated
 - New task skill needed or catalog out of sync with `skills/automation-*/`
 - `AGENTS.md` bootstrap rules need extension (e.g. new lint rule, FQCN policy)
