@@ -8,6 +8,7 @@ name: CI
   workflow_dispatch:
 
 env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
   PYTHON_VERSION: "3.12"
   ANSIBLE_VERSION: ">=2.15,<2.19"
 
