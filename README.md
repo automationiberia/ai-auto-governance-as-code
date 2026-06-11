@@ -43,7 +43,7 @@ ai-auto-governance-as-code/
 
 | Document | Purpose |
 |----------|---------|
-| **[AGENTS.md](AGENTS.md)** | AI agent modes: Auditor / Architect / Librarian |
+| **[AGENTS.md](AGENTS.md)** | Human as Architect; AI modes: Auditor / Builder / Librarian |
 | **[skills/TOOL-SETUP.md](skills/TOOL-SETUP.md)** | Configure Cursor / Claude / Copilot |
 | **[docs/PRE-COMMIT-GUIDE.md](docs/PRE-COMMIT-GUIDE.md)** | Pre-commit hooks setup and usage |
 | **[automation-whitepaper/](automation-whitepaper/)** | Complete standards & architecture |

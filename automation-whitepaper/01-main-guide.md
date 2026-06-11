@@ -43,39 +43,28 @@ Full text and rationale: see [architecture/landscape-type-function-component.md]
 
 ---
 
-## 3. High-level process map
+## 3. Six-stage lifecycle
 
 ```mermaid
 flowchart LR
-  subgraph intake [Intake]
-    A[Request / Use case] --> B[Prioritize]
-  end
-  subgraph build [Build]
-    B --> C[Design]
-    C --> D[Implement]
-    D --> E[Test]
-  end
-  subgraph release [Release]
-    E --> F[Review]
-    F --> G[Promote]
-  end
-  subgraph run [Run]
-    G --> H[Operate]
-    H --> I[Measure & improve]
-  end
-  I --> A
+  A[Intake] --> B[Design]
+  B --> C[Implementation]
+  C --> D[Quality]
+  D --> E[Promotion]
+  E --> F[Operation & improvement]
+  F --> A
 ```
 
-| Phase | Outcome | Detailed doc |
+| Stage | Outcome | Detailed doc |
 |-------|---------|----------------|
-| **Intake** | Approved backlog item with owner and success criteria | [lifecycle/intake-and-prioritization.md](lifecycle/intake-and-prioritization.md) |
-| **Design** | Structure (landscape/type/function), interfaces, SSOT for data | [lifecycle/design-and-build.md](lifecycle/design-and-build.md), [architecture/](architecture/) |
-| **Implement** | Roles, playbooks, inventory, collections in Git | [development/](development/) |
-| **Test** | Syntax, lint, molecule/integration, check mode | [lifecycle/test-and-promote.md](lifecycle/test-and-promote.md), [quality/](quality/) |
-| **Review** | Peer + security + change alignment | [quality/code-review-and-linting.md](quality/code-review-and-linting.md) |
-| **Promote** | Versioned release to dev → pre → prod Controller | [lifecycle/test-and-promote.md](lifecycle/test-and-promote.md) |
-| **Operate** | Scheduled/triggered jobs, monitoring, incidents | [operations/](operations/) |
-| **Improve** | Metrics, tech debt, GPA updates | [lifecycle/operate-and-improve.md](lifecycle/operate-and-improve.md) |
+| **1 — Intake** | Approved backlog item with owner and success criteria | [lifecycle/intake-and-prioritization.md](lifecycle/intake-and-prioritization.md) |
+| **2 — Design** | L/T/F/C placement, SSOT, target execution environments | [lifecycle/design-and-build.md](lifecycle/design-and-build.md), [architecture/](architecture/) |
+| **3 — Implementation** | Roles, playbooks, inventory, collections in Git | [development/](development/) |
+| **4 — Quality** | Pre-commit, ansible-lint, Molecule idempotency, peer review | [quality/](quality/), [lifecycle/test-and-promote.md](lifecycle/test-and-promote.md) |
+| **5 — Promotion** | Versioned release dev → pre → prod via GitOps / AAP | [lifecycle/test-and-promote.md](lifecycle/test-and-promote.md) |
+| **6 — Operation & improvement** | Job metrics, refactoring, technical debt removal | [lifecycle/operate-and-improve.md](lifecycle/operate-and-improve.md), [operations/](operations/) |
+
+Overview: [lifecycle/automation-lifecycle-overview.md](lifecycle/automation-lifecycle-overview.md).
 
 ---
 

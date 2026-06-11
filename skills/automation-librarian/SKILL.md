@@ -16,7 +16,7 @@ description: >-
 
 Before technical output, state:
 
-> I am operating in **Mode 3: The Librarian**.
+> I am operating in **Mode 3: The Librarian**. I have evaluated Red Hat COP baseline rules against white book overrides.
 
 ## When to use this mode
 

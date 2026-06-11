@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- ASL architecture alignment: human-as-Architect paradigm, six-stage lifecycle, rule of precedence, native-first mandate
+- Mode 2 skill `automation-builder` (replaces `automation-architect`)
 - `CONTRIBUTING.md` with comprehensive contribution guidelines covering white paper, skills, and examples
 - `SECURITY.md` with vulnerability reporting process and security considerations
 - `Makefile` providing common tasks: setup, validate, test, clean, info
@@ -25,6 +27,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Mode 2 renamed from Architect to **Builder** across white paper, skills, and `AGENTS.md`
+- L/T/F/C inventory matrix definitions per enterprise white book (with artifact mapping)
+- Public variable naming: role/function prefix required (e.g. `nginx_max_connections`)
+- Runtime execution rule: agents declare mode and COP vs white book precedence evaluation
 - Reorganized `README.md` with visual hierarchy, quick start section, and repository structure overview
 - Shortened and enhanced `skills/README.md` with clearer mode distinctions and consolidated task skills
 - Improved `automation-whitepaper/README.md` with quick navigation table and grouped sections
@@ -44,7 +50,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Git submodule integration for deliveries/automation
 - Pre-commit configuration with ansible-lint, yamllint, black, pylint
 - Dev Spaces support with .devfile.yaml
-- Operating modes: Auditor, Architect, Librarian
+- Operating modes: Auditor, Builder, Librarian (human as Architect)
 
 [Unreleased]: https://github.com/your-org/ai-auto-governance-as-code/compare/v0.1.0...HEAD
 [0.1.0]: https://github.com/your-org/ai-auto-governance-as-code/releases/tag/v0.1.0

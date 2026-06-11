@@ -28,7 +28,7 @@ body:
       label: Skill Name
       description: >-
         Name of the skill
-        (e.g., automation-architect, automation-testing)
+        (e.g., automation-builder, automation-testing)
       placeholder: automation-<name>
     validations:
       required: true
@@ -40,7 +40,7 @@ body:
       description: Which AI agent mode does this skill target?
       options:
         - Mode 1 - The Auditor (retroactive review)
-        - Mode 2 - The Architect (proactive creation)
+        - Mode 2 - The Builder (proactive creation)
         - Mode 3 - The Librarian (maintenance)
         - Task Skill (used within other modes)
     validations:

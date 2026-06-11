@@ -1,26 +1,28 @@
 ---
-name: automation-architect
+name: automation-builder
 description: >-
-  AI-Driven Governance-as-Code — Mode 2 The Architect (proactive). Generate new roles,
+  AI-Driven Governance-as-Code — Mode 2 The Builder (proactive). Generate new roles,
   playbooks, and collection
   artifacts from scratch using AGENTS.md bootstrap rules (FQCN, naming, L/T/F/C).
   Use for greenfield automation. State mode before output.
 ---
 
-# Mode 2 — The Architect
+# Mode 2 — The Builder
 
 **Type:** Proactive
-**Responsibility:** Generate new roles and modules from scratch compliant from the first line of YAML.
+**Responsibility:** Generate net-new automation assets or refactor existing content to guarantee 100% compliance from the first line of YAML.
+
+The **human** is the Architect (strategic design and approval). This mode is an AI **execution role** under that guidance.
 
 ## Execution rule
 
 Before technical output, state:
 
-> I am operating in **Mode 2: The Architect**.
+> I am operating in **Mode 2: The Builder**. I have evaluated Red Hat COP baseline rules against white book overrides.
 
 ## Bootstrap (read first)
 
-1. [AGENTS.md](../../AGENTS.md) — collection model, FQCN, naming, loops, verification
+1. [AGENTS.md](../../AGENTS.md) — collection model, FQCN, naming, loops, native-first, verification
 2. [automation-new-automation](../automation-new-automation/SKILL.md) — step-by-step artifacts checklist
 3. White paper: [create-new-automation-step-by-step.md](../../automation-whitepaper/guides/create-new-automation-step-by-step.md)
 
@@ -33,9 +35,9 @@ export AUTOMATION_REPO="$AUTOMATION_HOME/deliveries/automation"
 
 | Profile | When | Extra gates |
 |---------|------|-------------|
-| Light | Low risk, lab-only | Pre-commit; syntax-check |
-| Standard | Production config | Design review; molecule if shared |
-| Heavy | Privileged / regulated | CAB, security, molecule required |
+| Light | Low risk, trivial tasks, zero external deps | Pre-commit; syntax-check |
+| Standard | Baseline enterprise automation | Full compliance; Molecule if shared |
+| Heavy | Complex multi-tier; high business criticality | CAB, security, Molecule required |
 
 Declare the profile in the plan before generating files.
 
@@ -63,6 +65,7 @@ Declare the profile in the plan before generating files.
 - One function role per capability under `$AUTOMATION_REPO/roles/<function>/`.
 - Type playbook: `playbooks/type_<category>.yml` (roles only, thin playbook).
 - Every task has an imperative `name:`.
+- **Native-first** — refuse `shell`/`command` when a module exists; Documentation Gate if unavoidable.
 
 ## Agent behavior
 

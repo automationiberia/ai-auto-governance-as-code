@@ -7,7 +7,7 @@ Every prompt assumes the agent reads [AGENTS.md](../../AGENTS.md), **declares it
 | Before you start | Document |
 |------------------|----------|
 | Tool setup (Cursor · Claude · Copilot · generic) | [skills/TOOL-SETUP.md](../../skills/TOOL-SETUP.md) |
-| Operating modes (Auditor / Architect / Librarian) | [AGENTS.md](../../AGENTS.md) |
+| Operating modes (Auditor / Builder / Librarian); human = Architect | [AGENTS.md](../../AGENTS.md) |
 
 ---
 
@@ -17,7 +17,7 @@ Every prompt assumes the agent reads [AGENTS.md](../../AGENTS.md), **declares it
 2. [How to invoke skills](#2-how-to-invoke-skills)
 3. [Primary workflow — review, refactor, governance](#3-primary-workflow--review-refactor-governance) ← start here for role work
 4. [Mode 1 — The Auditor (more prompts)](#4-mode-1--the-auditor-more-prompts)
-5. [Mode 2 — The Architect (more prompts)](#5-mode-2--the-architect-more-prompts)
+5. [Mode 2 — The Builder (more prompts)](#5-mode-2--the-builder-more-prompts)
 6. [Mode 3 — The Librarian (more prompts)](#6-mode-3--the-librarian-more-prompts)
 7. [Strategic proposal — AAP & Puppet](#7-strategic-proposal--aap--puppet)
 8. [Quick reference — task skills](#8-quick-reference--task-skills)
@@ -72,7 +72,7 @@ Use this **same chat thread** for delivery roles in `deliveries/automation/`.
 | Step | Mode | Skill(s) | Outcome |
 |------|------|----------|---------|
 | **1** | Auditor | `automation-auditor`, `automation-role-development` | Findings table + refactor plan (no edits) |
-| **2** | Architect | `automation-architect`, `automation-role-development` | Apply plan — minimal diffs |
+| **2** | Builder | `automation-builder`, `automation-role-development` | Apply plan — minimal diffs |
 | **3** | — | — | syntax-check + pre-commit |
 | **4** (optional) | Librarian | `automation-librarian` | Governance diff plan if standards gap |
 
@@ -109,11 +109,11 @@ Example: `<function>` → `ntp_sync`.
 
 Same thread — use the findings table and refactor plan **already in context**.
 
-Attach: `@AGENTS.md` `@skills/automation-architect/SKILL.md` `@skills/automation-role-development/SKILL.md` `@deliveries/automation/roles/<function>/`
+Attach: `@AGENTS.md` `@skills/automation-builder/SKILL.md` `@skills/automation-role-development/SKILL.md` `@deliveries/automation/roles/<function>/`
 
 ```text
-Read AGENTS.md. Use skills automation-architect and automation-role-development.
-I am operating in Mode 2: The Architect.
+Read AGENTS.md. Use skills automation-builder and automation-role-development.
+I am operating in Mode 2: The Builder. I have evaluated Red Hat COP baseline rules against white book overrides.
 
 I have Auditor findings for deliveries/automation/roles/<function>/ from Step 1
 in this conversation. Use the Auditor findings table and refactor plan that
@@ -138,11 +138,11 @@ Run or instruct: ansible-playbook --syntax-check and pre-commit run --all-files
 in deliveries/automation/. Report results.
 ```
 
-### Step 4 — After Auditor + Architect — update governance (Mode 3)
+### Step 4 — After Auditor + Builder — update governance (Mode 3)
 
 Use **only** when Steps 1–2 exposed a **recurring gap** or **new pattern** that should become a standard — **not** for routine role fixes.
 
-Same thread — use Auditor findings and Architect summary **already in context**.
+Same thread — use Auditor findings and Builder summary **already in context**.
 
 Attach: `@AGENTS.md` `@skills/automation-librarian/SKILL.md`
 
@@ -150,10 +150,10 @@ Attach: `@AGENTS.md` `@skills/automation-librarian/SKILL.md`
 Read AGENTS.md. Use skill automation-librarian.
 I am operating in Mode 3: The Librarian.
 
-Context: I completed Step 1 (Auditor) and Step 2 (Architect) for
+Context: I completed Step 1 (Auditor) and Step 2 (Builder) for
 deliveries/automation/roles/<function>/ in this conversation.
 
-Use the Auditor findings and Architect refactor summary already in the context
+Use the Auditor findings and Builder refactor summary already in the context
 (recurring gaps or new pattern worth standardizing).
 
 Propose a governance update only — do not edit delivery role files.
@@ -209,14 +209,14 @@ Scope: automation-whitepaper/examples/ unless I specify deliveries/automation/.
 
 ---
 
-## 5. Mode 2 — The Architect (more prompts)
+## 5. Mode 2 — The Builder (more prompts)
 
 For greenfield or extending capabilities in **`ai-auto-deliveries`** (`deliveries/automation/`).
 
 ### New capability (standard profile)
 
 ```text
-Use skill automation-architect and automation-new-automation. Read AGENTS.md.
+Use skill automation-builder and automation-new-automation. Read AGENTS.md.
 
 Profile: Standard.
 Create a new capability <function> in $AUTOMATION_REPO:
@@ -231,7 +231,7 @@ Follow standard-rsyslog-forwarding patterns. FQCN only. List files before editin
 ### Light profile (lab / low risk)
 
 ```text
-Mode 2 — Architect. Use automation-new-automation. Profile: Light.
+Mode 2 — Builder. Use automation-new-automation. Profile: Light.
 
 Add a capability for <scenario> in the delivery collection.
 Mirror automation-whitepaper/examples/light-dev-packages/. List files before editing.
@@ -240,7 +240,7 @@ Mirror automation-whitepaper/examples/light-dev-packages/. List files before edi
 ### Extend role to new OS
 
 ```text
-Use automation-architect, automation-role-development, and
+Use automation-builder, automation-role-development, and
 automation-whitepaper/guides/extending-existing-automation.md.
 
 Add platform support for <OsFamily> to deliveries/automation/roles/<function>/
@@ -250,7 +250,7 @@ using tasks/platforms/<OsFamily>.yml — do not clone the role.
 ### Architecture placement only (no code)
 
 ```text
-Use automation-architecture in Architect mode.
+Use automation-architecture in Builder mode.
 
 Propose Landscape / Type / Function / Component for <need> and type playbook name.
 No YAML — design note only.
@@ -308,7 +308,7 @@ References: [strategic-proposal-aap-governance-evolution.md](../governance/strat
 ### Phase 2.1 — Centralized orchestration (wrapper)
 
 ```text
-Use automation-puppet-orchestrate. Mode 2 — Architect. Read AGENTS.md.
+Use automation-puppet-orchestrate. Mode 2 — Builder. Read AGENTS.md.
 
 Create a Phase 1 wrapper in deliveries/automation/ for Puppet class `<class>` via
 community.general.puppet: noop/check mode, summarize: true, _puppet_environment, tags.
@@ -318,7 +318,7 @@ No shell puppet agent. No native refactor.
 ### Phase 2.2 — On-demand refactor (trigger required)
 
 ```text
-Use automation-architect and automation-new-automation. Profile: Standard.
+Use automation-builder and automation-new-automation. Profile: Standard.
 
 Trigger: <major functional change | architectural rewrite | scope expansion>.
 Refactor Puppet `<module>` to native role `<function>`. Design before YAML.
@@ -327,7 +327,7 @@ Refactor Puppet `<module>` to native role `<function>`. Design before YAML.
 ### Phase 2.3 — Greenfield (native Ansible only)
 
 ```text
-Mode 2 — Architect. Phase 2.3. New capability `<function>` — native Ansible only.
+Mode 2 — Builder. Phase 2.3. New capability `<function>` — native Ansible only.
 Do not create Puppet modules. Follow AGENTS.md.
 ```
 
@@ -367,11 +367,11 @@ Flag: shell puppet, missing summarize, deprecated timeout param, non-FQCN.
 ### Design → implement → gate (greenfield)
 
 ```text
-Step 1 (Architect): Standard profile — INTAKE + DESIGN outline for <function>. No YAML.
+Step 1 (Builder): Standard profile — INTAKE + DESIGN outline for <function>. No YAML.
 ```
 
 ```text
-Step 2 (Architect): Implement in deliveries/automation/ per approved design.
+Step 2 (Builder): Implement in deliveries/automation/ per approved design.
 ```
 
 ```text
