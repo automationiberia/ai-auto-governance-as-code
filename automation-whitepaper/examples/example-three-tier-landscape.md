@@ -127,4 +127,4 @@ database
 ## 8. Related documents
 
 - [example-inventory-good-vs-bad.md](example-inventory-good-vs-bad.md)
-- [example-spanish-enterprise-change-flow.md](example-spanish-enterprise-change-flow.md)
+- [example-enterprise-change-flow.md](example-enterprise-change-flow.md)

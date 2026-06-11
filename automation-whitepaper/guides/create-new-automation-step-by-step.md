@@ -1,5 +1,9 @@
 # Step-by-Step Guide: Create New Automation
 
+> **Shorter path:** [create-new-from-scratch.md](create-new-from-scratch.md) — 7 steps for greenfield work.  
+> **Unfamiliar terms?** [glossary.md](glossary.md) explains **gates**, **CAB**, and related acronyms.  
+> This document is the **full** checklist with gates, profiles, and enterprise sign-off.
+
 Practical checklist for new Ansible automation. Steps apply **in order**; items marked **(gate)** block merge or production.
 
 Mark progress with the checkboxes (`- [ ]` → `- [x]`). In VS Code / Cursor, click the box in Markdown preview to toggle.

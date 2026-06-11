@@ -21,7 +21,7 @@ Docs: `automation-whitepaper/governance/`
 
 Walkthrough contrast (both use new `git init` repos): light vs standard example markdown files
 
-Heavy / CAB detail: `examples/example-spanish-enterprise-change-flow.md`
+Heavy / CAB detail: [glossary.md](../../automation-whitepaper/guides/glossary.md) · [example-enterprise-change-flow.md](../../automation-whitepaper/examples/example-enterprise-change-flow.md)
 
 ## Agent behavior
 
