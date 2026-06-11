@@ -69,5 +69,5 @@ git submodule update --remote automation-good-practices
 - If a pattern is only used once, prefer documenting in an example walkthrough before elevating to mandatory SKILL text.
 - After edits, remind user to apply [TOOL-SETUP.md](../TOOL-SETUP.md) for their AI tool (Cursor script optional).
 - Do not commit unless the user explicitly asks; after completing changes, ask whether they want a commit.
-- Never run `git push` automatically; only push when the user explicitly asks. Show push commands for manual use per [AGENTS.md](../../AGENTS.md#git-workflow-agents).
+- Never run `git push` or `gh pr create` automatically; only when the user explicitly asks. After a commit, show push commands and a draft PR title/body per [AGENTS.md](../../AGENTS.md#git-workflow-agents).
 - For PR-sized governance work, use a branch from up-to-date `main` per [AGENTS.md](../../AGENTS.md#git-workflow-agents) and [CONTRIBUTING.md](../../CONTRIBUTING.md#branch-strategy).
