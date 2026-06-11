@@ -1,6 +1,6 @@
 # Create new automation from scratch
 
-Minimal path from idea to merged role. **Full checklist:** [create-new-automation-step-by-step.md](create-new-automation-step-by-step.md).  
+Minimal path from idea to merged role. **Full checklist:** [create-new-automation-step-by-step.md](create-new-automation-step-by-step.md).
 **What are gates / CAB?** See [glossary.md](glossary.md).
 
 ---

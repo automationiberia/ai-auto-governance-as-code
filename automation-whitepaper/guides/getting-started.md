@@ -94,7 +94,7 @@ ansible-playbook --syntax-check \
 
 ## Terms you may see
 
-**Gate** = mandatory checkpoint before merge or production (e.g. pre-commit green, peer review).  
+**Gate** = mandatory checkpoint before merge or production (e.g. pre-commit green, peer review).
 **CAB** = Change Advisory Board (*Comité de Cambios*) — formal approval before production changes.
 
 Full definitions: [glossary.md](glossary.md).
