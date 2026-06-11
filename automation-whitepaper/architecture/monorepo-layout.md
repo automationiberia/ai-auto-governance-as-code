@@ -6,7 +6,7 @@ This document describes the **centralized monorepo** pattern used to separate **
 
 ## Purpose
 
-A single governance monorepo (this repository is commonly named **`ai-auto-skills`**) is the **single point of entry** for:
+A single governance monorepo (this repository is commonly named **`ai-auto-governance-as-code`**) is the **single point of entry** for:
 
 - Normative standards and process documentation
 - Runnable reference examples
@@ -50,7 +50,7 @@ Additional root artifacts:
                                    │ informs (Librarian)
                                    ▼
 ┌──────────────────────────────────────────────────────────────┐
-│  Governance monorepo (e.g. ai-auto-skills)                   │
+│  Governance monorepo (e.g. ai-auto-governance-as-code)                   │
 │  ┌────────────────────┐    ┌─────────────────────────────┐   │
 │  │ automation-whitepaper │──│ skills/ + AGENTS.md         │   │
 │  │ (white book)         │    │ (AI intelligence layer)    │   │

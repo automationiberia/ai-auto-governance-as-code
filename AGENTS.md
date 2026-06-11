@@ -69,6 +69,58 @@ Reference implementations: `automation-whitepaper/examples/light-dev-packages/` 
 
 ---
 
+## Git workflow (agents)
+
+| Rule | Requirement |
+|------|-------------|
+| **Commits** | Do not create commits unless the user explicitly asks. After completing file changes, ask whether the user wants a commit. |
+| **Push** | Never run `git push` or `gh pr create` automatically. Only when the user explicitly asks. After a commit, show push commands **and** a draft PR title and body for manual use (see below). |
+| **Branch** | For a new initiative or PR-sized change, start from an up-to-date `main`, then create a branch: `git fetch origin && git checkout main && git pull origin main && git checkout -b <type>/<description>`. Branch prefixes: `feature/`, `fix/`, `docs/`, `skill/` — see [CONTRIBUTING.md](CONTRIBUTING.md#branch-strategy). |
+| **Verify** | Run `pre-commit run --all-files` before committing when hooks are installed. |
+
+**After commit (user-run only — do not execute as agent):**
+
+When the user commits on a feature branch, show:
+
+1. Push commands
+2. A **draft PR title** and **body** filled in from the changes (format: [.github/PULL_REQUEST_TEMPLATE.md](.github/PULL_REQUEST_TEMPLATE.md))
+
+```bash
+git push -u origin HEAD          # first push of a new branch
+git push                         # subsequent pushes on the same branch
+```
+
+**PR title:** `<imperative summary>`
+
+**PR body:**
+
+```markdown
+## Summary
+
+<!-- What changed, why, and what's affected -->
+
+## Testing
+
+- [ ] `pre-commit run --all-files` passes
+- [ ] Ansible examples tested (if applicable): `ansible-playbook --syntax-check`
+
+## Notes (optional)
+
+<!-- Breaking changes, follow-up work, or context for reviewers -->
+```
+
+Optional — create the PR from the CLI after pushing:
+
+```bash
+gh pr create --title "<imperative summary>" --body "$(cat <<'EOF'
+## Summary
+...
+EOF
+)"
+```
+
+---
+
 ## Layered stack (AI-Driven Governance-as-Code)
 
 ```text

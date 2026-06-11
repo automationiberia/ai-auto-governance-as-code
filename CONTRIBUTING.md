@@ -1,4 +1,4 @@
-# Contributing to ai-auto-skills
+# Contributing to ai-auto-governance-as-code
 
 Thank you for your interest in contributing to the AI-Driven Governance-as-Code for Ansible Automation project!
 
@@ -32,7 +32,7 @@ This project adheres to professional standards of collaboration. Be respectful, 
 ```bash
 # Clone with submodules
 git clone --recurse-submodules <repository-url>
-cd ai-auto-skills
+cd ai-auto-governance-as-code
 
 # Install development dependencies
 pip install -r requirements-dev.txt

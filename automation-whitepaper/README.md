@@ -45,7 +45,7 @@ automation-whitepaper/
 
 ### Architecture
 
-- [Monorepo Layout](architecture/monorepo-layout.md) — Governance monorepo (`ai-auto-skills`), white book, skills, submodules
+- [Monorepo Layout](architecture/monorepo-layout.md) — Governance monorepo (`ai-auto-governance-as-code`), white book, skills, submodules
 - [AAP & Puppet Coexistence Evolution](architecture/aap-puppet-coexistence-evolution.md) — Three phases: centralized orchestration, on-demand refactor, native greenfield
 - [L/T/F/C Patterns](architecture/landscape-type-function-component.md)
 - [Collections & EEs](architecture/collections-and-execution-environments.md)

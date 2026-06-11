@@ -26,7 +26,7 @@ ansible-playbook --syntax-check playbooks/type_linux_logging.yml
 ## 📂 Environment
 
 ```bash
-export AUTOMATION_HOME=/path/to/ai-auto-skills
+export AUTOMATION_HOME=/path/to/ai-auto-governance-as-code
 export AUTOMATION_REPO="$AUTOMATION_HOME/deliveries/automation"
 ```
 

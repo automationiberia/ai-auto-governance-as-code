@@ -1,6 +1,6 @@
 # Agent Skills — tool-agnostic setup
 
-**Canonical source (all tools):** `skills/*/SKILL.md` and [AGENTS.md](../AGENTS.md) in the **`ai-auto-skills`** repository.
+**Canonical source (all tools):** `skills/*/SKILL.md` and [AGENTS.md](../AGENTS.md) in the **`ai-auto-governance-as-code`** repository.
 Do not fork skill text into tool-specific copies unless your platform requires it — link or load from here.
 
 **Which tool are you using?** Follow exactly one row below, then use [prompt examples](../automation-whitepaper/guides/ai-prompt-examples.md).
@@ -23,7 +23,7 @@ Prompt copy-paste library (tool-neutral): [ai-prompt-examples.md](../automation-
 ## Repository prep (every tool)
 
 ```bash
-cd /path/to/ai-auto-skills
+cd /path/to/ai-auto-governance-as-code
 git submodule update --init --recursive
 pip install -r requirements-dev.txt
 pre-commit install   # optional but recommended for humans
@@ -37,7 +37,7 @@ export AUTOMATION_REPO="$AUTOMATION_HOME/deliveries/automation"
 
 **When:** You use Cursor IDE with Agent / Chat on this repo.
 
-1. Clone `ai-auto-skills` and run repository prep above.
+1. Clone `ai-auto-governance-as-code` and run repository prep above.
 2. Link skills into Cursor’s project skill directory:
 
    ```bash
