@@ -71,7 +71,7 @@ Use **Mode 3 — Librarian** when updating:
 3. Update [AGENTS.md](../AGENTS.md) if modes change
 4. Run tool-specific sync per [TOOL-SETUP.md](TOOL-SETUP.md) (e.g. `link-cursor-skills.sh` **only for Cursor**)
 5. Add entry to catalog above
-6. Ask the user before committing; use a branch from up-to-date `main` per [AGENTS.md](../AGENTS.md#git-workflow-agents)
+6. Ask the user before committing; never push automatically — see [AGENTS.md](../AGENTS.md#git-workflow-agents). Use a branch from up-to-date `main`.
 
 ## 📋 Complete Skill Catalog
 

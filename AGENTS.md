@@ -74,8 +74,16 @@ Reference implementations: `automation-whitepaper/examples/light-dev-packages/` 
 | Rule | Requirement |
 |------|-------------|
 | **Commits** | Do not create commits unless the user explicitly asks. After completing file changes, ask whether the user wants a commit. |
+| **Push** | Never run `git push` automatically. Only push when the user explicitly asks. You may show push commands for the user to run manually (see below). |
 | **Branch** | For a new initiative or PR-sized change, start from an up-to-date `main`, then create a branch: `git fetch origin && git checkout main && git pull origin main && git checkout -b <type>/<description>`. Branch prefixes: `feature/`, `fix/`, `docs/`, `skill/` — see [CONTRIBUTING.md](CONTRIBUTING.md#branch-strategy). |
 | **Verify** | Run `pre-commit run --all-files` before committing when hooks are installed. |
+
+**Push (user-run only — do not execute as agent):**
+
+```bash
+git push -u origin HEAD          # first push of a new branch
+git push                         # subsequent pushes on the same branch
+```
 
 ---
 
