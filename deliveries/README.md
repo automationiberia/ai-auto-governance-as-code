@@ -1,6 +1,6 @@
 # Deliveries — shared automation collection
 
-Git submodule inside the **`ai-auto-skills`** governance monorepo. Production **roles** and **type playbooks** live here — separate from the white book and Agent Skills.
+Git submodule inside the **`ai-auto-governance-as-code`** governance monorepo. Production **roles** and **type playbooks** live here — separate from the white book and Agent Skills.
 
 | Item | Value |
 |------|--------|
@@ -37,4 +37,4 @@ git submodule update --init deliveries/automation
 
 Configure Git/SSH credentials for `automationiberia/ai-auto-deliveries` before clone or run `bash .devfile/setup-workspace.sh` after adding credentials.
 
-Work inside the submodule (`cd deliveries/automation`), push to `origin`, then update the submodule pointer in **`ai-auto-skills`** when pinning a release.
+Work inside the submodule (`cd deliveries/automation`), push to `origin`, then update the submodule pointer in **`ai-auto-governance-as-code`** when pinning a release.

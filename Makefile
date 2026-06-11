@@ -1,4 +1,4 @@
-# Makefile for ai-auto-skills — AI-Driven Governance-as-Code for Ansible Automation
+# Makefile for ai-auto-governance-as-code — AI-Driven Governance-as-Code for Ansible Automation
 # See README.md for full documentation
 
 SHELL := /bin/bash
@@ -30,7 +30,7 @@ CI ?= false
 ##@ General
 
 help: ## Display this help message
-	@echo "$(COLOR_BOLD)ai-auto-skills — Makefile targets$(COLOR_RESET)"
+	@echo "$(COLOR_BOLD)ai-auto-governance-as-code — Makefile targets$(COLOR_RESET)"
 	@echo ""
 	@echo "$(COLOR_BLUE)AUTOMATION_HOME=$(AUTOMATION_HOME)$(COLOR_RESET)"
 	@echo "$(COLOR_BLUE)AUTOMATION_REPO=$(AUTOMATION_REPO)$(COLOR_RESET)"

@@ -1,4 +1,4 @@
-# ai-auto-skills
+# ai-auto-governance-as-code
 
 > **AI-Driven Governance-as-Code for Ansible Automation**
 
@@ -15,7 +15,7 @@ Centralized governance monorepo for Ansible standards, documentation, and AI Age
 ```bash
 # Clone with submodules
 git clone --recurse-submodules <repo-url>
-cd ai-auto-skills
+cd ai-auto-governance-as-code
 
 # Setup (or use 'make setup')
 pip install -r requirements-dev.txt
@@ -30,7 +30,7 @@ export AUTOMATION_REPO="$AUTOMATION_HOME/deliveries/automation"
 ## 📁 Repository Structure
 
 ```
-ai-auto-skills/
+ai-auto-governance-as-code/
 ├── automation-whitepaper/    # Standards, architecture, examples
 ├── skills/                   # AI agent skills (SKILL.md files)
 ├── automation-good-practices/# Red Hat CoP submodule

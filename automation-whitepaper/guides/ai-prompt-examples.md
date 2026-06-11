@@ -1,6 +1,6 @@
-# AI prompt examples — using ai-auto-skills and Agent Skills
+# AI prompt examples — using ai-auto-governance-as-code and Agent Skills
 
-Copy-paste prompts for **any** AI agent (Cursor, Claude, Copilot, or other) in the **`ai-auto-skills`** monorepo.
+Copy-paste prompts for **any** AI agent (Cursor, Claude, Copilot, or other) in the **`ai-auto-governance-as-code`** monorepo.
 
 Every prompt assumes the agent reads [AGENTS.md](../../AGENTS.md), **declares its mode** before technical output, and follows the linked skill.
 
@@ -32,7 +32,7 @@ Every prompt assumes the agent reads [AGENTS.md](../../AGENTS.md), **declares it
 ### Repository (all tools)
 
 ```bash
-cd /path/to/ai-auto-skills
+cd /path/to/ai-auto-governance-as-code
 git submodule update --init --recursive
 pip install -r requirements-dev.txt
 pre-commit install   # optional

@@ -5,7 +5,7 @@
 | **Document version** | 1.0 (Initial Draft) |
 | **Target audience** | Enterprise Architecture & Automation Teams |
 | **Core stack** | Ansible Automation Platform (AAP), OpenShift Dev Spaces, Puppet, GenAI Agents |
-| **Repository** | `ai-auto-skills` (governance) + `ai-auto-deliveries` (Ansible collection) |
+| **Repository** | `ai-auto-governance-as-code` (governance) + `ai-auto-deliveries` (Ansible collection) |
 
 ---
 
@@ -147,7 +147,7 @@ Entry point: [`.devfile.yaml`](../../.devfile.yaml) · `automation-home.code-wor
 
 Onboarding path:
 
-1. Clone `ai-auto-skills` with submodules
+1. Clone `ai-auto-governance-as-code` with submodules
 2. [TOOL-SETUP.md](../../skills/TOOL-SETUP.md) for your AI tool (optional)
 3. [01-main-guide.md](../01-main-guide.md) and [create-new-automation-step-by-step.md](../guides/create-new-automation-step-by-step.md)
 4. Phase-aware work: [aap-puppet-coexistence-evolution.md](../architecture/aap-puppet-coexistence-evolution.md)

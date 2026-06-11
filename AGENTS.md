@@ -69,6 +69,16 @@ Reference implementations: `automation-whitepaper/examples/light-dev-packages/` 
 
 ---
 
+## Git workflow (agents)
+
+| Rule | Requirement |
+|------|-------------|
+| **Commits** | Do not create commits unless the user explicitly asks. After completing file changes, ask whether the user wants a commit. |
+| **Branch** | For a new initiative or PR-sized change, start from an up-to-date `main`, then create a branch: `git fetch origin && git checkout main && git pull origin main && git checkout -b <type>/<description>`. Branch prefixes: `feature/`, `fix/`, `docs/`, `skill/` — see [CONTRIBUTING.md](CONTRIBUTING.md#branch-strategy). |
+| **Verify** | Run `pre-commit run --all-files` before committing when hooks are installed. |
+
+---
+
 ## Layered stack (AI-Driven Governance-as-Code)
 
 ```text

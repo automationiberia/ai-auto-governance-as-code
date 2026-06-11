@@ -1,11 +1,11 @@
 blank_issues_enabled: false
 contact_links:
   - name: Question or Discussion
-    url: https://github.com/your-org/ai-auto-skills/discussions
+    url: https://github.com/your-org/ai-auto-governance-as-code/discussions
     about: Ask questions or discuss ideas with the community
   - name: Security Vulnerability
     url: >-
-      https://github.com/your-org/ai-auto-skills/
+      https://github.com/your-org/ai-auto-governance-as-code/
       security/advisories/new
     about: >-
       Report a security vulnerability privately
