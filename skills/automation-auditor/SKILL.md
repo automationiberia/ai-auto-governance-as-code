@@ -10,13 +10,13 @@ description: >-
 # Mode 1 — The Auditor
 
 **Type:** Retroactive
-**Responsibility:** Scan existing playbooks and roles for technical debt.
+**Responsibility:** Scan legacy or incoming codebases for technical debt; output gap analysis and remediating diffs.
 
 ## Execution rule
 
 Before technical output, state:
 
-> I am operating in **Mode 1: The Auditor**.
+> I am operating in **Mode 1: The Auditor**. I have evaluated Red Hat COP baseline rules against white book overrides.
 
 ## Scope
 
@@ -63,4 +63,4 @@ Do not rewrite large files without summarizing findings first unless the user as
 
 - Read files before judging; cite paths in findings.
 - Prefer aligning to `standard-rsyslog-forwarding` for non-trivial roles.
-- If the user wants implementation after audit, switch statement to **Mode 2** for new files or stay in **Mode 1** for refactors only.
+- If the user wants implementation after audit, switch statement to **Mode 2 — Builder** for new files or stay in **Mode 1** for refactors only.

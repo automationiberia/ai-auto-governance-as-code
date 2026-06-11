@@ -4,19 +4,23 @@
 
 **First time?** Read [TOOL-SETUP.md](TOOL-SETUP.md) to configure your AI tool (Cursor/Claude/Copilot).
 
+## Paradigm
+
+The **human is the Architect** (strategy, Red Lines, approval). AI agents operate in three **execution modes** below — see [AGENTS.md](../AGENTS.md).
+
 ## 🎭 Operating Modes
 
-AI agents must declare their mode before generating code — see [AGENTS.md](../AGENTS.md).
+AI agents must declare their mode and precedence evaluation before generating code — see [AGENTS.md](../AGENTS.md).
 
 | Mode | Skill | Purpose |
 |------|-------|---------|
-| **1 — Auditor** | [automation-auditor](automation-auditor/SKILL.md) | Review & refactor existing code |
-| **2 — Architect** | [automation-architect](automation-architect/SKILL.md) | Create new automation from scratch |
+| **1 — Auditor** | [automation-auditor](automation-auditor/SKILL.md) | Review & refactor existing code; gap analysis |
+| **2 — Builder** | [automation-builder](automation-builder/SKILL.md) | Create new automation from scratch |
 | **3 — Librarian** | [automation-librarian](automation-librarian/SKILL.md) | Maintain governance layer |
 
 ## 🛠️ Task Skills
 
-Used within Auditor or Architect modes as needed.
+Used within Auditor or Builder modes as needed.
 
 | Skill | When to Use |
 |-------|-------------|
@@ -26,7 +30,7 @@ Used within Auditor or Architect modes as needed.
 | [automation-quality-gates](automation-quality-gates/SKILL.md) | Code review & validation |
 | [automation-pre-commit](automation-pre-commit/SKILL.md) | Pre-commit hooks & linting |
 | [automation-architecture](automation-architecture/SKILL.md) | L/T/F/C patterns & collections |
-| [automation-lifecycle](automation-lifecycle/SKILL.md) | Automation lifecycle management |
+| [automation-lifecycle](automation-lifecycle/SKILL.md) | Six-stage automation lifecycle |
 | [automation-governance](automation-governance/SKILL.md) | Stakeholder & CAB processes |
 | [automation-controller-ops](automation-controller-ops/SKILL.md) | Controller operations |
 
@@ -80,7 +84,7 @@ Use **Mode 3 — Librarian** when updating:
 | Skill | Mode |
 |-------|------|
 | [automation-auditor](automation-auditor/SKILL.md) | 1 — Auditor |
-| [automation-architect](automation-architect/SKILL.md) | 2 — Architect |
+| [automation-builder](automation-builder/SKILL.md) | 2 — Builder |
 | [automation-librarian](automation-librarian/SKILL.md) | 3 — Librarian |
 
 ### Task Skills
@@ -89,7 +93,7 @@ Use **Mode 3 — Librarian** when updating:
 |-------|----------|-------------|
 | [automation-new-automation](automation-new-automation/SKILL.md) | New automation end-to-end | [step-by-step guide](../automation-whitepaper/guides/create-new-automation-step-by-step.md) |
 | [automation-pre-commit](automation-pre-commit/SKILL.md) | Hooks, lint failures | [pre-commit.md](../automation-whitepaper/quality/pre-commit.md) |
-| [automation-lifecycle](automation-lifecycle/SKILL.md) | Intake → retire | [lifecycle/](../automation-whitepaper/lifecycle/) |
+| [automation-lifecycle](automation-lifecycle/SKILL.md) | Six-stage lifecycle | [lifecycle/](../automation-whitepaper/lifecycle/) |
 | [automation-architecture](automation-architecture/SKILL.md) | L/T/F/C, collections | [architecture/](../automation-whitepaper/architecture/) |
 | [automation-role-development](automation-role-development/SKILL.md) | Roles | [development/roles.md](../automation-whitepaper/development/roles.md) |
 | [automation-playbook-inventory](automation-playbook-inventory/SKILL.md) | Playbooks, inventory | [development/](../automation-whitepaper/development/) |

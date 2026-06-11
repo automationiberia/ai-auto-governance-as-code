@@ -10,11 +10,11 @@ description: >-
 
 **Context:** Generating **Phase 1** orchestration wrapper playbooks per [aap-puppet-coexistence-evolution.md](../../automation-whitepaper/architecture/aap-puppet-coexistence-evolution.md).
 
-**Mode:** **2 — The Architect** (wrappers only — do not rewrite Puppet manifests).
+**Mode:** **2 — The Builder** (wrappers only — do not rewrite Puppet manifests).
 
 ## Execution rule
 
-> I am operating in **Mode 2: The Architect** (Phase 1 Puppet orchestration).
+> I am operating in **Mode 2: The Builder** (Phase 1 Puppet orchestration).
 
 ## Mandatory guardrails
 
@@ -57,7 +57,7 @@ Add `async` / `poll` only when requirements explicitly need them.
 ## Cross-references
 
 - [strategic-proposal-aap-governance-evolution.md](../../automation-whitepaper/governance/strategic-proposal-aap-governance-evolution.md)
-- [automation-architect](../automation-architect/SKILL.md)
+- [automation-builder](../automation-builder/SKILL.md)
 - [AGENTS.md](../../AGENTS.md)
 
 ## Agent behavior

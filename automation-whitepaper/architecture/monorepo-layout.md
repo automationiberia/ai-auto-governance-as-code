@@ -23,18 +23,18 @@ Production implementation code lives in a **separate delivery collection** (subm
 
 ## Architectural components
 
-| Directory | Function |
-|-----------|----------|
-| **`automation-whitepaper/`** | The **white book** — authoritative guide for lifecycle, architecture, quality, and **executable examples** (light / standard / heavy). Human-readable source of truth. |
-| **`skills/`** | **AI Agent Skills** (encoded as `SKILL.md` markdown; some environments may use `.mdc` or equivalent). Instruct agents how to **create**, **review**, and **govern** code according to the white book. Complemented by [AGENTS.md](../../AGENTS.md) operating modes (Auditor / Architect / Librarian). |
-| **`automation-good-practices/`** | **Git submodule** — upstream reference from the Red Hat CoP GPA repository. Used for comparison and Librarian-mode updates; not a substitute for the local white book. |
-| **`deliveries/automation/`** | **Git submodule** — shared Ansible **collection** ([`automationiberia/ai-auto-deliveries`](https://github.com/automationiberia/ai-auto-deliveries)). Remote is **fixed** in [`.gitmodules`](../../.gitmodules); changing the URL breaks `git submodule update`. |
+| Path | Content | Functional role | Source |
+|------|---------|-----------------|--------|
+| **`automation-whitepaper/`** | White book: architecture, lifecycle, effort profiles, examples | Authoritative standards | Internal |
+| **`skills/`** | Agent Skills (`SKILL.md`; some tools use `.mdc`) | Active enforcement engine | Internal |
+| **`automation-good-practices/`** | Red Hat CoP GPA reference | Compliance baseline | Red Hat CoP (submodule) |
+| **`deliveries/automation/`** | Shared collection [`ai-auto-deliveries`](https://github.com/automationiberia/ai-auto-deliveries) | Production execution | Internal (submodule) |
 
 Additional root artifacts:
 
 | Path | Function |
 |------|----------|
-| **`AGENTS.md`** | Agent bootstrap: program name, three modes, Architect rules (FQCN, naming, collection model). |
+| **`AGENTS.md`** | Agent bootstrap: human-as-Architect paradigm, three AI modes (Auditor / Builder / Librarian), Builder rules (FQCN, naming, collection model). |
 | **`requirements-dev.txt`**, **`.pre-commit-config.yaml`** | Mechanical quality gates for the governance repo and examples. |
 | **`deliveries/README.md`** | How the delivery submodule relates to the monorepo. |
 

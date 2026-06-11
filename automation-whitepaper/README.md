@@ -30,7 +30,7 @@ automation-whitepaper/
 
 ### Governance
 
-- **[AI-Driven Governance](governance/governance-as-code-ai-enforcement.md)** — Auditor / Architect / Librarian modes
+- **[AI-Driven Governance](governance/governance-as-code-ai-enforcement.md)** — Human as Architect; AI modes: Auditor / Builder / Librarian
 - **[Strategic Proposal v1.0](governance/strategic-proposal-aap-governance-evolution.md)** — AAP, Puppet, GenAI, Dev Spaces
 - [Organizational Model](governance/organizational-model-and-stakeholders.md)
 - [Roles & Responsibilities](governance/roles-and-responsibilities.md)

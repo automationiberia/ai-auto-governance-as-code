@@ -140,7 +140,7 @@ During translation:
 ### Workflow
 
 1. Intake + approved trigger (ticket)
-2. **Architect mode** — native role design; human review of Puppet ↔ Ansible parity
+2. **Builder mode** — native role design; human Architect reviews Puppet ↔ Ansible parity
 3. Test: lab → pre-prod; check mode; idempotency
 4. Cutover: disable Puppet class for scope → native AAP job → Puppet noop validation
 5. Retain Phase 1 wrapper for **non-migrated** classes on same host
@@ -168,8 +168,8 @@ All new content lives in **`ai-auto-deliveries`** (`deliveries/automation/`). Do
 
 | Phase | Activity | Mode | Skill |
 |-------|----------|------|-------|
-| 1 | Wrapper playbooks | Architect | [automation-puppet-orchestrate](../../skills/automation-puppet-orchestrate/SKILL.md) |
-| 2 | Puppet → Ansible refactor | Architect | [automation-new-automation](../../skills/automation-new-automation/SKILL.md) |
+| 1 | Wrapper playbooks | Builder | [automation-puppet-orchestrate](../../skills/automation-puppet-orchestrate/SKILL.md) |
+| 2 | Puppet → Ansible refactor | Builder | [automation-new-automation](../../skills/automation-new-automation/SKILL.md) |
 | 2 | PR / policy scan | Auditor | [automation-auditor](../../skills/automation-auditor/SKILL.md) |
 | Any | Update strategy | Librarian | [automation-librarian](../../skills/automation-librarian/SKILL.md) |
 

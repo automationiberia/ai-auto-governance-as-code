@@ -7,7 +7,8 @@ Coding standards aligned with GPA **Coding Style** and the [strategic proposal](
 ## 1. Naming
 
 - Valid Python identifiers: `snake_case` for files, variables, keys
-- **`_` prefix (internal):** Variables for internal task logic, private tuning, or backend computations use a leading underscore (e.g. `_puppet_environment`, `_internal_retry_count`). **Public** variables intended for inventory or operator override **omit** the prefix.
+- **`_` prefix (internal):** Variables for internal task logic, `register` results, or backend computations use a leading underscore (e.g. `_raw_package_list`, `_puppet_environment`). Overrides generic COP naming where the white book mandates isolation.
+- **Role/function prefix (public):** Exposed parameters in `defaults/main.yml` must be prefixed with the host role or function name (e.g. `nginx_max_connections`, not `max_connections`).
 - **`__` prefix (role loops):** In roles, `loop_control.loop_var` uses `__<function>_…` — see §3 Ansible-specific.
 - No special characters in variable names (even if YAML allows)
 - Descriptive names; pattern `object[_feature]_action` for roles/playbooks
@@ -36,8 +37,8 @@ Coding standards aligned with GPA **Coding Style** and the [strategic proposal](
 ## 3. Ansible-specific
 
 - Use **FQCN** for modules (e.g. `ansible.builtin.package`); agents enforce via [AGENTS.md](../../AGENTS.md)
-- Idempotent tasks; prefer modules over `command`/`shell`
-- Comment justification when `command`/`shell` required
+- **Native-first:** prefer modules over `ansible.builtin.command` / `ansible.builtin.shell`; the Builder refuses shell when a module exists
+- When shell/command is the only option: **Documentation Gate** comment above the task explaining why native alternatives failed, plus explicit `changed_when` and `failed_when`
 - `when:` with bare vars: `| bool` filter
 - Bracket notation: `__foo_entry['key']` not `__foo_entry.key` (loop/dict entries)
 - Avoid `meta: end_play` (use `end_host`)

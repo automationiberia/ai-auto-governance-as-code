@@ -19,13 +19,25 @@ Monorepo layout: [automation-whitepaper/architecture/monorepo-layout.md](automat
 
 ---
 
+## Paradigm: Human as the Architect
+
+The **human engineer is the Architect** — strategic design, Red Lines, and final approval. AI agents operate in three **execution modes** below. **Mode 2 is The Builder**, not "Architect."
+
+---
+
 ## Execution rule (mandatory)
 
-**Before delivering technical output**, the agent must state its active mode, for example:
+**Before delivering technical output**, the agent must:
 
-> I am operating in **Mode 1: The Auditor**.
+1. State its active mode, for example:
 
-If the task spans modes (e.g. audit then refactor), state the **current** mode for each response section.
+   > I am operating in **Mode 1: The Auditor**.
+
+2. Confirm precedence evaluation:
+
+   > I have evaluated Red Hat COP baseline rules against white book overrides.
+
+If the task spans modes (e.g. audit then build), state the **current** mode for each response section.
 
 ---
 
@@ -33,8 +45,8 @@ If the task spans modes (e.g. audit then refactor), state the **current** mode f
 
 | Mode | Type | Agent responsibility | Specific actions |
 |------|------|----------------------|----------------|
-| **1 — The Auditor** | Retroactive | Scan existing playbooks and roles for technical debt. | Identify legacy patterns (e.g. `with_items`), missing `__` loop variable prefixes, bare `item`, non-FQCN modules, and propose refactors aligned with `skills/*/SKILL.md` and the white paper. |
-| **2 — The Architect** | Proactive | Generate new roles and modules from scratch. | Bootstrap context using **this file** and [skills/automation-architect/SKILL.md](skills/automation-architect/SKILL.md); ensure FQCN usage, L/T/F/C naming, and collection layout are compliant from the first line of YAML. |
+| **1 — The Auditor** | Retroactive | Scan existing playbooks and roles for technical debt. | Gap analysis: legacy patterns (e.g. `with_items`), missing variable prefixes, bare `item`, non-FQCN modules; output findings and remediating diffs aligned with `skills/*/SKILL.md` and the white paper. |
+| **2 — The Builder** | Proactive | Generate net-new automation or refactor to full compliance. | Bootstrap from **this file** and [skills/automation-builder/SKILL.md](skills/automation-builder/SKILL.md); ensure FQCN, L/T/F/C placement, and collection layout from the first line of YAML. |
 | **3 — The Librarian** | Maintenance | Continuous evolution of the governance layer. | Propose updates to white paper markdown and matching `SKILL.md` when the team adopts new patterns (e.g. Molecule for testing) or when [Red Hat CoP GPA](https://github.com/redhat-cop/automation-good-practices) upstream changes. |
 
 ### Mode selection
@@ -42,14 +54,25 @@ If the task spans modes (e.g. audit then refactor), state the **current** mode f
 | User intent | Mode | Primary skill |
 |-------------|------|----------------|
 | Review, lint fix, refactor, PR comment on existing YAML | **1 — Auditor** | [automation-auditor](skills/automation-auditor/SKILL.md) |
-| New capability, greenfield role/playbook, extend OS platform | **2 — Architect** | [automation-architect](skills/automation-architect/SKILL.md) + task skills below |
+| New capability, greenfield role/playbook, extend OS platform | **2 — Builder** | [automation-builder](skills/automation-builder/SKILL.md) + task skills below |
 | Sync skills with white paper, GPA submodule, new governance pattern | **3 — Librarian** | [automation-librarian](skills/automation-librarian/SKILL.md) |
 
-Task skills (use **inside** Architect or Auditor as needed): see [skills/README.md](skills/README.md).
+Task skills (use **inside** Builder or Auditor modes as needed): see [skills/README.md](skills/README.md).
 
 ---
 
-## Mode 2 bootstrap rules (Architect)
+## Rule of precedence
+
+| Priority | Source |
+|----------|--------|
+| **Foundation** | Red Hat CoP `automation-good-practices/` — default baseline |
+| **Supreme override** | Enterprise white book — wins on conflict |
+
+Details: [governance-as-code-ai-enforcement.md](automation-whitepaper/governance/governance-as-code-ai-enforcement.md#rule-of-precedence).
+
+---
+
+## Mode 2 bootstrap rules (Builder)
 
 Apply on **every** new or generated Ansible artifact:
 
@@ -57,9 +80,12 @@ Apply on **every** new or generated Ansible artifact:
 |------|-------------|
 | **Collection model** | One shared collection at `$AUTOMATION_REPO`; one **function role** per capability; no per-initiative Git repos. |
 | **FQCN** | Use fully qualified collection names for modules (e.g. `ansible.builtin.package`, not bare `package`). |
-| **Naming** | `snake_case`; public vars without `_` prefix; internal/tuning vars with `_` prefix (e.g. `_puppet_environment`); role loops `__<function>_…`; imperative `name:` on every task. |
+| **L/T/F/C** | Every asset maps to Landscape / Type / Function / Component before generation or validation. |
+| **Naming** | `snake_case`; public vars prefixed with role/function name (e.g. `nginx_max_connections`); internal/tuning vars with `_` prefix; role loops `__<function>_…`; imperative `name:` on every task. |
 | **Loops** | `loop_control.loop_var` with `__<function>_…`; never bare `item` in roles. |
 | **Legacy** | Do not introduce `with_items` / `with_dict`; use `loop` + `loop_control`. |
+| **Native-first** | Refuse `shell`/`command` when a module exists; Documentation Gate comment + `changed_when`/`failed_when` if unavoidable. |
+| **Booleans** | Unquoted lowercase `true` / `false`. |
 | **Structure** | Platform tasks under `tasks/platforms/<OsFamily>.yml`; type playbooks under `playbooks/type_<category>.yml`. |
 | **Templates** | Suffix `.j2`; include `{{ ansible_managed \| comment }}`. |
 | **Paths in docs** | Use `$AUTOMATION_HOME` / `$AUTOMATION_REPO`; never hardcode workspace or machine paths. |
@@ -128,7 +154,7 @@ automation-whitepaper/     ← canonical standards (human + audit trail)
         ↓
 skills/*/SKILL.md        ← encoded enforcement (agent-consumable)
         ↓
-AGENTS.md (this file)    ← mode selection + Architect bootstrap
+AGENTS.md (this file)    ← mode selection + Builder bootstrap
         ↓
 pre-commit + CI          ← mechanical enforcement (when enabled)
 ```

@@ -1,34 +1,38 @@
 # Landscape, Type, Function, and Component
 
-This hierarchy is the department's primary structural model, aligned with [GPA — Structures](https://redhat-cop.github.io/automation-good-practices/).
+The **L/T/F/C inventory matrix** classifies every automation asset. No role or playbook may be generated or validated without identifying its place in this hierarchy. Aligned with enterprise white book mandates; GPA structures inform implementation patterns.
 
 ---
 
-## 1. Definitions
+## 1. Inventory matrix definitions
 
-| Level | Definition | Artifact |
+| Level | Definition | Examples |
 |-------|------------|----------|
-| **Landscape** | Everything deployed together as one logical unit | Controller **workflow**, or playbook importing type playbooks |
-| **Type** | Host category with **exactly one** type per host; one playbook deploys the full type | Type playbook (e.g. `middleware_server.yml`) |
-| **Function** | Reusable capability used by one or more types | **Role** (e.g. `base_linux`, `postgresql`) |
-| **Component** | Maintainability split inside a function | `tasks/<component>.yml` or child role |
+| **Landscape (L)** | Targeted environment tier | `production`, `development`, `sandbox` |
+| **Type (T)** | Underlying infrastructure platform | `rhel`, `windows`, `cisco`, `vmware` |
+| **Function (F)** | Broader business service being automated | `webserver`, `database`, `security_patching` |
+| **Component (C)** | Specific technical unit or application daemon | `nginx`, `postgresql`, `rsyslog` |
+
+**Example mapping:** Landscape `production` · Type `rhel` · Function `webserver` · Component `nginx`.
+
+Every new capability documents its L/T/F/C placement in `docs/<function>/DESIGN.md` or the design note.
+
+---
+
+## 2. Mapping to Ansible artifacts
+
+The matrix drives **classification and inventory hygiene**. Implementation still follows collection layout and GPA-inspired structure:
+
+| Matrix level | Typical artifact | Notes |
+|--------------|------------------|-------|
+| Landscape | Controller workflow, environment-specific inventory groups | One logical deployment unit per landscape |
+| Type | Type playbook (e.g. `playbooks/type_webserver.yml`) | One type per host; thin playbook importing function roles |
+| Function | Function role (e.g. `roles/webserver/`) | Reusable capability; one role per function in `$AUTOMATION_REPO` |
+| Component | `tasks/<component>.yml` or focused task file inside the function role | Maintainability split (e.g. `nginx.yml`, `tls.yml`) |
 
 **Functions** optimize **re-use**. **Components** optimize **readability**.
 
----
-
-## 2. Example: three-tier application
-
-| Level | This example |
-|-------|--------------|
-| Landscape | Web + middleware + database production stack |
-| Types | `web_frontend`, `middleware`, `database` |
-| Functions | `vm_provision`, `base_linux`, `apache`, `jboss`, `postgresql` |
-| Components (in `base_linux`) | `dns.yml`, `ntp.yml`, `ssh.yml` |
-
-Workflow runs three type playbooks (or one playbook-of-playbooks with `import_playbook`).
-
-For a worked layout see [../examples/example-three-tier-landscape.md](../examples/example-three-tier-landscape.md).
+For a worked three-tier example see [../examples/example-three-tier-landscape.md](../examples/example-three-tier-landscape.md).
 
 ---
 
@@ -36,9 +40,10 @@ For a worked layout see [../examples/example-three-tier-landscape.md](../example
 
 ### 3.1 Rules
 
-1. One type per host; one playbook per type.
-2. Do not chain numbered playbooks (`01_setup.yml`, `02_app.yml`)—use workflow or imports.
-3. Prefer re-combining existing function roles over duplicating tasks.
+1. Document L/T/F/C before implementation (Design stage).
+2. One type per host; one type playbook per host category.
+3. Do not chain numbered playbooks (`01_setup.yml`, `02_app.yml`) — use workflow or imports.
+4. Prefer re-combining existing function roles over duplicating tasks.
 
 ### 3.2 Valid exceptions (document in ADR)
 
@@ -57,7 +62,7 @@ For a worked layout see [../examples/example-three-tier-landscape.md](../example
 
 When structure is unclear, apply:
 
-- Playbooks are not for programming—push logic to roles/modules
+- Playbooks are not for programming — push logic to roles/modules
 - Clear, concise, readable
 - If implementation is hard to explain, simplify
 - Convention over configuration for consumers
@@ -72,11 +77,12 @@ When structure is unclear, apply:
 | Duplicate type playbooks differing by one role | Use variables and groups |
 | Multiple types on same host without clear primary | Violates one-type rule |
 | Landscape logic in role defaults | Blurs layers |
+| Asset without L/T/F/C classification | Blocks governance validation |
 
 ---
 
 ## 6. Related documents
 
 - [collections-and-execution-environments.md](collections-and-execution-environments.md)
-- [../development/playbooks.md](../development/playbooks.md)
+- [monorepo-layout.md](monorepo-layout.md)
 - [../development/roles.md](../development/roles.md)

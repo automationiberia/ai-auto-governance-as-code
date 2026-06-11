@@ -112,7 +112,7 @@ Brief description of skill purpose and when to use it.
 
 ## Context
 - White paper reference: [section](../automation-whitepaper/...)
-- Operating mode: [1-Auditor / 2-Architect / 3-Librarian]
+- Operating mode: [1-Auditor / 2-Builder / 3-Librarian]
 
 ## Instructions
 Clear, actionable steps for AI agents.
@@ -320,7 +320,7 @@ When contributing skills, understand the [three operating modes](AGENTS.md):
 | Mode | Purpose | Skill Type |
 |------|---------|------------|
 | **1 — Auditor** | Retroactive review of existing code | Refactoring, debt scanning |
-| **2 — Architect** | Proactive creation of new automation | Bootstrap, generate from scratch |
+| **2 — Builder** | Proactive creation of new automation | Bootstrap, generate from scratch |
 | **3 — Librarian** | Maintain governance layer | Sync skills with white paper |
 
 Skills should declare which mode they support and provide mode-specific instructions.

@@ -55,6 +55,6 @@ Do **not** create `ntp_sync_windows` or a second repo.
 
 ## Agent behavior
 
-- Declare active mode per [AGENTS.md](../../AGENTS.md) (this workflow is **Mode 2 — The Architect**).
+- Declare active mode per [AGENTS.md](../../AGENTS.md) (this workflow is **Mode 2 — The Builder**).
 - Generic paths only in generated docs.
 - If collection model is wrong in skills/docs, fix them, **delete** `deliveries/automation/` and any legacy per-initiative dirs, restart from task 1.

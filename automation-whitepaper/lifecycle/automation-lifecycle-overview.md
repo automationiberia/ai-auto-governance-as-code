@@ -1,50 +1,47 @@
 # Automation Lifecycle Overview
 
-Every automation asset has a lifecycle: **propose → design → build → test → release → operate → improve → retire**.
+Every automation asset follows the **six-stage enterprise lifecycle**: **Intake → Design → Implementation → Quality → Promotion → Operation & improvement**.
+
+Retirement is handled within Operation & improvement when an asset is superseded.
 
 ```mermaid
 stateDiagram-v2
-  [*] --> Proposed
-  Proposed --> Approved: Prioritized
-  Approved --> Design
-  Design --> Build
-  Build --> Test
-  Test --> Release: Gates pass
-  Test --> Build: Fail
-  Release --> Operating
-  Operating --> Improving: Feedback
-  Improving --> Operating
-  Operating --> Retired: Obsolete
-  Retired --> [*]
+  [*] --> Intake
+  Intake --> Design: Prioritized
+  Design --> Implementation: L/T/F/C + SSOT defined
+  Implementation --> Quality: Code in Git
+  Quality --> Promotion: Gates pass
+  Quality --> Implementation: Fail
+  Promotion --> Operation: Released to prod
+  Operation --> Operation: Improve / refactor
+  Operation --> [*]: Retired
 ```
 
 ---
 
-## Phase summary
+## Six stages
 
-| Phase | Entry criteria | Exit criteria | Document |
-|-------|----------------|-------------|----------|
-| **Proposed** | Problem described | Ticket accepted | [intake-and-prioritization.md](intake-and-prioritization.md) |
-| **Approved** | Value/risk assessed | Owner assigned | [intake-and-prioritization.md](intake-and-prioritization.md) |
-| **Design** | Approved | Structure + SSOT + interfaces documented | [design-and-build.md](design-and-build.md) |
-| **Build** | Design signed | Code in Git, CI green | [design-and-build.md](design-and-build.md) |
-| **Test** | Build complete | UAT + check mode + security (if needed) | [test-and-promote.md](test-and-promote.md) |
-| **Release** | Test pass | Prod Controller + CAB | [test-and-promote.md](test-and-promote.md) |
-| **Operating** | Released | SLAs monitored | [operate-and-improve.md](operate-and-improve.md) |
-| **Improving** | Metrics/debt | Backlog items scheduled | [operate-and-improve.md](operate-and-improve.md) |
-| **Retired** | Superseded | Jobs disabled, docs archived | [operate-and-improve.md](operate-and-improve.md) |
+| Stage | Purpose | Entry criteria | Exit criteria | Document |
+|-------|---------|----------------|---------------|----------|
+| **1 — Intake** | Demand management, priority, success criteria | Problem described | Ticket accepted, owner assigned | [intake-and-prioritization.md](intake-and-prioritization.md) |
+| **2 — Design** | L/T/F/C, SSOT, execution environments | Intake approved | Structure + interfaces documented | [design-and-build.md](design-and-build.md) |
+| **3 — Implementation** | Roles, playbooks, naming, modular design | Design signed | Code in Git, CI green | [design-and-build.md](design-and-build.md), [../development/](../development/) |
+| **4 — Quality** | Pre-commit, ansible-lint, Molecule idempotency | Build complete | Lint + tests pass; UAT if required | [../quality/](../quality/), [test-and-promote.md](test-and-promote.md) |
+| **5 — Promotion** | Dev → Pre-Prod → Prod via GitOps / AAP | Quality pass | Prod Controller + CAB (if heavy) | [test-and-promote.md](test-and-promote.md) |
+| **6 — Operation & improvement** | Metrics, refactoring, debt removal | Released | SLAs monitored; improvements scheduled | [operate-and-improve.md](operate-and-improve.md) |
 
 ---
 
-## Artefacts per phase
+## Artefacts per stage
 
-| Phase | Artefacts |
+| Stage | Artefacts |
 |-------|-----------|
-| Design | Short design note, variable contract, inventory SSOT map |
-| Build | Git branch/PR, roles/playbooks, README, argument_specs |
-| Test | CI logs, molecule report, UAT sign-off |
-| Release | Version tag, change record, runbook |
-| Operate | Job template, schedule, monitoring dashboard |
+| Intake | Ticket, success criteria, effort profile (light / standard / heavy) |
+| Design | L/T/F/C map, variable contract, inventory SSOT, short design note |
+| Implementation | Git branch/PR, roles/playbooks, README, argument_specs |
+| Quality | CI logs, molecule report, pre-commit evidence |
+| Promotion | Version tag, change record, runbook, Controller job template |
+| Operation | Schedules, monitoring dashboard, improvement backlog |
 
 ---
 
@@ -52,7 +49,7 @@ stateDiagram-v2
 
 Automation is never "done." Schedule:
 
-- **Quarterly:** lint rule updates, collection bumps, GPA diff review
+- **Quarterly:** lint rule updates, collection bumps, GPA diff review (Librarian mode)
 - **Annually:** access review on Controller, credential audit
 - **Per major OS release:** platform variable and integration test refresh
 
@@ -61,4 +58,5 @@ Automation is never "done." Schedule:
 ## Related documents
 
 - [../01-main-guide.md](../01-main-guide.md)
-- Sub-phase guides in this directory
+- [../governance/governance-as-code-ai-enforcement.md](../governance/governance-as-code-ai-enforcement.md)
+- Sub-stage guides in this directory

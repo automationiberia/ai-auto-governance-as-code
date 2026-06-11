@@ -49,7 +49,7 @@ export AUTOMATION_REPO="$AUTOMATION_HOME/deliveries/automation"
 3. Open `automation-home.code-workspace` (monorepo + `deliveries/automation`).
 4. Optional project rule (Cursor Settings → Rules): *Read AGENTS.md; state Mode 1/2/3 before Ansible output.*
 
-**Invoke:** `Use skill automation-architect` · `@AGENTS.md` · `@skills/automation-auditor/SKILL.md`
+**Invoke:** `Use skill automation-builder` · `@AGENTS.md` · `@skills/automation-auditor/SKILL.md`
 
 **Refresh:** After `git pull` adds skills, re-run `link-cursor-skills.sh`.
 
@@ -73,7 +73,7 @@ Claude has **no standard “skills folder”** shared with Cursor. Configure **c
 # Project instructions
 
 Before Ansible or automation-whitepaper work, read AGENTS.md and declare
-Auditor / Architect / Librarian mode. Skills live under skills/automation-*/SKILL.md.
+Auditor / Builder / Librarian mode (human = Architect). Skills live under skills/automation-*/SKILL.md.
 Delivery code: deliveries/automation/ ($AUTOMATION_REPO).
 ```
 
@@ -102,7 +102,7 @@ Do **not** rely on `.mdc` unless your Claude product documents that format; **`S
 
    ```markdown
    For Ansible automation in this repo, follow AGENTS.md and skills/automation-*/SKILL.md.
-   Declare Auditor, Architect, or Librarian mode before technical output.
+   Declare Auditor, Builder, or Librarian mode before technical output.
    ```
 
 3. In chat, `@AGENTS.md` and role paths if your Copilot build supports file context.
@@ -121,7 +121,7 @@ Do **not** rely on `.mdc` unless your Claude product documents that format; **`S
 2. Start every automation task with:
 
    ```text
-   Read <path>/AGENTS.md. State your mode (Auditor / Architect / Librarian).
+   Read <path>/AGENTS.md. State your mode (Auditor / Builder / Librarian).
    Then follow <path>/skills/<skill-name>/SKILL.md.
    ```
 
