@@ -112,4 +112,4 @@ Spanish organizations often mirror a **functional IT model** with strong **Chang
 
 - [roles-and-responsibilities.md](roles-and-responsibilities.md)
 - [../lifecycle/intake-and-prioritization.md](../lifecycle/intake-and-prioritization.md)
-- [../examples/example-spanish-enterprise-change-flow.md](../examples/example-spanish-enterprise-change-flow.md)
+- [../guides/glossary.md](../guides/glossary.md) · [../examples/example-enterprise-change-flow.md](../examples/example-enterprise-change-flow.md)

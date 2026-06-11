@@ -73,7 +73,7 @@ flowchart LR
 - [ ] CMDB To-Be updated or ticket filed for CMDB team
 - [ ] Service Desk informed if user-visible window
 
-Spanish enterprise CAB flow example: [../examples/example-spanish-enterprise-change-flow.md](../examples/example-spanish-enterprise-change-flow.md).
+Spanish enterprise CAB flow example: [../guides/glossary.md](../guides/glossary.md) · [../examples/example-enterprise-change-flow.md](../examples/example-enterprise-change-flow.md).
 
 ---
 

@@ -1,6 +1,12 @@
 # Main Guide: Processes and Flows for Automation
 
-This document is the entry point for the automation department white paper. It describes **how** automation is requested, designed, built, tested, operated, and improved—linking people, process, and technical structure.
+This document is the **complete** reference for processes and flows. For a short onboarding path, use the summary guides:
+
+| Goal | Start here |
+|------|------------|
+| First time in the repo | [guides/getting-started.md](guides/getting-started.md) |
+| Review or fix existing code | [guides/evaluate-and-update-existing.md](guides/evaluate-and-update-existing.md) |
+| Build something new | [guides/create-new-from-scratch.md](guides/create-new-from-scratch.md) |
 
 ---
 
@@ -18,7 +24,7 @@ It does **not** replace vendor documentation; it defines **our** operating model
 
 ### Creating new automation?
 
-Use the checklist (scaled by **light / standard / heavy** risk): **[guides/create-new-automation-step-by-step.md](guides/create-new-automation-step-by-step.md)**
+Quick path: **[guides/create-new-from-scratch.md](guides/create-new-from-scratch.md)** · Full checklist: **[guides/create-new-automation-step-by-step.md](guides/create-new-automation-step-by-step.md)**
 **Delivery code** lives in one **shared Ansible collection** at **`deliveries/automation/`** (each capability = one role) — see [../deliveries/README.md](../deliveries/README.md).
 **Dev Spaces:** import the monorepo and use [guides/devspaces-workspace.md](guides/devspaces-workspace.md).
 **Extending** a capability (new OS, servers): [guides/extending-existing-automation.md](guides/extending-existing-automation.md) — extend the **same function role** (`tasks/platforms/`), do not add `role_windows` clones or new per-initiative repos.
@@ -76,7 +82,7 @@ Automation that touches production must involve **traditional enterprise teams**
 |--------------------------------------|------------------|---------------------|
 | **Business / application owners** | Intake, acceptance criteria | [governance/organizational-model-and-stakeholders.md](governance/organizational-model-and-stakeholders.md) |
 | **IT Operations / Systems** | Design, runbooks, operations handover | [lifecycle/operate-and-improve.md](lifecycle/operate-and-improve.md) |
-| **Change Management (CAB)** | Production changes, maintenance windows | [examples/example-spanish-enterprise-change-flow.md](examples/example-spanish-enterprise-change-flow.md) |
+| **Change Management (CAB)** | Production changes, maintenance windows | [glossary.md](guides/glossary.md) · [example-enterprise-change-flow.md](examples/example-enterprise-change-flow.md) |
 | **Information Security (CISO/SOC)** | Risk review, secrets, logging | [lifecycle/test-and-promote.md](lifecycle/test-and-promote.md) |
 | **Network** | Connectivity, firewall rules in automation | [development/inventories-and-variables.md](development/inventories-and-variables.md) |
 | **Database (DBA)** | Data-layer changes, backup/restore coordination | [lifecycle/design-and-build.md](lifecycle/design-and-build.md) |
@@ -170,6 +176,8 @@ Details: [lifecycle/operate-and-improve.md](lifecycle/operate-and-improve.md).
 ---
 
 ## 8. Quality gates (summary)
+
+A **gate** is a mandatory checkpoint — mechanical (tools) or human (approval) — before merge or production. See [guides/glossary.md](guides/glossary.md).
 
 All production-bound content must pass:
 

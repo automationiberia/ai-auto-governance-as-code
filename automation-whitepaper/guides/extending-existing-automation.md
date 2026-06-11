@@ -1,5 +1,7 @@
 # Extending Existing Automation
 
+> **Audit or refactor first?** See [evaluate-and-update-existing.md](evaluate-and-update-existing.md).
+
 Changes apply inside the **shared delivery collection** `deliveries/automation/`. Extend the existing function role — do not add a new repo or a parallel role.
 
 ---
