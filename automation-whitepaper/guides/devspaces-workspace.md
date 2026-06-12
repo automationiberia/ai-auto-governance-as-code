@@ -85,6 +85,16 @@ cat .devfile/setup-workspace.log
 bash .devfile/setup-workspace.sh
 ```
 
+**AI shortcut (postStart failure):**
+
+```text
+I am operating in Mode 1: The Auditor.
+
+Read .devfile/setup-workspace.log and diagnose Dev Spaces postStart failure.
+Typical cause: submodule SSH credentials for deliveries/automation.
+Suggest fix only — do not edit .devfile.yaml until I approve.
+```
+
 ---
 
 ## Git submodules and credentials

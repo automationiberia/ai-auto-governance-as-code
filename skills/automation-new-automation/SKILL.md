@@ -25,7 +25,7 @@ export AUTOMATION_REPO="$AUTOMATION_HOME/deliveries/automation"
 | Situation | Action |
 |-----------|--------|
 | `deliveries/automation/` missing | `git init`, copy `templates/delivery-collection.galaxy.yml` → `galaxy.yml`, lint templates, initial commit |
-| Collection exists | Feature branch only; add new `roles/<function>/` |
+| Collection exists | Feature branch only; add new `roles/rolename/` |
 
 ## One function role per capability
 
@@ -37,9 +37,9 @@ Do **not** create `ntp_sync_windows` or a second repo.
 | Section | Files |
 |---------|--------|
 | Collection | `galaxy.yml`, `meta/runtime.yml`, `CHANGELOG.md`, collection `README.md` |
-| Intake / design | `docs/<function>/INTAKE.md`, `docs/<function>/DESIGN.md` |
+| Intake / design | `docs/rolename/INTAKE.md`, `docs/rolename/DESIGN.md` |
 | Repo config | `ansible.cfg` (`roles_path = roles`) |
-| Role | `roles/<function>/` — `defaults`, `tasks/main.yml`, `set_vars.yml` if multi-OS, `tasks/platforms/`, `handlers`, `templates` with `{{ ansible_managed \| comment }}`, `meta/argument_specs.yml`, **`README.md`**. Loops: `loop_control.loop_var` with `__<function>_…` (never bare `item`) |
+| Role | `roles/rolename/` — `defaults`, `tasks/main.yml`, `set_vars.yml` if multi-OS, `tasks/platforms/`, `handlers`, `templates` with `{{ ansible_managed \| comment }}`, `meta/argument_specs.yml`, **`README.md`**. Loops: `loop_control.loop_var` with `__rolename_…` (never bare `item`) |
 | Playbook | `playbooks/type_<category>.yml` (roles only) |
 | Inventory | `inventory/sample/groups_and_hosts` + `group_vars/` |
 | Operate | `RUNBOOK.md` (generic `$AUTOMATION_HOME` paths) |
@@ -49,7 +49,7 @@ Do **not** create `ntp_sync_windows` or a second repo.
 
 1. Tooling: `pip install -r requirements-dev.txt`
 2. Ensure `$AUTOMATION_REPO` exists (init collection if needed)
-3. `git checkout -b feature/<ticket>-<function>-short-name`
+3. `git checkout -b feature/<ticket>-rolename-short-name`
 4. Add role + playbook + docs + inventory
 5. Verify and commit
 

@@ -23,7 +23,7 @@ The **automation-home** workspace is a Git monorepo. Nested repositories are **s
 │   └── automation/          # <-- AUTOMATION_REPO (submodule)
 │       ├── galaxy.yml
 │       ├── roles/
-│       │   └── <function>/
+│       │   └── rolename/
 │       ├── playbooks/
 │       └── inventory/sample/
 └── skills/
@@ -35,9 +35,9 @@ The **automation-home** workspace is a Git monorepo. Nested repositories are **s
 
 **One Git repository** for the team. Each automation adds:
 
-- `roles/<function>/` — one role per capability
+- `roles/rolename/` — one role per capability
 - `playbooks/type_<category>.yml` — thin type playbooks
-- `docs/<function>/INTAKE.md` and `DESIGN.md` — optional but recommended per capability
+- `docs/rolename/INTAKE.md` and `DESIGN.md` — optional but recommended per capability
 
 ### First-time setup (collection does not exist yet)
 
@@ -62,21 +62,39 @@ pip install -r "$AUTOMATION_HOME/requirements-dev.txt"
 pre-commit install
 ```
 
+**AI shortcut (new collection):**
+
+```text
+I am operating in Mode 2: The Builder.
+Use skill automation-new-automation.
+
+Initialize deliveries/automation/ collection per git-automation-repository.md:
+galaxy.yml, lint templates, pre-commit. List files before editing.
+```
+
+```bash
+git remote add origin <url>/<group>/automation.git
+git push -u origin main
+```
+
 ### Adding a new capability (collection already exists)
 
 ```bash
 export AUTOMATION_REPO="$AUTOMATION_HOME/deliveries/automation"
 cd "$AUTOMATION_REPO"
 git checkout main && git pull
-git checkout -b feature/<ticket>-<function>-short-name
-# add roles/<function>/, playbooks/, docs/, inventory updates
+git checkout -b feature/<ticket>-rolename-short-name
+# add roles/rolename/, playbooks/, docs/, inventory updates
 pre-commit run --all-files
-git commit -m "feat: add <function> automation"
+git commit -m "feat: add rolename automation"
 ```
 
-```bash
-git remote add origin <url>/<group>/automation.git
-git push -u origin main
+**AI shortcut:**
+
+```text
+I am operating in Mode 2: The Builder.
+Follow create-new-from-scratch.md Steps 3–7 for rolename in deliveries/automation/.
+Collection exists — feature branch only. List files before editing.
 ```
 
 Continue with [create-new-automation-step-by-step.md](create-new-automation-step-by-step.md).

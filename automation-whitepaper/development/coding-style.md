@@ -8,8 +8,8 @@ Coding standards aligned with GPA **Coding Style** and the [strategic proposal](
 
 - Valid Python identifiers: `snake_case` for files, variables, keys
 - **`_` prefix (internal):** Variables for internal task logic, `register` results, or backend computations use a leading underscore (e.g. `_raw_package_list`, `_puppet_environment`). Overrides generic COP naming where the white book mandates isolation.
-- **Role/function prefix (public):** Exposed parameters in `defaults/main.yml` must be prefixed with the host role or function name (e.g. `nginx_max_connections`, not `max_connections`).
-- **`__` prefix (role loops):** In roles, `loop_control.loop_var` uses `__<function>_…` — see §3 Ansible-specific.
+- **`rolename_*` prefix (public, GPA):** Exposed parameters in `defaults/main.yml` must be prefixed with the role name (e.g. `nginx_max_connections`, not `max_connections`).
+- **`__rolename_*` (role loops, GPA):** In roles, `loop_control.loop_var` uses `__rolename_…` — see §3 Ansible-specific.
 - No special characters in variable names (even if YAML allows)
 - Descriptive names; pattern `object[_feature]_action` for roles/playbooks
 - **No numbered** roles/playbooks (`web_01`)

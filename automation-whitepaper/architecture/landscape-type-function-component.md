@@ -15,7 +15,7 @@ The **L/T/F/C inventory matrix** classifies every automation asset. No role or p
 
 **Example mapping:** Landscape `production` · Type `rhel` · Function `webserver` · Component `nginx`.
 
-Every new capability documents its L/T/F/C placement in `docs/<function>/DESIGN.md` or the design note.
+Every new capability documents its L/T/F/C placement in `docs/rolename/DESIGN.md` or the design note.
 
 ---
 

@@ -232,7 +232,8 @@ All Ansible code must follow [automation-whitepaper/quality/](automation-whitepa
 - **Naming conventions**:
   - `snake_case` for all identifiers
   - `rolename_*` for public role variables
-  - `__rolename_*` for internal variables
+  - `_…` for internal variables (single leading underscore)
+  - `__rolename_…` for `loop_control.loop_var` in roles
   - Imperative task names
 
 - **Loop variables**:
@@ -240,10 +241,10 @@ All Ansible code must follow [automation-whitepaper/quality/](automation-whitepa
   # Good
   - name: Process items
     ansible.builtin.debug:
-      msg: "{{ __myfunction_item }}"
-    loop: "{{ myfunction_list }}"
+      msg: "{{ __rolename_item }}"
+    loop: "{{ rolename_list }}"
     loop_control:
-      loop_var: __myfunction_item
+      loop_var: __rolename_item
 
   # Bad - bare 'item'
   - name: Process items
