@@ -54,6 +54,14 @@ Add those lines to your shell profile if you work here often.
 | **Only read standards** | [01-main-guide.md](../01-main-guide.md) or [README.md](../README.md) |
 | **Use AI agents** | Continue to Step 4 below, then [ai-prompt-examples.md](ai-prompt-examples.md) |
 
+**AI shortcut (route me):**
+
+```text
+Read AGENTS.md. My goal: [review existing Ansible | build new capability | read standards only].
+Which guide, mode (Auditor / Builder / Librarian), and skills should I use?
+Declare mode before any YAML.
+```
+
 ---
 
 ## Step 4 — Optional: configure AI (pick one tool)
@@ -64,6 +72,14 @@ Add those lines to your shell profile if you work here often.
 | **Claude / Copilot / other** | Point the agent at `AGENTS.md` + one `skills/*/SKILL.md` — see [TOOL-SETUP.md](../../skills/TOOL-SETUP.md) |
 
 In every AI session, the agent must **declare its mode** before writing YAML.
+
+**AI shortcut (first session):**
+
+```text
+Read AGENTS.md and skills/TOOL-SETUP.md.
+AUTOMATION_HOME and AUTOMATION_REPO are set.
+Confirm my tool (Cursor / Claude / Copilot) is configured. List available skills for my goal.
+```
 
 ---
 
@@ -79,6 +95,14 @@ Syntax-check an example playbook:
 ```bash
 ansible-playbook --syntax-check \
   automation-whitepaper/examples/light-dev-packages/playbooks/type_dev_workstation.yml
+```
+
+**AI shortcut:**
+
+```text
+Run make validate (or pre-commit run --all-files) and ansible-playbook --syntax-check
+on automation-whitepaper/examples/light-dev-packages/playbooks/type_dev_workstation.yml.
+Report results — no file edits.
 ```
 
 ---

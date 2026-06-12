@@ -78,6 +78,14 @@ One ticket or backlog item with: **problem**, **who cares**, **approx. scale**, 
 
 Details: [intake-and-prioritization.md](../lifecycle/intake-and-prioritization.md).
 
+**AI shortcut:**
+
+```text
+I am operating in Mode 2: The Builder.
+Draft docs/rolename/INTAKE.md: problem, success criteria, scope (prod vs lab), hosts.
+No YAML. Profile: [Light | Standard | Heavy].
+```
+
 ---
 
 ## 4. Design (keep it short)
@@ -95,6 +103,14 @@ Details: [intake-and-prioritization.md](../lifecycle/intake-and-prioritization.m
 - [ ] Design note written (in ticket or PR)
 - [ ] Reviewed with Ops or second engineer — **(gate)** for **standard** / **heavy**; *self-check OK for **light***
 
+**AI shortcut (no YAML yet):**
+
+```text
+I am operating in Mode 2: The Builder.
+Profile: [Light | Standard | Heavy]. INTAKE + DESIGN outline for rolename. No YAML yet.
+L/T/F/C, SSOT, public rolename_* vars, risk. Output docs/rolename/DESIGN.md draft.
+```
+
 ---
 
 ## 5. Build
@@ -104,22 +120,22 @@ Work **inside `<automation-repo>`** (not only on a local folder outside Git).
 ### 5.1 Scaffold
 
 - [ ] Feature branch created: `feature/<ticket>-short-name`
-- [ ] Capability added to **shared collection** (`galaxy.yml` present; new `roles/<function>/`)
-- [ ] Role scaffolded (`ansible-galaxy init roles/<rolename>` or team template)
+- [ ] Capability added to **shared collection** (`galaxy.yml` present; new `roles/rolename/`)
+- [ ] Role scaffolded (`ansible-galaxy init roles/rolename` or team template)
 - [ ] Thin type playbook created under `playbooks/`
 - [ ] Sample inventory directory created (`groups_and_hosts`, `group_vars/`)
 
 ```bash
 cd "$AUTOMATION_REPO"
 git checkout -b feature/<ticket>-short-name
-ansible-galaxy init roles/<rolename>
+ansible-galaxy init roles/rolename
 ```
 
 Minimum tree:
 
 ```
-├── playbooks/type_<name>.yml
-├── roles/<rolename>/
+├── playbooks/type_<category>.yml
+├── roles/rolename/
 │   ├── defaults/main.yml
 │   ├── vars/                    # if multi-OS
 │   ├── tasks/main.yml
@@ -131,6 +147,16 @@ Minimum tree:
 └── inventory/sample/
     ├── groups_and_hosts
     └── group_vars/
+```
+
+**AI shortcut (scaffold only):**
+
+```text
+I am operating in Mode 2: The Builder.
+Scaffold rolename in deliveries/automation/ per approved DESIGN.md:
+roles/rolename/, playbooks/type_<category>.yml, inventory/sample/.
+List files before editing. No task logic yet.
+Follow AGENTS.md and automation-new-automation skill.
 ```
 
 ### 5.2 Implement
@@ -148,6 +174,17 @@ Minimum tree:
 
 Details: [development/roles.md](../development/roles.md), [development/playbooks.md](../development/playbooks.md).
 
+**AI shortcut:**
+
+```text
+I am operating in Mode 2: The Builder.
+Implement deliveries/automation/roles/rolename/ per approved DESIGN.md.
+Use skills automation-builder and automation-role-development.
+Profile: [Light | Standard | Heavy]. Follow AGENTS.md bootstrap rules (FQCN, rolename_*, loop_control).
+Align to automation-whitepaper/examples/[light-dev-packages | standard-rsyslog-forwarding]/.
+List files before editing.
+```
+
 ---
 
 ## 6. Verify locally
@@ -163,6 +200,16 @@ Run from `<automation-repo>`:
 
 [pre-commit.md](../quality/pre-commit.md) · [idempotency-and-check-mode.md](../quality/idempotency-and-check-mode.md)
 
+**AI shortcut:**
+
+```text
+Run ansible-playbook --syntax-check and pre-commit run --all-files
+in deliveries/automation/. Report results.
+
+If gates fail, switch to Mode 1: The Auditor and use automation-quality-gates.
+Same thread as Implement step.
+```
+
 ---
 
 ## 7. Ship
@@ -176,6 +223,15 @@ Run from `<automation-repo>`:
 - [ ] Version tagged; execution environment updated — *if shared collection or prod*
 - [ ] Controller job template created/updated + runbook linked — *prod or team standard*
 - [ ] CMDB To-Be update ticket — *only if CMDB owns that data*
+
+**AI shortcut:**
+
+```text
+Draft PR title and body for deliveries/automation/ feature branch.
+Include: DESIGN.md summary, test output, profile gates (peer review, UAT, CAB as applicable).
+Format: .github/PULL_REQUEST_TEMPLATE.md
+Do not commit or push unless I ask.
+```
 
 ---
 

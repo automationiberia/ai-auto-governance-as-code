@@ -21,16 +21,16 @@ export AUTOMATION_REPO="$AUTOMATION_HOME/deliveries/automation"
 
 | Change | Do | Don't |
 |--------|-----|--------|
-| New OS | `roles/<fn>/tasks/platforms/Windows.yml` | New role `<fn>_windows` |
+| New OS | `roles/rolename/tasks/platforms/Windows.yml` | New role `rolename_windows` |
 | New NTP server | `inventory/sample/group_vars/all/*.yml` | Hardcode in tasks |
-| New host type | `playbooks/type_<new>.yml` + inventory group | New Git repo |
+| New host type | `playbooks/type_<category>.yml` + inventory group | New Git repo |
 | Unrelated capability | New `roles/<other>/` in **same** collection | New `deliveries/<initiative>/` repo |
 
 ## Workflow
 
 1. `cd "$AUTOMATION_REPO"`
 2. `git checkout -b feature/<ticket>-short-name`
-3. Update `docs/<function>/DESIGN.md`, repo `CHANGELOG.md`, `RUNBOOK.md`, inventory
+3. Update `docs/rolename/DESIGN.md`, repo `CHANGELOG.md`, `RUNBOOK.md`, inventory
 4. Modify existing role; loops use `loop_control.loop_var` + `__` prefix (never `item`); add `collections/requirements.yml` if needed
 5. `ansible-galaxy collection install -r collections/requirements.yml` (if present)
 6. `--syntax-check` all affected type playbooks; `pre-commit run --all-files`

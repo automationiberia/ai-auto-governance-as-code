@@ -29,7 +29,7 @@ Typical targets:
 
 | What | Path |
 |------|------|
-| Function role | `roles/<function>/` |
+| Function role | `roles/rolename/` |
 | Type playbook | `playbooks/type_<category>.yml` |
 | Reference example | `automation-whitepaper/examples/standard-rsyslog-forwarding/` |
 
@@ -44,29 +44,29 @@ git checkout -b fix/<ticket>-short-description
 
 ## Step 2 — Evaluate (audit)
 
-### Option A — With AI (fastest)
-
-In Cursor / Claude / Copilot, attach `AGENTS.md` and `skills/automation-auditor/SKILL.md`, then:
+**AI shortcut:**
 
 ```text
 I am operating in Mode 1: The Auditor.
 
-Review deliveries/automation/roles/<function>/ for white book compliance.
+Review deliveries/automation/roles/rolename/ for white book compliance.
 Findings only — do not edit files yet.
 
 Output: summary by severity, findings table, refactor plan.
 ```
 
+Attach: `@AGENTS.md` `@skills/automation-auditor/SKILL.md` `@deliveries/automation/roles/rolename/`
+
 More prompts: [ai-prompt-examples.md § Primary workflow](ai-prompt-examples.md#3-primary-workflow--review-refactor-governance).
 
-### Option B — Manual checklist (no AI)
+### Manual checklist (no AI)
 
 | Check | Pass? |
 |-------|-------|
 | Every task has `name:` | |
 | Modules use FQCN (`ansible.builtin.*`) | |
 | No `with_items` — use `loop` + `loop_control` | |
-| Role loops use `__<function>_…`, not bare `item` | |
+| Role loops use `__rolename_…`, not bare `item` | |
 | Public vars prefixed: `rolename_*` | |
 | Internal vars use `_` prefix | |
 | No `shell`/`command` without justification + `changed_when` | |
@@ -91,24 +91,35 @@ Write down (ticket or PR description):
 2. **What** you will change (minimal diff)
 3. **What** you will **not** change (scope boundary)
 
-For **standard** / **heavy** profiles, update `docs/<function>/DESIGN.md` if behaviour or interfaces change.
+For **standard** / **heavy** profiles, update `docs/rolename/DESIGN.md` if behaviour or interfaces change.
+
+**AI shortcut:**
+
+```text
+Same thread as Step 2 (Auditor).
+
+Summarize findings into a PR plan: what to change (file + rule), what stays out of scope.
+No edits yet — plan only.
+```
 
 ---
 
 ## Step 4 — Apply fixes
 
-### Option A — With AI
-
-Same chat thread as Step 2:
+**AI shortcut:**
 
 ```text
 I am operating in Mode 2: The Builder.
 
 Apply the Auditor refactor plan from this conversation. Minimal diffs only.
-Follow AGENTS.md bootstrap rules.
+Use skills automation-builder and automation-role-development.
+Follow AGENTS.md bootstrap rules (FQCN, rolename_*, loop_control).
+Fix High and Medium findings first.
 ```
 
-### Option B — Manual
+Same chat thread as Steps 2–3. More prompts: [ai-prompt-examples.md § Step 2](ai-prompt-examples.md#step-2--apply-auditor-findings-mode-2).
+
+### Manual fixes
 
 Fix findings in priority order: **High → Medium → Low**.
 
@@ -117,9 +128,9 @@ Common fixes:
 | Finding | Fix |
 |---------|-----|
 | Bare module name | Add FQCN |
-| `with_items` | `loop:` + `loop_control.loop_var: __<fn>_item` |
+| `with_items` | `loop:` + `loop_control.loop_var: __rolename_item` |
 | Bare `item` in role | Rename loop var with `__` prefix |
-| Generic var `packages` | Rename to `<rolename>_packages` |
+| Generic var `packages` | Rename to `rolename_packages` |
 | Unjustified `command` | Use module, or add comment + `changed_when` |
 
 Extending platforms (new OS): add `tasks/platforms/<OsFamily>.yml` — do **not** clone the role. See [extending-existing-automation.md](extending-existing-automation.md).
@@ -137,13 +148,23 @@ ansible-playbook playbooks/<affected>.yml -i inventory/sample/ --check   # if la
 
 Second normal run should show **no unexpected `changed`** tasks.
 
+**AI shortcut:**
+
+```text
+Run ansible-playbook --syntax-check and pre-commit run --all-files
+in deliveries/automation/. Report results.
+
+If gates fail, switch to Mode 1: The Auditor — diagnose remaining findings only.
+Same thread as Steps 2–4.
+```
+
 ---
 
 ## Step 6 — Ship
 
 ```bash
 git add -A
-git commit -m "fix(<function>): <what you fixed>"
+git commit -m "fix(rolename): <what you fixed>"
 git push -u origin HEAD
 ```
 
@@ -155,16 +176,28 @@ Open a PR on the **delivery collection** repo with:
 
 Review checklist: [code-review-and-linting.md](../quality/code-review-and-linting.md).
 
+**AI shortcut:**
+
+```text
+Draft PR title and body for deliveries/automation/ fix branch.
+Include: audit findings summary, pre-commit output, scope boundary (what was not changed).
+Format: .github/PULL_REQUEST_TEMPLATE.md
+Do not commit or push unless I ask.
+```
+
 ---
 
 ## If the audit reveals a standards gap
 
 When the same issue appears in many roles, propose a governance update (**Mode 3 — Librarian**):
 
+**AI shortcut:**
+
 ```text
 I am operating in Mode 3: The Librarian.
 
 Recurring gap: <describe>. Propose white paper + SKILL.md update — plan only.
+Use Auditor findings from this conversation. Do not edit delivery roles.
 ```
 
 ---

@@ -120,7 +120,7 @@ Where the white book does not override:
 Enterprise mandates take absolute authority when they overlap COP:
 
 - **L/T/F/C inventory matrix** — every asset must map to Landscape / Type / Function / Component ([definitions](../architecture/landscape-type-function-component.md))
-- **Variable scoping** — internal vars with `_` prefix; public vars with role/function prefix (e.g. `nginx_max_connections`); role loops `__<function>_…`
+- **Variable scoping** — internal vars with `_` prefix; public vars `rolename_*` (GPA); role loops `__rolename_…`
 - **Strict boolean typing** — unquoted lowercase `true` / `false`
 
 ### Native-first execution mandate

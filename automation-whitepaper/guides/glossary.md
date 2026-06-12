@@ -63,6 +63,7 @@ Worked example: [example-enterprise-change-flow.md](../examples/example-enterpri
 
 | Term | Meaning |
 |------|---------|
+| **Placeholder conventions** | GPA literal `rolename` + angle-bracket tokens — see table below |
 | **ITSM** | IT Service Management tool (ServiceNow, Jira Service Management, etc.) — where tickets and change records live |
 | **RFC** | Request for Change — the change record number CAB reviews |
 | **UAT** | User Acceptance Testing — application or ops team confirms behaviour on pre-prod before prod |
@@ -70,6 +71,26 @@ Worked example: [example-enterprise-change-flow.md](../examples/example-enterpri
 | **Molecule** | Automated integration test framework for Ansible roles — required on **heavy**, recommended on **standard** when shared |
 | **SSOT** | Single Source of Truth — one authoritative place for inventory or variables (CMDB, Controller, Git inventory) |
 | **Red Lines** | Non-negotiable compliance rules the human Architect sets; agents enforce via skills and pre-commit |
+
+### Placeholder conventions (guides and skills)
+
+**Role paths and variables** use the literal `rolename` from [GPA roles](../../automation-good-practices/roles/README.adoc) — substitute with your actual role name (e.g. `ntp_sync` → `roles/ntp_sync/`, `ntp_sync_servers`).
+
+Do not use alternate spellings (`<fn>`, `<function>`, `<rolename>`).
+
+| Token | Meaning | Example |
+|-------|---------|---------|
+| `rolename` | Role directory and variable prefix (GPA) | `ntp_sync`, `rsyslog_forward` |
+| `<category>` | Type playbook category | `monitoring`, `webserver` |
+| `<ticket>` | ITSM ticket ID | `JIRA-1234` |
+| `<short-name>` | Branch suffix | `ntp-windows` |
+| `<OsFamily>` | Ansible `os_family` | `RedHat`, `Windows` |
+
+| Variable pattern | Use |
+|------------------|-----|
+| `rolename_*` | Public vars in `defaults/main.yml` (GPA) |
+| `__rolename_*` | `loop_control.loop_var` in roles (GPA) |
+| `_…` | Other internal vars — registers, tuning (white book) |
 
 ---
 

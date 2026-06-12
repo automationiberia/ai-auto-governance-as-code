@@ -33,7 +33,7 @@ Do not rewrite large files without summarizing findings first unless the user as
 | Finding | Severity | Standard |
 |---------|----------|----------|
 | `with_items`, `with_dict`, `with_nested` | High | Use `loop` + `loop_control.loop_var` |
-| Bare `item` in roles | High | `__<function>_…` via `loop_control` |
+| Bare `item` in roles | High | `__rolename_…` via `loop_control` |
 | Bare module names (no FQCN) | Medium | `ansible.builtin.*` or collection FQCN |
 | Missing `name:` on tasks/plays/blocks | Medium | [coding-style.md](../../automation-whitepaper/development/coding-style.md) |
 | Public vars without `rolename_` prefix | Medium | [roles.md](../../automation-whitepaper/development/roles.md) |

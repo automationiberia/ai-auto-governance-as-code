@@ -62,7 +62,7 @@ Declare the profile in the plan before generating files.
 ## First-line YAML rules (non-negotiable)
 
 - Modules: **FQCN** (`ansible.builtin.*` or declared collection).
-- One function role per capability under `$AUTOMATION_REPO/roles/<function>/`.
+- One function role per capability under `$AUTOMATION_REPO/roles/rolename/`.
 - Type playbook: `playbooks/type_<category>.yml` (roles only, thin playbook).
 - Every task has an imperative `name:`.
 - **Native-first** — refuse `shell`/`command` when a module exists; Documentation Gate if unavoidable.
@@ -71,4 +71,4 @@ Declare the profile in the plan before generating files.
 
 - Generate into `$AUTOMATION_REPO` unless the user asks for an example under `automation-whitepaper/examples/`.
 - Run or instruct verification: syntax-check + pre-commit before claiming complete.
-- Do not skip intake/design docs (`docs/<function>/INTAKE.md`, `DESIGN.md`) for **standard** / **heavy**.
+- Do not skip intake/design docs (`docs/rolename/INTAKE.md`, `DESIGN.md`) for **standard** / **heavy**.

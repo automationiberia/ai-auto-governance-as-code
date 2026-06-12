@@ -81,8 +81,8 @@ Apply on **every** new or generated Ansible artifact:
 | **Collection model** | One shared collection at `$AUTOMATION_REPO`; one **function role** per capability; no per-initiative Git repos. |
 | **FQCN** | Use fully qualified collection names for modules (e.g. `ansible.builtin.package`, not bare `package`). |
 | **L/T/F/C** | Every asset maps to Landscape / Type / Function / Component before generation or validation. |
-| **Naming** | `snake_case`; public vars prefixed with role/function name (e.g. `nginx_max_connections`); internal/tuning vars with `_` prefix; role loops `__<function>_…`; imperative `name:` on every task. |
-| **Loops** | `loop_control.loop_var` with `__<function>_…`; never bare `item` in roles. |
+| **Naming** | `snake_case`; public vars `rolename_*` (GPA literal — e.g. `nginx_max_connections`); internal/tuning vars with `_` prefix; role loops `__rolename_…`; imperative `name:` on every task. |
+| **Loops** | `loop_control.loop_var` with `__rolename_…`; never bare `item` in roles. |
 | **Legacy** | Do not introduce `with_items` / `with_dict`; use `loop` + `loop_control`. |
 | **Native-first** | Refuse `shell`/`command` when a module exists; Documentation Gate comment + `changed_when`/`failed_when` if unavoidable. |
 | **Booleans** | Unquoted lowercase `true` / `false`. |

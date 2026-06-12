@@ -58,7 +58,7 @@ export AUTOMATION_REPO="$AUTOMATION_HOME/deliveries/automation"
 | **Name the skill** | `Use skill automation-auditor` |
 | **Name the mode** | `Operate in Mode 1: The Auditor` |
 | **Point to files** | `Read AGENTS.md and skills/automation-auditor/SKILL.md` |
-| **IDE attachment** | `@AGENTS.md` `@skills/automation-auditor/SKILL.md` `@deliveries/automation/roles/<function>/` |
+| **IDE attachment** | `@AGENTS.md` `@skills/automation-auditor/SKILL.md` `@deliveries/automation/roles/rolename/` |
 | **Reference example** | `Align with standard-rsyslog-forwarding example role` |
 
 Expected reply prefix: *I am operating in Mode N: The …*
@@ -78,20 +78,20 @@ Use this **same chat thread** for delivery roles in `deliveries/automation/`.
 
 ### Step 1 — Role compliance review (Mode 1)
 
-Attach: `@AGENTS.md` `@skills/automation-auditor/SKILL.md` `@skills/automation-role-development/SKILL.md` `@deliveries/automation/roles/<function>/`
+Attach: `@AGENTS.md` `@skills/automation-auditor/SKILL.md` `@skills/automation-role-development/SKILL.md` `@deliveries/automation/roles/rolename/`
 
 ```text
 Read AGENTS.md and use skills automation-auditor and automation-role-development.
 I am operating in Mode 1: The Auditor.
 
-Review the role at deliveries/automation/roles/<function>/ for compliance with
+Review the role at deliveries/automation/roles/rolename/ for compliance with
 this repository's standards. Do not rewrite files — findings only.
 
 Check against:
 - AGENTS.md bootstrap rules (FQCN, no with_items, task name on every task)
 - automation-whitepaper/development/roles.md and coding-style.md
-- _ prefix for internal vars; __<function>_… for loop_control.loop_var (no bare item)
-- rolename_* public vars; tasks/platforms/ for multi-OS; meta/argument_specs.yml; role README.md
+- _ prefix for internal vars; __rolename_… for loop_control.loop_var (no bare item)
+- `rolename_*` public vars; tasks/platforms/ for multi-OS; meta/argument_specs.yml; role README.md
 - Idempotency, handlers vs when-changed, templates with ansible_managed
 - Compare structure to automation-whitepaper/examples/standard-rsyslog-forwarding/roles/rsyslog_forward/
 
@@ -103,19 +103,19 @@ Output:
 5. pre-commit / syntax-check commands to run after fixes
 ```
 
-Example: `<function>` → `ntp_sync`.
+Example: substitute `rolename` → `ntp_sync`.
 
 ### Step 2 — Apply Auditor findings (Mode 2)
 
 Same thread — use the findings table and refactor plan **already in context**.
 
-Attach: `@AGENTS.md` `@skills/automation-builder/SKILL.md` `@skills/automation-role-development/SKILL.md` `@deliveries/automation/roles/<function>/`
+Attach: `@AGENTS.md` `@skills/automation-builder/SKILL.md` `@skills/automation-role-development/SKILL.md` `@deliveries/automation/roles/rolename/`
 
 ```text
 Read AGENTS.md. Use skills automation-builder and automation-role-development.
 I am operating in Mode 2: The Builder. I have evaluated Red Hat COP baseline rules against white book overrides.
 
-I have Auditor findings for deliveries/automation/roles/<function>/ from Step 1
+I have Auditor findings for deliveries/automation/roles/rolename/ from Step 1
 in this conversation. Use the Auditor findings table and refactor plan that
 already exists in the context. Implement the refactor plan — minimal diffs only.
 
@@ -151,7 +151,7 @@ Read AGENTS.md. Use skill automation-librarian.
 I am operating in Mode 3: The Librarian.
 
 Context: I completed Step 1 (Auditor) and Step 2 (Builder) for
-deliveries/automation/roles/<function>/ in this conversation.
+deliveries/automation/roles/rolename/ in this conversation.
 
 Use the Auditor findings and Builder refactor summary already in the context
 (recurring gaps or new pattern worth standardizing).
@@ -193,7 +193,7 @@ Suggest fixes with paths; run pre-commit if I ask you to apply fixes.
 ```text
 Use automation-auditor.
 
-Compare deliveries/automation/roles/<function>/ to
+Compare deliveries/automation/roles/rolename/ to
 automation-whitepaper/examples/standard-rsyslog-forwarding/roles/rsyslog_forward/.
 What structural gaps exist? Cite paths only, no pasted YAML blocks.
 ```
@@ -219,10 +219,10 @@ For greenfield or extending capabilities in **`ai-auto-deliveries`** (`deliverie
 Use skill automation-builder and automation-new-automation. Read AGENTS.md.
 
 Profile: Standard.
-Create a new capability <function> in $AUTOMATION_REPO:
-- one function role under roles/<function>/
+Create a new capability rolename in $AUTOMATION_REPO:
+- one function role under roles/rolename/
 - type playbook playbooks/type_<category>.yml
-- docs/<function>/INTAKE.md and DESIGN.md
+- docs/rolename/INTAKE.md and DESIGN.md
 - inventory sample under inventory/sample/
 
 Follow standard-rsyslog-forwarding patterns. FQCN only. List files before editing.
@@ -243,7 +243,7 @@ Mirror automation-whitepaper/examples/light-dev-packages/. List files before edi
 Use automation-builder, automation-role-development, and
 automation-whitepaper/guides/extending-existing-automation.md.
 
-Add platform support for <OsFamily> to deliveries/automation/roles/<function>/
+Add platform support for <OsFamily> to deliveries/automation/roles/rolename/
 using tasks/platforms/<OsFamily>.yml — do not clone the role.
 ```
 
@@ -261,7 +261,7 @@ No YAML — design note only.
 ```text
 Use automation-playbook-inventory in Mode 2.
 
-Add inventory sample and thin type playbook for role <function> in deliveries/automation/.
+Add inventory sample and thin type playbook for role rolename in deliveries/automation/.
 Roles only in playbook — no business logic in playbook.
 ```
 
@@ -321,13 +321,13 @@ No shell puppet agent. No native refactor.
 Use automation-builder and automation-new-automation. Profile: Standard.
 
 Trigger: <major functional change | architectural rewrite | scope expansion>.
-Refactor Puppet `<module>` to native role `<function>`. Design before YAML.
+Refactor Puppet `<module>` to native role `rolename`. Design before YAML.
 ```
 
 ### Phase 2.3 — Greenfield (native Ansible only)
 
 ```text
-Mode 2 — Builder. Phase 2.3. New capability `<function>` — native Ansible only.
+Mode 2 — Builder. Phase 2.3. New capability `rolename` — native Ansible only.
 Do not create Puppet modules. Follow AGENTS.md.
 ```
 
@@ -367,7 +367,7 @@ Flag: shell puppet, missing summarize, deprecated timeout param, non-FQCN.
 ### Design → implement → gate (greenfield)
 
 ```text
-Step 1 (Builder): Standard profile — INTAKE + DESIGN outline for <function>. No YAML.
+Step 1 (Builder): Standard profile — INTAKE + DESIGN outline for rolename. No YAML.
 ```
 
 ```text

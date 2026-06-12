@@ -86,7 +86,7 @@ Delivery code: deliveries/automation/ ($AUTOMATION_REPO).
 
 ```text
 Read AGENTS.md in this project. Operate in Mode 1: The Auditor.
-Follow skills/automation-auditor/SKILL.md. Audit deliveries/automation/roles/<function>/.
+Follow skills/automation-auditor/SKILL.md. Audit deliveries/automation/roles/rolename/.
 ```
 
 Do **not** rely on `.mdc` unless your Claude product documents that format; **`SKILL.md` here is markdown**.
@@ -125,7 +125,7 @@ Do **not** rely on `.mdc` unless your Claude product documents that format; **`S
    Then follow <path>/skills/<skill-name>/SKILL.md.
    ```
 
-3. Use **paths**, not pasted YAML — e.g. `deliveries/automation/roles/<function>/tasks/main.yml`.
+3. Use **paths**, not pasted YAML — e.g. `deliveries/automation/roles/rolename/tasks/main.yml`.
 
 **No extra scripts required** — skip `link-cursor-skills.sh` unless you also use Cursor.
 

@@ -39,13 +39,25 @@ export AUTOMATION_REPO="$AUTOMATION_HOME/deliveries/automation"
 
 ```
 ai-auto-governance-as-code/
-├── automation-whitepaper/    # Standards, architecture, examples
-├── skills/                   # AI agent skills (SKILL.md files)
-├── automation-good-practices/# Red Hat CoP submodule
-├── deliveries/automation/    # Actual Ansible collection (submodule)
-├── AGENTS.md                 # AI agent operating modes
-└── Makefile                  # Common tasks (make help)
+├── automation-whitepaper/      # Standards, architecture, examples
+├── skills/                     # AI agent skills (SKILL.md files)
+├── automation-good-practices/  # Red Hat CoP submodule (GPA baseline)
+├── deliveries/                 # Delivery submodule wrapper
+│   ├── README.md               # Submodule wiring and SSH setup
+│   └── automation/             # Shared Ansible collection (submodule)
+├── docs/                       # Operational guides (e.g. pre-commit)
+├── .github/                    # CI workflows, PR/issue templates
+├── AGENTS.md                   # AI agent operating modes
+├── requirements-dev.txt        # Dev dependencies
+├── .pre-commit-config.yaml     # Quality gates (governance repo + examples)
+├── Makefile                    # Common tasks (make help)
+├── CONTRIBUTING.md             # Contribution workflow
+├── CHANGELOG.md                # Release history
+├── SECURITY.md                 # Security reporting
+└── .devfile.yaml               # OpenShift Dev Spaces workspace
 ```
+
+Full layout and data flow: [monorepo layout](automation-whitepaper/architecture/monorepo-layout.md).
 
 ## 📚 Key Documentation
 

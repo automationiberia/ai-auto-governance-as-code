@@ -71,7 +71,7 @@ Base architectural standard: [Red Hat CoP automation-good-practices](https://git
 | Rule | Requirement |
 |------|-------------|
 | **`_` prefix (internal)** | Variables for **internal** task logic, private loops, or backend computations use a leading underscore (e.g. `_internal_retry_count`, `_puppet_environment`). **Public** variables overridable from inventory omit the prefix. |
-| **`__` loop variables (roles)** | In roles, `loop_control.loop_var` uses `__<function>_…` per GPA — see [coding-style.md](../development/coding-style.md). |
+| **`__` loop variables (roles)** | In roles, `loop_control.loop_var` uses `__rolename_…` per GPA — see [coding-style.md](../development/coding-style.md). |
 | **Syntax restrictions** | `with_items`, `with_dict`, and similar legacy loops are **blocked**; use native `loop` + `loop_control`. |
 | **FQCN** | Fully qualified collection names for all modules. |
 

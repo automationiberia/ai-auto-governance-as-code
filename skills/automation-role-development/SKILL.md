@@ -21,7 +21,7 @@ Study: `tasks/set_vars.yml`, `meta/argument_specs.yml`, `templates/*.j2` in stan
 
 ## Rules
 
-- `rolename_*` public; `__rolename_*` internal
+- `rolename_*` public; `_…` internal; `__rolename_…` for `loop_control.loop_var`
 - `role_path` in includes
 - No hardcoded inventory groups
 - README + idempotency/check mode
@@ -46,4 +46,4 @@ Narrative only: `examples/example-role-interface.md`
 ## Agent behavior
 
 - Declare active mode per [AGENTS.md](../../AGENTS.md) (review → **Auditor**; new role → **Builder**).
-- Edit files under `roles/<name>/`; cite paths in review comments.
+- Edit files under `roles/rolename/`; cite paths in review comments.
