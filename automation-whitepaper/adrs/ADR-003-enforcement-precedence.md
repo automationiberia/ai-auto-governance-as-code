@@ -1,7 +1,7 @@
 # ADR-003: Establish enforcement precedence hierarchy
 
-**Status:** Accepted (example)  
-**Type:** GOVERNANCE_RULE  
+**Status:** Accepted (example)
+**Type:** GOVERNANCE_RULE
 **Enforcement:** Auditor (strict); all modes
 
 ## Context

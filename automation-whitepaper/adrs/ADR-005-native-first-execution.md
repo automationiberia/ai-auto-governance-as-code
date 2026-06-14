@@ -1,7 +1,7 @@
 # ADR-005: Enforce native-first Ansible execution policy
 
-**Status:** Accepted (example)  
-**Type:** CODING_STANDARD  
+**Status:** Accepted (example)
+**Type:** CODING_STANDARD
 **Enforcement:** Builder + Auditor
 
 ## Context

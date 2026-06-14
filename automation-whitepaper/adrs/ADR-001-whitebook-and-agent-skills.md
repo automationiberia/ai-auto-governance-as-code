@@ -1,7 +1,7 @@
 # ADR-001: White book and Agent Skills governance model
 
-**Status:** Accepted (example)  
-**Type:** STRUCTURAL  
+**Status:** Accepted (example)
+**Type:** STRUCTURAL
 **Enforcement:** White book + skills; Auditor + Builder
 
 ## Context

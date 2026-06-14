@@ -1,7 +1,7 @@
 # ADR-006: Define L/T/F/C inventory model as mandatory structural standard
 
-**Status:** Accepted (example)  
-**Type:** STRUCTURAL  
+**Status:** Accepted (example)
+**Type:** STRUCTURAL
 **Enforcement:** Builder + Auditor
 
 ## Context

@@ -1,7 +1,7 @@
 # ADR-004: Librarian synchronization (not automated compilation)
 
-**Status:** Accepted (example)  
-**Type:** EVOLUTION_RULE  
+**Status:** Accepted (example)
+**Type:** EVOLUTION_RULE
 **Enforcement:** Librarian
 
 ## Context

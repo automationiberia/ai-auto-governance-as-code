@@ -1,7 +1,7 @@
 # ADR-002: AI execution modes and manual operating path
 
-**Status:** Accepted (example)  
-**Type:** STRUCTURAL  
+**Status:** Accepted (example)
+**Type:** STRUCTURAL
 **Enforcement:** `AGENTS.md` + mode skills; all modes
 
 ## Context
