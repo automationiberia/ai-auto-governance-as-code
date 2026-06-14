@@ -36,6 +36,8 @@ Before technical output, state:
 5. TOOL-SETUP.md sync          ← Cursor: link-cursor-skills.sh; other tools: per TOOL-SETUP
 ```
 
+Canonical skill format is **`SKILL.md`**. There is **no automated compile pipeline** to `.mdc`. Example ADR: [ADR-004-librarian-synchronization.md](../../automation-whitepaper/adrs/ADR-004-librarian-synchronization.md).
+
 Never update only `SKILL.md` without the white paper section it encodes.
 
 ## Librarian deliverables

@@ -11,28 +11,34 @@
 | **Create new automation** | [create-new-from-scratch.md](guides/create-new-from-scratch.md) · [full checklist](guides/create-new-automation-step-by-step.md) |
 | **Use AI agents** | [AI prompt examples](guides/ai-prompt-examples.md) + [../AGENTS.md](../AGENTS.md) |
 | **See examples** | [examples/](examples/) — Light & Standard profiles |
-| **Understand the architecture** | [architecture/monorepo-layout.md](architecture/monorepo-layout.md) |
+| **Understand the architecture** | [architecture/monorepo-layout.md](architecture/monorepo-layout.md) · [governance/whitebook-folder-map.md](governance/whitebook-folder-map.md) |
 
 ## 📖 Documentation Structure
 
 ```
 automation-whitepaper/
 ├── 01-main-guide.md          # Start here - complete overview
-├── governance/               # AI-driven governance, org model
+├── governance/               # AI-driven governance, org model, folder map
+├── adrs/                     # Optional decision records (exceptions)
 ├── lifecycle/                # Intake → design → test → operate
 ├── architecture/             # L/T/F/C, collections, monorepo
 ├── development/              # Roles, playbooks, coding style
 ├── quality/                  # Pre-commit, linting, idempotency
 ├── operations/               # Controller, inventory, SSOT
-├── guides/                   # Step-by-step how-tos
-└── examples/                 # Runnable reference code
+├── guides/                   # Step-by-step how-tos (manual path start)
+├── examples/                 # Runnable reference code
+└── templates/                # Bootstrap files for delivery repos
 ```
+
+Folder map: [whitebook-folder-map.md](governance/whitebook-folder-map.md).
 
 ## 📚 Key Sections
 
 ### Governance
 
-- **[AI-Driven Governance](governance/governance-as-code-ai-enforcement.md)** — Human as Architect; AI modes: Auditor / Builder / Librarian
+- **[AI-Driven Governance](governance/governance-as-code-ai-enforcement.md)** — Human as Architect; manual path + AI modes
+- **[White book folder map](governance/whitebook-folder-map.md)** — WHEN/WHERE/HOW guide to each directory
+- **[Optional ADRs](adrs/README.md)** — Exceptions and major decisions
 - **[Strategic Proposal v1.0](governance/strategic-proposal-aap-governance-evolution.md)** — AAP, Puppet, GenAI, Dev Spaces
 - [Organizational Model](governance/organizational-model-and-stakeholders.md)
 - [Roles & Responsibilities](governance/roles-and-responsibilities.md)

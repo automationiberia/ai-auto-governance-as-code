@@ -8,7 +8,7 @@ This document describes the **centralized monorepo** pattern used to separate **
 
 A single governance monorepo (this repository is commonly named **`ai-auto-governance-as-code`**) is the **single point of entry** for:
 
-- Normative standards and process documentation
+- Normative standards and process documentation (Guide-first white book)
 - Runnable reference examples
 - The **intelligence layer** (Agent Skills) that drives consistent create / review / govern behavior
 
@@ -25,8 +25,9 @@ Production implementation code lives in a **separate delivery collection** (subm
 
 | Path | Content | Functional role | Source |
 |------|---------|-----------------|--------|
-| **`automation-whitepaper/`** | White book: architecture, lifecycle, effort profiles, examples | Authoritative standards | Internal |
-| **`skills/`** | Agent Skills (`SKILL.md`; some tools use `.mdc`) | Active enforcement engine | Internal |
+| **`automation-whitepaper/`** | Guide-first white book: lifecycle, architecture, guides, optional `adrs/` | Authoritative enterprise standards (human-authored) | Internal |
+| **`skills/`** | Agent Skills (`SKILL.md`; tool mirrors optional) | AI enforcement layer (Librarian-synced) | Internal |
+| **`AGENTS.md`** | Mode selection, Builder bootstrap, precedence confirmation | AI entry point | Internal |
 | **`automation-good-practices/`** | Red Hat CoP GPA reference | Compliance baseline | Red Hat CoP (submodule) |
 | **`deliveries/automation/`** | Shared collection [`ai-auto-deliveries`](https://github.com/automationiberia/ai-auto-deliveries) | Production execution | Internal (submodule) |
 
@@ -34,9 +35,12 @@ Additional root artifacts:
 
 | Path | Function |
 |------|----------|
-| **`AGENTS.md`** | Agent bootstrap: human-as-Architect paradigm, three AI modes (Auditor / Builder / Librarian), Builder rules (FQCN, naming, collection model). |
-| **`requirements-dev.txt`**, **`.pre-commit-config.yaml`** | Mechanical quality gates for the governance repo and examples. |
-| **`deliveries/README.md`** | How the delivery submodule relates to the monorepo. |
+| **`requirements-dev.txt`**, **`.pre-commit-config.yaml`** | Mechanical quality gates for the governance repo and examples |
+| **`deliveries/README.md`** | How the delivery submodule relates to the monorepo |
+
+Canonical skill format is **`SKILL.md`**. There is **no automated compile pipeline** to `.mdc` or other formats.
+
+White book folder map: [../governance/whitebook-folder-map.md](../governance/whitebook-folder-map.md).
 
 ---
 
@@ -47,28 +51,34 @@ Additional root artifacts:
                     │  automation-good-practices  │
                     │  (Red Hat CoP GPA upstream) │
                     └──────────────┬──────────────┘
-                                   │ informs (Librarian)
+                                   │ baseline; Librarian monitors
                                    ▼
 ┌──────────────────────────────────────────────────────────────┐
-│  Governance monorepo (e.g. ai-auto-governance-as-code)                   │
-│  ┌────────────────────┐    ┌─────────────────────────────┐   │
-│  │ automation-whitepaper │──│ skills/ + AGENTS.md         │   │
-│  │ (white book)         │    │ (AI intelligence layer)    │   │
-│  └────────────────────┘    └─────────────────────────────┘   │
+│  Governance monorepo (ai-auto-governance-as-code)          │
+│  ┌────────────────────┐    ┌─────────────────────────────┐ │
+│  │ automation-whitepaper │──│ skills/ + AGENTS.md         │ │
+│  │ (Guide-first)        │    │ (AI operationalization)   │ │
+│  └────────────────────┘    └─────────────────────────────┘ │
 └──────────────────────────────┬───────────────────────────────┘
-                               │ encodes rules for
+                               │
+              ┌────────────────┴────────────────┐
+              ▼                                 ▼
+     Manual path (guides/)              AI modes (Auditor / Builder / Librarian)
+              │                                 │
+              └────────────────┬────────────────┘
                                ▼
                     ┌─────────────────────────────┐
                     │  deliveries/automation/     │
-                    │  (delivery collection,      │
-                    │   ai-auto-deliveries)       │
                     │  roles + type playbooks     │
-                    └─────────────────────────────┘
+                    └──────────────┬──────────────┘
+                                   │ pre-commit + CI
+                                   ▼
+                         mechanical validation
 ```
 
 | Layer | Consumed by |
 |-------|-------------|
-| White book | Engineers, auditors, change managers |
+| White book | Engineers (manual), auditors, change managers |
 | Agent Skills + `AGENTS.md` | AI agents (configure per [skills/TOOL-SETUP.md](../../skills/TOOL-SETUP.md)) |
 | Delivery collection | Ansible CLI, Controller, CI pipelines |
 
@@ -88,6 +98,7 @@ export AUTOMATION_REPO="$AUTOMATION_HOME/deliveries/automation"
 ## Related documents
 
 - [AI-Driven Governance-as-Code](../governance/governance-as-code-ai-enforcement.md)
+- [whitebook-folder-map.md](../governance/whitebook-folder-map.md)
 - [landscape-type-function-component.md](landscape-type-function-component.md)
 - [collections-and-execution-environments.md](collections-and-execution-environments.md)
 - [../../deliveries/README.md](../../deliveries/README.md)

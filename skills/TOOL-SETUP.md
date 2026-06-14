@@ -44,14 +44,14 @@ export AUTOMATION_REPO="$AUTOMATION_HOME/deliveries/automation"
    ./skills/scripts/link-cursor-skills.sh
    ```
 
-   This symlinks `skills/automation-*` → `.cursor/skills/` (gitignored; per-machine).
+   This symlinks `skills/automation-*` → `.cursor/skills/` (gitignored; per-machine). Removes stale links (e.g. deprecated `automation-architect`) and links current skills such as `automation-builder`.
 
 3. Open `automation-home.code-workspace` (monorepo + `deliveries/automation`).
 4. Optional project rule (Cursor Settings → Rules): *Read AGENTS.md; state Mode 1/2/3 before Ansible output.*
 
 **Invoke:** `Use skill automation-builder` · `@AGENTS.md` · `@skills/automation-auditor/SKILL.md`
 
-**Refresh:** After `git pull` adds skills, re-run `link-cursor-skills.sh`.
+**Refresh:** After `git pull` adds or renames skills, re-run `link-cursor-skills.sh` (replaces deprecated `automation-architect` with `automation-builder`).
 
 ---
 

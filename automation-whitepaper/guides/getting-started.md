@@ -13,7 +13,15 @@ One-page path from zero to productive. Deep reference: [01-main-guide.md](../01-
 | **Upstream baseline** | `automation-good-practices/` | Compare with Red Hat CoP (submodule) |
 | **Real Ansible code** | `deliveries/automation/` | Roles and playbooks in production (submodule) |
 
-**You are the Architect** (design + approval). AI agents work in **Auditor**, **Builder**, or **Librarian** mode — see [AGENTS.md](../../AGENTS.md).
+**You are the Architect** (design + approval). AI agents work in **Auditor**, **Builder**, or **Librarian** mode — see [AGENTS.md](../../AGENTS.md). You can also work **manually** (no AI): same standards, no mode declaration.
+
+### Manual path (recommended to start)
+
+1. This guide through Step 5
+2. Reference examples: **light** and **standard** under [examples/](../examples/)
+3. `pre-commit run --all-files` and `ansible-playbook --syntax-check`
+
+Folder map: [whitebook-folder-map.md](../governance/whitebook-folder-map.md).
 
 ---
 

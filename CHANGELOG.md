@@ -9,6 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Guide-first governance alignment: [whitebook-folder-map.md](automation-whitepaper/governance/whitebook-folder-map.md), optional [adrs/](automation-whitepaper/adrs/README.md) with example ADR-001…006
+- Manual operating path documented alongside AI modes (Auditor / Builder / Librarian)
+- Four-tier rule of precedence (CoP → white book → skills → mechanical gates)
+
+### Changed
+
+- Governance narrative: encode/sync (not compile); no `.mdc` pipeline; runtime rule clarifies pre-commit validates code only
+- `governance-as-code-ai-enforcement.md`, `monorepo-layout.md`, `AGENTS.md`, and skills catalog aligned with architecture definition
+
+### Added (earlier unreleased)
+
 - ASL architecture alignment: human-as-Architect paradigm, six-stage lifecycle, rule of precedence, native-first mandate
 - Mode 2 skill `automation-builder` (replaces `automation-architect`)
 - `CONTRIBUTING.md` with comprehensive contribution guidelines covering white paper, skills, and examples

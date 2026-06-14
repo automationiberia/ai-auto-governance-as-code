@@ -6,9 +6,18 @@
 
 ## Paradigm
 
-The **human is the Architect** (strategy, Red Lines, approval). AI agents operate in three **execution modes** below — see [AGENTS.md](../AGENTS.md).
+The **human is the Architect** (strategy, Red Lines, approval). AI agents operate in three **execution modes** below — or work **manually** via white book guides (no mode declaration). See [AGENTS.md](../AGENTS.md).
 
-## 🎭 Operating Modes
+## Operating paths
+
+| Path | When |
+|------|------|
+| **Manual** | Onboarding; follow [getting-started](../automation-whitepaper/guides/getting-started.md) without AI |
+| **Mode 1 — Auditor** | Review and fix existing code |
+| **Mode 2 — Builder** | Create new automation |
+| **Mode 3 — Librarian** | Update white book + skills |
+
+## 🎭 AI operating modes
 
 AI agents must declare their mode and precedence evaluation before generating code — see [AGENTS.md](../AGENTS.md).
 
