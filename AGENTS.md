@@ -25,6 +25,19 @@ The **human engineer is the Architect** — strategic design, Red Lines, and fin
 
 ---
 
+## Operating paths
+
+| Path | Operator | Use |
+|------|----------|-----|
+| **Manual** | Human engineer | Follow `automation-whitepaper/guides/` and examples; no AI mode declaration |
+| **Mode 1 — Auditor** | AI agent | Review and remediate existing code |
+| **Mode 2 — Builder** | AI agent | Greenfield or refactor to compliance |
+| **Mode 3 — Librarian** | AI agent (+ human approval) | Evolve white book and `SKILL.md` |
+
+Manual operation is **first-class** — same rules as AI modes. Start: [getting-started.md](automation-whitepaper/guides/getting-started.md).
+
+---
+
 ## Execution rule (mandatory)
 
 **Before delivering technical output**, the agent must:
@@ -38,6 +51,8 @@ The **human engineer is the Architect** — strategic design, Red Lines, and fin
    > I have evaluated Red Hat COP baseline rules against white book overrides.
 
 If the task spans modes (e.g. audit then build), state the **current** mode for each response section.
+
+**Manual (human-only) work** does not require mode declaration. **pre-commit and CI** validate **code**, not chat mode text.
 
 ---
 
@@ -63,10 +78,14 @@ Task skills (use **inside** Builder or Auditor modes as needed): see [skills/REA
 
 ## Rule of precedence
 
-| Priority | Source |
-|----------|--------|
-| **Foundation** | Red Hat CoP `automation-good-practices/` — default baseline |
-| **Supreme override** | Enterprise white book — wins on conflict |
+| Priority | Source | Rule |
+|----------|--------|------|
+| **1 — Foundation** | Red Hat CoP `automation-good-practices/` | Default baseline where white book is silent |
+| **2 — Supreme override** | Enterprise white book (`automation-whitepaper/`) | On conflict, white book wins |
+| **3 — AI encoding** | `skills/*/SKILL.md` + this file | Operationalizes 1–2 for AI; must match white book |
+| **4 — Mechanical** | pre-commit, ansible-lint, CI | Validates code artifacts |
+
+Optional ADRs in `automation-whitepaper/adrs/` document exceptions; they do not sit above the white book.
 
 Details: [governance-as-code-ai-enforcement.md](automation-whitepaper/governance/governance-as-code-ai-enforcement.md#rule-of-precedence).
 
@@ -150,13 +169,16 @@ EOF
 ## Layered stack (AI-Driven Governance-as-Code)
 
 ```text
-automation-whitepaper/     ← canonical standards (human + audit trail)
+automation-good-practices/   ← Red Hat CoP baseline (where white book silent)
         ↓
-skills/*/SKILL.md        ← encoded enforcement (agent-consumable)
+automation-whitepaper/     ← Guide-first standards (human-authored; wins on conflict)
+        ↓ Librarian sync
+skills/*/SKILL.md          ← AI operationalization
+AGENTS.md (this file)      ← mode selection + Builder bootstrap
         ↓
-AGENTS.md (this file)    ← mode selection + Builder bootstrap
+Manual path  OR  AI modes (Auditor / Builder / Librarian)
         ↓
-pre-commit + CI          ← mechanical enforcement (when enabled)
+pre-commit + CI            ← mechanical validation (code artifacts)
 ```
 
 ---

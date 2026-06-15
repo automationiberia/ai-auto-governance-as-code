@@ -45,7 +45,9 @@ For a worked three-tier example see [../examples/example-three-tier-landscape.md
 3. Do not chain numbered playbooks (`01_setup.yml`, `02_app.yml`) — use workflow or imports.
 4. Prefer re-combining existing function roles over duplicating tasks.
 
-### 3.2 Valid exceptions (document in ADR)
+### 3.2 Valid exceptions (optional ADR)
+
+Record approved exceptions in [`adrs/`](../adrs/README.md) (optional ADR). Normative L/T/F/C rules remain in this guide. Example: [ADR-006](../adrs/ADR-006-ltfc-mandatory.md).
 
 | Situation | Possible exception |
 |-----------|-------------------|

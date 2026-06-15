@@ -10,6 +10,16 @@ CURSOR_SKILLS="${ROOT}/.cursor/skills"
 
 mkdir -p "${CURSOR_SKILLS}"
 
+# Remove stale symlinks (e.g. deprecated automation-architect)
+for existing in "${CURSOR_SKILLS}"/automation-*; do
+  [[ -e "${existing}" ]] || continue
+  name="$(basename "${existing}")"
+  if [[ ! -d "${SKILLS_SRC}/${name}" ]]; then
+    rm -f "${existing}"
+    echo "Removed stale ${name}"
+  fi
+done
+
 for skill_dir in "${SKILLS_SRC}"/automation-*/; do
   [[ -d "${skill_dir}" ]] || continue
   name="$(basename "${skill_dir}")"
