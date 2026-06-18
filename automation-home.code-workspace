@@ -3,10 +3,6 @@
     {
       "name": "automation-home",
       "path": "."
-    },
-    {
-      "name": "delivery-collection",
-      "path": "deliveries/automation"
     }
   ],
   "settings": {
