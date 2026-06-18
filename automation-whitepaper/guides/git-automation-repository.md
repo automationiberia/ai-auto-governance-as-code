@@ -97,7 +97,7 @@ Follow create-new-from-scratch.md Steps 3–7 for rolename in deliveries/automat
 Collection exists — feature branch only. List files before editing.
 ```
 
-Continue with [create-new-automation-step-by-step.md](create-new-automation-step-by-step.md).
+Continue with [create-new-from-scratch.md](create-new-from-scratch.md).
 
 ---
 
@@ -130,6 +130,6 @@ git push -u origin feature/<ticket>-short-name
 
 ## Related
 
-- [create-new-automation-step-by-step.md](create-new-automation-step-by-step.md)
-- [extending-existing-automation.md](extending-existing-automation.md)
+- [create-new-from-scratch.md](create-new-from-scratch.md)
+- [evaluate-and-update-existing.md](evaluate-and-update-existing.md)
 - [quality/pre-commit.md](../quality/pre-commit.md)

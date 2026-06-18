@@ -100,7 +100,7 @@ Use **Mode 3 — Librarian** when updating:
 
 | Skill | Use when | White paper |
 |-------|----------|-------------|
-| [automation-new-automation](automation-new-automation/SKILL.md) | New automation end-to-end | [step-by-step guide](../automation-whitepaper/guides/create-new-automation-step-by-step.md) |
+| [automation-new-automation](automation-new-automation/SKILL.md) | New automation end-to-end | [create-new-from-scratch guide](../automation-whitepaper/guides/create-new-from-scratch.md) |
 | [automation-pre-commit](automation-pre-commit/SKILL.md) | Hooks, lint failures | [pre-commit.md](../automation-whitepaper/quality/pre-commit.md) |
 | [automation-lifecycle](automation-lifecycle/SKILL.md) | Six-stage lifecycle | [lifecycle/](../automation-whitepaper/lifecycle/) |
 | [automation-architecture](automation-architecture/SKILL.md) | L/T/F/C, collections | [architecture/](../automation-whitepaper/architecture/) |

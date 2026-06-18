@@ -4,14 +4,16 @@
 
 ## 🚀 Quick Navigation
 
-| I want to... | Go to |
-|--------------|-------|
-| **Start here (first visit)** | [getting-started.md](guides/getting-started.md) |
-| **Review or fix existing code** | [evaluate-and-update-existing.md](guides/evaluate-and-update-existing.md) |
-| **Create new automation** | [create-new-from-scratch.md](guides/create-new-from-scratch.md) · [full checklist](guides/create-new-automation-step-by-step.md) |
-| **Use AI agents** | [AI prompt examples](guides/ai-prompt-examples.md) + [../AGENTS.md](../AGENTS.md) |
-| **See examples** | [examples/](examples/) — Light & Standard profiles |
+
+| I want to...                    | Go to                                                                                                                                         |
+| ------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Start here (first visit)**    | [getting-started.md](guides/getting-started.md)                                                                                               |
+| **Review or fix existing code** | [evaluate-and-update-existing.md](guides/evaluate-and-update-existing.md)                                                                     |
+| **Create new automation**       | [create-new-from-scratch.md](guides/create-new-from-scratch.md)                                                                               |
+| **Use AI agents**               | [AI prompt examples](guides/ai-prompt-examples.md) + [../AGENTS.md](../AGENTS.md)                                                             |
+| **See examples**                | [examples/](examples/) — Light & Standard profiles                                                                                            |
 | **Understand the architecture** | [architecture/monorepo-layout.md](architecture/monorepo-layout.md) · [governance/whitebook-folder-map.md](governance/whitebook-folder-map.md) |
+
 
 ## 📖 Documentation Structure
 
@@ -73,13 +75,11 @@ Folder map: [whitebook-folder-map.md](governance/whitebook-folder-map.md).
 
 - **[Getting started](guides/getting-started.md)** — Clone, setup, first steps
 - **[Evaluate & update existing](guides/evaluate-and-update-existing.md)** — Audit and fix roles/playbooks
-- **[Create new from scratch](guides/create-new-from-scratch.md)** — Greenfield in 7 steps
+- **[Create new from scratch](guides/create-new-from-scratch.md)** — Greenfield checklist with gates, CAB, Molecule
 - **[Glossary](guides/glossary.md)** — Gates, CAB, UAT, profiles
-- **[New automation (full checklist)](guides/create-new-automation-step-by-step.md)** — Gates, CAB, Molecule
 - **[AI Prompt Examples](guides/ai-prompt-examples.md)** — Copy-paste prompts
 - [Git Workflow](guides/git-automation-repository.md)
 - [Dev Spaces Setup](guides/devspaces-workspace.md)
-- [Extending Automation](guides/extending-existing-automation.md)
 
 ### Operations
 
@@ -90,9 +90,11 @@ Folder map: [whitebook-folder-map.md](governance/whitebook-folder-map.md).
 
 Runnable reference implementations:
 
-| Profile | Code | Walkthrough |
-|---------|------|-------------|
-| **Light** | [light-dev-packages/](examples/light-dev-packages/) | [walkthrough](examples/example-light-walkthrough-dev-packages.md) |
+
+| Profile      | Code                                                                  | Walkthrough                                                                |
+| ------------ | --------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| **Light**    | [light-dev-packages/](examples/light-dev-packages/)                   | [walkthrough](examples/example-light-walkthrough-dev-packages.md)          |
 | **Standard** | [standard-rsyslog-forwarding/](examples/standard-rsyslog-forwarding/) | [walkthrough](examples/example-complete-walkthrough-rsyslog-forwarding.md) |
+
 
 **More examples:** [Three-tier landscape](examples/example-three-tier-landscape.md) • [Inventory patterns](examples/example-inventory-good-vs-bad.md) • [Role interface](examples/example-role-interface.md) • [Enterprise change flow](examples/example-enterprise-change-flow.md)

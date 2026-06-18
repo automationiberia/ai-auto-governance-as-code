@@ -8,7 +8,7 @@ description: >-
 
 # New Automation (Step-by-Step)
 
-Checklist: `automation-whitepaper/guides/create-new-automation-step-by-step.md`
+Checklist: `automation-whitepaper/guides/create-new-from-scratch.md`
 Git: `automation-whitepaper/guides/git-automation-repository.md`
 
 ## Paths (never hardcode workspace name)

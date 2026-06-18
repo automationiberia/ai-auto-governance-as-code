@@ -2,7 +2,7 @@
 
 **Profile:** **standard** (production, shared collection).
 
-Applies [create-new-automation-step-by-step.md](../guides/create-new-automation-step-by-step.md).
+Applies [create-new-from-scratch.md](../guides/create-new-from-scratch.md).
 **Light** contrast: [example-light-walkthrough-dev-packages.md](example-light-walkthrough-dev-packages.md).
 
 **Reference code (verified):** [standard-rsyslog-forwarding/](standard-rsyslog-forwarding/) — copy into `<automation-repo>`.
@@ -139,5 +139,5 @@ ansible-playbook -i inventory/sample playbooks/type_linux_logging.yml --check
 
 ## Related
 
-- [create-new-automation-step-by-step.md](../guides/create-new-automation-step-by-step.md)
+- [create-new-from-scratch.md](../guides/create-new-from-scratch.md)
 - [example-light-walkthrough-dev-packages.md](example-light-walkthrough-dev-packages.md)

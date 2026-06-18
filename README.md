@@ -4,9 +4,9 @@
 
 Centralized governance monorepo for Ansible standards, documentation, and AI Agent Skills. Aligned with [Red Hat CoP](https://github.com/redhat-cop/automation-good-practices), adaptable to enterprise change flows.
 
-Governance is **human-authored** in the Automation Whitebook (Guide-first guides). **Red Hat CoP** is the baseline where the white book is silent; on conflict, **the white book wins**. Teams may work **manually** (guides + examples) or with AI (Auditor / Builder / Librarian). There is **no automated compile pipeline** — Librarian mode keeps skills in sync with the white book.
+Governance is **human-authored** in the [Automation White Paper](automation-whitepaper/README.md) (Guide-first guides). **Red Hat CoP** is the baseline where the white book is silent; on conflict, **the white book wins**. Teams may work **manually** (guides + examples) or with AI (Auditor / Builder / Librarian). There is **no automated compile pipeline** — Librarian mode keeps skills in sync with the white book.
 
-**New here?** Start with [Getting started](automation-whitepaper/guides/getting-started.md) (15 min).
+**New here?** Start with [Getting started](automation-whitepaper/guides/getting-started.md) (15 min). **Full standards index:** [automation-whitepaper/README.md](automation-whitepaper/README.md).
 
 | Goal | Guide |
 |------|-------|
@@ -41,7 +41,7 @@ export AUTOMATION_REPO="$AUTOMATION_HOME/deliveries/automation"
 
 ```
 ai-auto-governance-as-code/
-├── automation-whitepaper/      # Standards, architecture, examples
+├── automation-whitepaper/      # Standards, architecture, examples — index: README.md
 ├── skills/                     # AI agent skills (SKILL.md files)
 ├── automation-good-practices/  # Red Hat CoP submodule (GPA baseline)
 ├── deliveries/                 # Delivery submodule wrapper
@@ -65,13 +65,13 @@ Full layout and data flow: [monorepo layout](automation-whitepaper/architecture/
 
 | Document | Purpose |
 |----------|---------|
+| **[Automation White Paper](automation-whitepaper/README.md)** | Complete standards index: governance, lifecycle, architecture, guides, examples |
 | **[Getting started](automation-whitepaper/guides/getting-started.md)** | Clone, setup, pick your path |
 | **[Evaluate & update](automation-whitepaper/guides/evaluate-and-update-existing.md)** | Audit and fix existing automation |
-| **[Create from scratch](automation-whitepaper/guides/create-new-from-scratch.md)** | New capability in 7 steps |
+| **[Create from scratch](automation-whitepaper/guides/create-new-from-scratch.md)** | New capability checklist (8 steps) |
 | **[AGENTS.md](AGENTS.md)** | Human as Architect; manual path + AI modes: Auditor / Builder / Librarian |
 | **[skills/TOOL-SETUP.md](skills/TOOL-SETUP.md)** | Configure Cursor / Claude / Copilot |
 | **[docs/PRE-COMMIT-GUIDE.md](docs/PRE-COMMIT-GUIDE.md)** | Pre-commit hooks setup and usage |
-| **[automation-whitepaper/](automation-whitepaper/)** | Complete standards & architecture |
 | **[CONTRIBUTING.md](CONTRIBUTING.md)** | How to contribute |
 
 ## 🤖 For AI Agents

@@ -139,5 +139,5 @@ Wiki: add host to `dev_linux` in inventory; run type playbook from `<automation-
 
 ## Related
 
-- [create-new-automation-step-by-step.md](../guides/create-new-automation-step-by-step.md)
+- [create-new-from-scratch.md](../guides/create-new-from-scratch.md)
 - [example-complete-walkthrough-rsyslog-forwarding.md](example-complete-walkthrough-rsyslog-forwarding.md)

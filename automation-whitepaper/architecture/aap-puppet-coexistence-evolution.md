@@ -135,7 +135,7 @@ During translation:
 - Remove legacy Ansible anti-patterns (`with_items`, bare `item`, non-FQCN)
 - Apply **`_` / `__` variable rules** and [coding-style.md](../development/coding-style.md)
 - One **function role** in `deliveries/automation/roles/rolename/`
-- Profile **light / standard / heavy** per [create-new-automation-step-by-step.md](../guides/create-new-automation-step-by-step.md)
+- Profile **light / standard / heavy** per [create-new-from-scratch.md](../guides/create-new-from-scratch.md)
 
 ### Workflow
 

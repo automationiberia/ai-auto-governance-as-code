@@ -24,7 +24,7 @@ Before technical output, state:
 
 1. [AGENTS.md](../../AGENTS.md) — collection model, FQCN, naming, loops, native-first, verification
 2. [automation-new-automation](../automation-new-automation/SKILL.md) — step-by-step artifacts checklist
-3. White paper: [create-new-automation-step-by-step.md](../../automation-whitepaper/guides/create-new-automation-step-by-step.md)
+3. White paper: [create-new-from-scratch.md](../../automation-whitepaper/guides/create-new-from-scratch.md)
 
 ```bash
 export AUTOMATION_HOME=/path/to/your/automation-home

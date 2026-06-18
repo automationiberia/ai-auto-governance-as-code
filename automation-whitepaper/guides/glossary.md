@@ -15,7 +15,7 @@ In this repository, gates fall into two kinds:
 | **Mechanical gate** | Tools (automatic) | `pre-commit run --all-files` green · `ansible-lint` clean · `ansible-playbook --syntax-check` · CI pipeline pass |
 | **Human gate** | People (approval) | Peer review · UAT sign-off · Security review · CAB approval |
 
-In [create-new-automation-step-by-step.md](create-new-automation-step-by-step.md), items marked **(gate)** are mandatory for that profile — skipping them blocks merge or production.
+In [create-new-from-scratch.md](create-new-from-scratch.md), items marked **(gate)** are mandatory for that profile — skipping them blocks merge or production.
 
 **Typical gate sequence before production:**
 

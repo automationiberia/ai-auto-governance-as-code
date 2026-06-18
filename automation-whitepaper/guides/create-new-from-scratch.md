@@ -1,7 +1,22 @@
 # Create new automation from scratch
 
-Minimal path from idea to merged role. **Full checklist:** [create-new-automation-step-by-step.md](create-new-automation-step-by-step.md).
-**What are gates / CAB?** See [glossary.md](glossary.md).
+Greenfield path from idea to merged role. Steps apply **in order**; items marked **(gate)** block merge or production.
+
+Mark progress with checkboxes (`- [ ]` → `- [x]`). In VS Code / Cursor, click the box in Markdown preview to toggle.
+
+**Unfamiliar terms?** [glossary.md](glossary.md) explains **gates**, **CAB**, and related acronyms.
+
+| Profile | Walkthrough |
+|---------|-------------|
+| **Light** | [Walkthrough](../examples/example-light-walkthrough-dev-packages.md) · [Code](../examples/light-dev-packages/) |
+| **Standard** | [Walkthrough](../examples/example-complete-walkthrough-rsyslog-forwarding.md) · [Code](../examples/standard-rsyslog-forwarding/) |
+
+Path conventions ([details](../examples/README.md)):
+
+| Symbol | Meaning |
+|--------|---------|
+| `<automation-home>` | Department standards repo (white paper, shared `pre-commit` config) |
+| `<automation-repo>` | **Shared collection** `deliveries/automation/` — one repo for all capabilities ([deliveries/README.md](../../deliveries/README.md)) |
 
 ---
 
@@ -13,13 +28,14 @@ Minimal path from idea to merged role. **Full checklist:** [create-new-automatio
 | Can you describe desired state? | Clarify intake first |
 | Is there a ticket or backlog item? | Required for **standard** / **heavy** |
 
-Pick a profile:
+| Profile | When | Ticket | Design review | UAT | CAB | Molecule |
+|---------|------|--------|---------------|-----|-----|----------|
+| **Light** | Single role, lab/low risk, existing SSOT | Backlog item OK | Self-check design note | Lab only | No | Optional |
+| **Standard** | Prod or shared collection | ITSM ticket | Async review (Ops or peer) | Pre-prod sample | Yes | If reused by others |
+| **Heavy** | Privileged, destructive, regulated | ITSM + Security early | Meeting with Ops + Security | Formal sign-off | Yes | Required |
 
-| Profile | Use when |
-|---------|----------|
-| **Light** | Lab, single role, low risk |
-| **Standard** | Production or shared collection |
-| **Heavy** | Privileged, regulated, multi-tier |
+- [ ] Profile chosen: **Light** / **Standard** / **Heavy** *(circle one in your ticket or PR)*
+- [ ] Confirmed: not a one-off manual task — automation is justified
 
 Default to **light** until production is confirmed.
 
@@ -35,15 +51,27 @@ git checkout main && git pull
 git checkout -b feature/<ticket>-<short-name>
 ```
 
+- [ ] `<automation-home>` available (standards repo with `requirements-dev.txt`)
+- [ ] `pip install -r requirements-dev.txt` (from `<automation-home>`)
+- [ ] `pre-commit install` run inside `<automation-repo>` **(gate)**
+
+Git and collection layout: [git-automation-repository.md](git-automation-repository.md).
+
 ---
 
-## Step 2 — Intake (5 minutes)
+## Step 2 — Intake
 
 Capture in the ticket or `docs/rolename/INTAKE.md`:
 
 - **Problem** — what manual work goes away?
 - **Success** — how do we know it worked?
 - **Scope** — prod or lab only? Which hosts?
+
+- [ ] Ticket/backlog item created with problem statement and scope
+- [ ] Triage: SSOT for hosts/vars exists or plan documented *(never skip)*
+- [ ] Triage: desired state is definable (not vague "make it better")
+- [ ] Stakeholders noted (Ops, App, Security) — *skip if **light** and lab-only*
+- [ ] Lead/peer agrees scope fits automation — *required for **standard** / **heavy***
 
 Details: [intake-and-prioritization.md](../lifecycle/intake-and-prioritization.md).
 
@@ -52,7 +80,7 @@ Details: [intake-and-prioritization.md](../lifecycle/intake-and-prioritization.m
 ```text
 I am operating in Mode 2: The Builder.
 Draft docs/rolename/INTAKE.md: problem, success criteria, scope (prod vs lab), hosts.
-No YAML. Profile: Light.
+No YAML. Profile: [Light | Standard | Heavy].
 ```
 
 ---
@@ -68,13 +96,20 @@ Document in `docs/rolename/DESIGN.md`:
 | **Public vars** | `nginx_max_connections`, `nginx_packages` |
 | **Risk** | `become`, restarts, secrets via Vault |
 
-Reference: [landscape-type-function-component.md](../architecture/landscape-type-function-component.md).
+- [ ] **Structure:** landscape / type / function / component ([architecture](../architecture/landscape-type-function-component.md))
+- [ ] **SSOT:** where hosts and To-Be variables live (CMDB, cloud plugin, static inventory)
+- [ ] **Interface:** public `rolename_*` variables listed
+- [ ] **As-Is vs To-Be:** separate names where both exist
+- [ ] **Risk:** `become`, secrets, destructive tasks, production impact assessed
+- [ ] Design note written (in ticket or PR)
+- [ ] Reviewed with Ops or second engineer — **(gate)** for **standard** / **heavy**; *self-check OK for **light***
 
 **AI shortcut (no YAML yet):**
 
 ```text
 I am operating in Mode 2: The Builder.
-Standard profile. INTAKE + DESIGN outline for rolename. No YAML yet.
+Profile: [Light | Standard | Heavy]. INTAKE + DESIGN outline for rolename. No YAML yet.
+L/T/F/C, SSOT, public rolename_* vars, risk. Output docs/rolename/DESIGN.md draft.
 ```
 
 ---
@@ -88,6 +123,10 @@ cd "$AUTOMATION_REPO"
 ansible-galaxy init roles/rolename
 mkdir -p playbooks inventory/sample/group_vars/all
 ```
+
+- [ ] Capability added to **shared collection** (`galaxy.yml` present; new `roles/rolename/`)
+- [ ] Thin type playbook created under `playbooks/`
+- [ ] Sample inventory directory created (`groups_and_hosts`, `group_vars/`)
 
 Minimum tree:
 
@@ -121,14 +160,14 @@ Thin type playbook pattern:
 ```text
 I am operating in Mode 2: The Builder.
 Scaffold rolename in deliveries/automation/ per approved DESIGN.md:
-roles/rolename/, playbooks/type_<category>.yml, docs/rolename/.
+roles/rolename/, playbooks/type_<category>.yml, docs/rolename/, inventory/sample/.
 List files before editing. No task logic yet.
-Profile: Light. Follow AGENTS.md and automation-new-automation skill.
+Follow AGENTS.md and automation-new-automation skill.
 ```
 
 ---
 
-## Step 5 — Implement (rules that block merge)
+## Step 5 — Implement
 
 | Rule | Requirement |
 |------|-------------|
@@ -137,6 +176,16 @@ Profile: Light. Follow AGENTS.md and automation-new-automation skill.
 | Tasks | Imperative `name:` on every task |
 | Templates | `.j2` + `{{ ansible_managed \| comment }}` |
 | Shell | Avoid; if required, Documentation Gate comment + `changed_when` |
+
+- [ ] `defaults/main.yml` — all public inputs with `rolename_*` prefix
+- [ ] `vars/` + `tasks/set_vars.yml` — *if multi-OS or multi-provider*
+- [ ] `tasks/main.yml` (+ component files with prefixed task names)
+- [ ] `meta/argument_specs.yml` — *if more than one required input*
+- [ ] Handlers for service restarts where needed
+- [ ] Role `README.md` — purpose, variables, example, idempotency, rollback limits
+- [ ] Type playbook is thin (roles only, or `import_role` only — not both)
+- [ ] Inventory holds To-Be only; no host lists inside variables
+- [ ] No secrets in Git (Vault or Controller credentials)
 
 Copy patterns from:
 
@@ -153,8 +202,8 @@ Details: [development/roles.md](../development/roles.md) · [coding-style.md](..
 I am operating in Mode 2: The Builder.
 Implement deliveries/automation/roles/rolename/ per approved DESIGN.md.
 Use skills automation-builder and automation-role-development.
-Profile: Light. Follow AGENTS.md bootstrap rules (FQCN, naming, loop_control).
-Align structure to automation-whitepaper/examples/light-dev-packages/.
+Profile: [Light | Standard | Heavy]. Follow AGENTS.md bootstrap rules (FQCN, naming, loop_control).
+Align structure to automation-whitepaper/examples/[light-dev-packages | standard-rsyslog-forwarding]/.
 List files before editing.
 ```
 
@@ -171,11 +220,19 @@ pre-commit run --all-files
 ansible-playbook playbooks/type_<category>.yml -i inventory/sample/ --check
 ```
 
+- [ ] `ansible-playbook --syntax-check playbooks/<playbook>.yml`
+- [ ] `pre-commit run --all-files` in `<automation-repo>` **(gate)**
+- [ ] First normal run completed successfully
+- [ ] Second normal run: no unexpected `changed` **(gate)**
+- [ ] Molecule or CI integration test — **(gate)** if **standard** (shared) or **heavy**; *optional for **light***
+
 | Profile | Extra gate |
 |---------|------------|
 | Light | Lab run + idempotent re-run |
 | Standard | Peer review + Molecule if shared |
 | Heavy | Security review + CAB + Molecule required |
+
+[pre-commit.md](../quality/pre-commit.md) · [idempotency-and-check-mode.md](../quality/idempotency-and-check-mode.md)
 
 **AI shortcut:**
 
@@ -184,17 +241,22 @@ Run ansible-playbook --syntax-check and pre-commit run --all-files
 in deliveries/automation/. Report results.
 
 If gates fail, switch to Mode 1: The Auditor and use automation-quality-gates.
+Same thread as Step 5 — see ai-prompt-examples.md § Design → implement → gate.
 ```
-
-Same thread as Step 5 — see [ai-prompt-examples.md § Design → implement → gate](ai-prompt-examples.md#9-other-multi-step-workflows).
 
 ---
 
 ## Step 7 — Ship
 
-1. Commit on feature branch in `$AUTOMATION_REPO`
-2. Open PR with design note + test output
-3. After merge: tag version, update Controller job template (if prod)
+- [ ] Changes committed on feature branch in `<automation-repo>`
+- [ ] Pull request opened on `<automation-repo>` (design note + test output in description)
+- [ ] Peer review completed ([checklist](../quality/code-review-and-linting.md)) **(gate)**
+- [ ] UAT on pre-prod hosts — *skip if **light** (lab verify is enough)*
+- [ ] Security review — *only **heavy** or privileged production*
+- [ ] CAB / change record approved — *only **production**; **skip if light***
+- [ ] Version tagged; execution environment updated — *if shared collection or prod*
+- [ ] Controller job template created/updated + runbook linked — *prod or team standard*
+- [ ] CMDB To-Be update ticket — *only if CMDB owns that data*
 
 Promotion details: [test-and-promote.md](../lifecycle/test-and-promote.md).
 
@@ -209,12 +271,22 @@ Do not commit or push unless I ask.
 
 ---
 
+## Step 8 — Operate
+
+- [ ] Runbook or job template description documents: what, `--limit`, on failure
+- [ ] Alert on job failure configured — *production only; skip if **light** lab*
+- [ ] Automation retired/disabled when obsolete — *when applicable*
+
+No mandatory PIR for **light** profile — fix forward if something breaks.
+
+---
+
 ## Quick links
 
 | Need | Document |
 |------|----------|
-| Full gated checklist | [create-new-automation-step-by-step.md](create-new-automation-step-by-step.md) |
 | Git / collection layout | [git-automation-repository.md](git-automation-repository.md) |
+| Audit or extend existing code | [evaluate-and-update-existing.md](evaluate-and-update-existing.md) |
 | Light walkthrough | [example-light-walkthrough-dev-packages.md](../examples/example-light-walkthrough-dev-packages.md) |
 | Standard walkthrough | [example-complete-walkthrough-rsyslog-forwarding.md](../examples/example-complete-walkthrough-rsyslog-forwarding.md) |
 | AI prompts | [ai-prompt-examples.md](ai-prompt-examples.md) |
@@ -225,3 +297,4 @@ Do not commit or push unless I ask.
 
 - [getting-started.md](getting-started.md)
 - [evaluate-and-update-existing.md](evaluate-and-update-existing.md)
+- [01-main-guide.md](../01-main-guide.md)

@@ -241,7 +241,7 @@ Mirror automation-whitepaper/examples/light-dev-packages/. List files before edi
 
 ```text
 Use automation-builder, automation-role-development, and
-automation-whitepaper/guides/extending-existing-automation.md.
+automation-whitepaper/guides/evaluate-and-update-existing.md (section Extend existing automation).
 
 Add platform support for <OsFamily> to deliveries/automation/roles/rolename/
 using tasks/platforms/<OsFamily>.yml — do not clone the role.
@@ -409,4 +409,4 @@ Step 3 (Auditor): automation-quality-gates checklist before PR.
 - [skills/TOOL-SETUP.md](../../skills/TOOL-SETUP.md)
 - [skills/README.md](../../skills/README.md)
 - [governance-as-code-ai-enforcement.md](../governance/governance-as-code-ai-enforcement.md)
-- [create-new-automation-step-by-step.md](create-new-automation-step-by-step.md)
+- [create-new-from-scratch.md](create-new-from-scratch.md)

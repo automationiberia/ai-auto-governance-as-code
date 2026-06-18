@@ -7,8 +7,8 @@ description: >-
 
 # Automation Lifecycle (changes)
 
-Extend: `automation-whitepaper/guides/extending-existing-automation.md`
-Checklist: `automation-whitepaper/guides/create-new-automation-step-by-step.md` (sections 5–6)
+Extend: `automation-whitepaper/guides/evaluate-and-update-existing.md` (section **Extend existing automation**)
+Checklist: `automation-whitepaper/guides/create-new-from-scratch.md` (Steps 5–6)
 
 ## Paths
 

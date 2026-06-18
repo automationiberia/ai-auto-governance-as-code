@@ -2,7 +2,7 @@
 
 Short path to **audit**, **fix**, and **ship** changes on roles or playbooks that already exist.
 
-For adding a new OS or host type to an existing capability, also see [extending-existing-automation.md](extending-existing-automation.md).
+For adding a new OS, inventory group, or host type to an existing capability, see [Extend existing automation](#extend-existing-automation) below.
 
 ---
 
@@ -12,8 +12,9 @@ For adding a new OS or host type to an existing capability, also see [extending-
 - A PR needs lint or standards fixes
 - You want to refactor without changing behaviour
 - You inherited code and need a structured gap analysis
+- You need to extend an existing role (new platform, inventory, or host category)
 
-**AI mode:** **1 — Auditor** (review) then **2 — Builder** (apply fixes). **Human:** you approve every change.
+**AI mode:** **1 — Auditor** (review) then **2 — Builder** (apply fixes or extensions). **Human:** you approve every change.
 
 ---
 
@@ -133,7 +134,7 @@ Common fixes:
 | Generic var `packages` | Rename to `rolename_packages` |
 | Unjustified `command` | Use module, or add comment + `changed_when` |
 
-Extending platforms (new OS): add `tasks/platforms/<OsFamily>.yml` — do **not** clone the role. See [extending-existing-automation.md](extending-existing-automation.md).
+Extending platforms (new OS): add `tasks/platforms/<OsFamily>.yml` — do **not** clone the role. See [Extend existing automation](#extend-existing-automation).
 
 ---
 
@@ -202,9 +203,75 @@ Use Auditor findings from this conversation. Do not edit delivery roles.
 
 ---
 
+## Extend existing automation
+
+Changes apply inside the **shared delivery collection** `deliveries/automation/`. Extend the existing function role — do not add a new repo or a parallel role.
+
+### Default rules
+
+| Change | Do | Avoid |
+|--------|-----|--------|
+| New OS (e.g. Windows) | `roles/rolename/tasks/platforms/Windows.yml` | `roles/rolename_windows/` |
+| New NTP server | `inventory/sample/group_vars/all/*.yml` | Hardcode in tasks |
+| New host category | `playbooks/type_<category>.yml` + inventory group | Duplicate role logic |
+| New unrelated capability | New `roles/<other>/` in **same** collection | `deliveries/<initiative>/` repo |
+
+### One function role, multiple platforms
+
+```text
+deliveries/automation/
+├── galaxy.yml
+└── roles/ntp_sync/
+    └── tasks/platforms/
+        ├── RedHat.yml
+        └── Windows.yml
+```
+
+Add `collections/requirements.yml` at collection root when a platform needs extra collections (e.g. `ansible.windows`).
+
+### Extension workflow
+
+1. **Branch and docs** — update `docs/rolename/DESIGN.md`, `CHANGELOG.md`, and inventory as needed.
+
+```bash
+cd "$AUTOMATION_REPO"
+git checkout main && git pull
+git checkout -b feature/<ticket>-description
+```
+
+**AI shortcut:**
+
+```text
+I am operating in Mode 2: The Builder.
+Use skill automation-lifecycle.
+
+Extend existing role rolename in deliveries/automation/ — scope: [new OS | new inventory | new host category].
+Update docs/rolename/DESIGN.md outline only. No YAML yet.
+```
+
+2. **Extend the role** — modify `roles/rolename/`; add platform files or inventory only; use `loop_control.loop_var` with `__rolename_…` in loops. Add type playbooks for new host categories.
+
+**AI shortcut:**
+
+```text
+I am operating in Mode 2: The Builder.
+Use skills automation-builder, automation-role-development, automation-lifecycle.
+
+Add [platform <OsFamily> | inventory | type playbook] to deliveries/automation/roles/rolename/.
+Do not clone the role. Minimal diffs only. Follow AGENTS.md and evaluate-and-update-existing.md.
+List files before editing.
+```
+
+More prompts: [ai-prompt-examples.md § Extend role to new OS](ai-prompt-examples.md#extend-role-to-new-os).
+
+3. **Verify and ship** — same as Steps 5–6 above; include `ansible-galaxy collection install -r collections/requirements.yml` when `collections/requirements.yml` is present.
+
+---
+
 ## Related
 
 - [getting-started.md](getting-started.md)
 - [create-new-from-scratch.md](create-new-from-scratch.md)
+- [git-automation-repository.md](git-automation-repository.md)
 - [quality/pre-commit.md](../quality/pre-commit.md)
 - [development/coding-style.md](../development/coding-style.md)

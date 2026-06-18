@@ -114,4 +114,4 @@ Use `# noqa: rule-id` only with inline justification.
 
 - [code-review-and-linting.md](code-review-and-linting.md)
 - [../development/coding-style.md](../development/coding-style.md)
-- [../guides/create-new-automation-step-by-step.md](../guides/create-new-automation-step-by-step.md)
+- [../guides/create-new-from-scratch.md](../guides/create-new-from-scratch.md)
