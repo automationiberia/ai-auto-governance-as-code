@@ -1,10 +1,10 @@
 [submodule "automation-good-practices"]
 	path = automation-good-practices
-	url = git@github.com:redhat-cop/automation-good-practices.git
+	url = https://github.com/redhat-cop/automation-good-practices.git
 	branch = main
 [submodule "deliveries/automation"]
 	path = deliveries/automation
-	url = git@github.com:automationiberia/ai-auto-deliveries.git
+	url = https://github.com/automationiberia/ai-auto-deliveries.git
 [submodule "skills/vendor/aap-skills-library"]
 	path = skills/vendor/aap-skills-library
 	url = https://github.com/automationiberia/aap-skills-library.git
