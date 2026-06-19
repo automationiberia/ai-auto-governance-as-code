@@ -30,10 +30,11 @@ Before technical output, state:
 
 ```text
 1. automation-whitepaper/*.md   ← human source of truth
-2. skills/<matching>/SKILL.md   ← encoded enforcement
+2. skills/<matching>/SKILL.md   ← encoded enforcement (automation-* or platform/aap-*)
 3. AGENTS.md                    ← if mode/bootstrap rules change
 4. skills/README.md             ← catalog + mode matrix
 5. TOOL-SETUP.md sync          ← Cursor: link-cursor-skills.sh; other tools: per TOOL-SETUP
+6. AAPSL upstream (optional)   ← vendor/aap-skills-library → diff → platform/aap-*
 ```
 
 Canonical skill format is **`SKILL.md`**. There is **no automated compile pipeline** to `.mdc`. Example ADR: [ADR-004-librarian-synchronization.md](../../automation-whitepaper/adrs/ADR-004-librarian-synchronization.md).
@@ -57,6 +58,17 @@ cd "$AUTOMATION_HOME"
 git submodule sync automation-good-practices
 git submodule update --remote automation-good-practices
 # Review upstream changes; port into whitepaper/skills as needed
+```
+
+## AAPSL upstream sync (platform skills)
+
+Reference: [ADR-007](../../automation-whitepaper/adrs/ADR-007-aap-platform-skills-plane.md) · [aap-platform-administration.md](../../automation-whitepaper/operations/aap-platform-administration.md).
+
+```bash
+cd "$AUTOMATION_HOME"
+git submodule update --remote skills/vendor/aap-skills-library
+./skills/scripts/sync-aapsl-skills.sh --diff
+# Librarian merges approved changes into skills/platform/aap-* (never symlink vendor directly)
 ```
 
 ## Related docs

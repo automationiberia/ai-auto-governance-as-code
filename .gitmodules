@@ -5,3 +5,6 @@
 [submodule "deliveries/automation"]
 	path = deliveries/automation
 	url = git@github.com:automationiberia/ai-auto-deliveries.git
+[submodule "skills/vendor/aap-skills-library"]
+	path = skills/vendor/aap-skills-library
+	url = https://github.com/automationiberia/aap-skills-library.git

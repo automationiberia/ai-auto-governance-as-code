@@ -24,6 +24,7 @@ Every prompt assumes the agent reads [AGENTS.md](../../AGENTS.md), **declares it
 9. [Other multi-step workflows](#9-other-multi-step-workflows)
 10. [Prompts to avoid](#10-prompts-to-avoid)
 11. [Tool-specific notes](#11-tool-specific-notes)
+12. [Platform administration (AAP MCP)](#12-platform-administration-aap-mcp)
 
 ---
 
@@ -358,6 +359,9 @@ Flag: shell puppet, missing summarize, deprecated timeout param, non-FQCN.
 | Governance / CAB | `Use automation-governance — stakeholders for Standard prod change?` |
 | Controller / SSOT | `Use automation-controller-ops — inventory integration for <source>?` |
 | Enterprise change flow | `Walk through example-enterprise-change-flow.md for <deploy>.` |
+| Platform snapshot (MCP) | `Platform area: Audit. Use aap-live-snapshot for org <name>.` |
+| RBAC review (MCP) | `Platform area: Audit. Use aap-rbac-review — who can execute <template>?` |
+| Job status (MCP) | `Platform area: Operate (read-only). Use aap-job-status for job <id>.` |
 | AAP + Puppet strategy | `Read strategic-proposal-aap-governance-evolution.md — phase for <scenario>` |
 
 ---
@@ -400,6 +404,44 @@ Step 3 (Auditor): automation-quality-gates checklist before PR.
 | **Claude** | `AGENTS.md` in project knowledge; no symlink script |
 | **Copilot** | `.github/copilot-instructions.md` → `AGENTS.md` |
 | **Generic** | File paths in prompt; same-thread context for Steps 2–4 |
+
+---
+
+## 12. Platform administration (AAP MCP)
+
+Requires MCP — see [TOOL-SETUP.md](../../skills/TOOL-SETUP.md#mcp-aap-platform-skills) and [aap-platform-administration.md](../operations/aap-platform-administration.md).
+
+### Full platform snapshot
+
+```text
+Platform area: Audit (read-only).
+I have evaluated Red Hat CoP baseline rules against white book overrides.
+Use skill aap-live-snapshot for organization "Lab".
+Cross-check job templates against playbooks under $AUTOMATION_REPO/playbooks/.
+```
+
+### RBAC review
+
+```text
+Platform area: Audit (read-only).
+Use skill aap-rbac-review.
+Who has execute permission on job template "Deploy Application" in organization Default?
+```
+
+### Job status
+
+```text
+Platform area: Operate (read-only).
+Use skill aap-job-status.
+What is the status of job 456? If failed, summarize failure and link to output.
+```
+
+### Content audit + platform correlation
+
+```text
+Step 1 (Mode 1): Audit deliveries/automation/roles/motd/ for white book compliance.
+Step 2 (Platform Audit): aap-live-snapshot — list job templates referencing playbooks/type_linux_motd.yml.
+```
 
 ---
 

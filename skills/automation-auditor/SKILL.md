@@ -20,11 +20,18 @@ Before technical output, state:
 
 ## Scope
 
-Audit trees under:
+**Content audit** (this skill) — YAML and Git artifacts:
 
 - `$AUTOMATION_REPO` (delivery collection submodule)
 - `automation-whitepaper/examples/` (reference implementations)
 - Paths the user specifies in the request
+
+**Platform audit** (separate plane) — live AAP state via MCP:
+
+- [platform/aap-live-snapshot](../platform/aap-live-snapshot/SKILL.md) — full snapshot
+- [platform/aap-rbac-review](../platform/aap-rbac-review/SKILL.md) — focused RBAC
+
+Declare platform area when using platform skills; do not conflate with content Mode 1 findings.
 
 Do not rewrite large files without summarizing findings first unless the user asks for fixes.
 

@@ -43,6 +43,18 @@ Used within Auditor or Builder modes as needed.
 | [automation-governance](automation-governance/SKILL.md) | Stakeholder & CAB processes |
 | [automation-controller-ops](automation-controller-ops/SKILL.md) | Controller operations |
 
+## Platform skills (live AAP via MCP)
+
+Used for stage 6 operations and platform audit. Declare **platform area** per [aap-platform-administration.md](../automation-whitepaper/operations/aap-platform-administration.md).
+
+| Skill | When to Use |
+|-------|-------------|
+| [aap-live-snapshot](platform/aap-live-snapshot/SKILL.md) | Full platform snapshot (read-only) |
+| [aap-rbac-review](platform/aap-rbac-review/SKILL.md) | RBAC and access review (read-only) |
+| [aap-job-status](platform/aap-job-status/SKILL.md) | Job status and failed-job lookup (read-only) |
+
+Catalog: [platform/README.md](platform/README.md) · Template: [SKILL-TEMPLATE.md](SKILL-TEMPLATE.md)
+
 ## ⚙️ Setup
 
 **Choose your AI tool:**
@@ -80,10 +92,11 @@ export AUTOMATION_REPO="$AUTOMATION_HOME/deliveries/automation"
 Use **Mode 3 — Librarian** when updating:
 
 1. Update white paper markdown first
-2. Sync corresponding `SKILL.md` (keep under ~500 lines)
-3. Update [AGENTS.md](../AGENTS.md) if modes change
+2. Sync corresponding `SKILL.md` (keep under ~500 lines) — `automation-*` or `platform/aap-*`
+3. Update [AGENTS.md](../AGENTS.md) if modes or skill planes change
 4. Run tool-specific sync per [TOOL-SETUP.md](TOOL-SETUP.md) (e.g. `link-cursor-skills.sh` **only for Cursor**)
-5. Add entry to catalog above
+5. Add entry to catalog above (content and/or platform tables)
+6. For AAPSL upstream: `git submodule update --remote skills/vendor/aap-skills-library` then `sync-aapsl-skills.sh --diff`
 6. Ask the user before committing; never push or open PRs automatically — after a commit, show push commands and a draft PR body per [AGENTS.md](../AGENTS.md#git-workflow-agents). Use a branch from up-to-date `main`.
 
 ## 📋 Complete Skill Catalog
@@ -110,6 +123,14 @@ Use **Mode 3 — Librarian** when updating:
 | [automation-governance](automation-governance/SKILL.md) | Stakeholders, CAB | [governance/](../automation-whitepaper/governance/) |
 | [automation-controller-ops](automation-controller-ops/SKILL.md) | Controller, SSOT | [operations/](../automation-whitepaper/operations/) |
 | [automation-puppet-orchestrate](automation-puppet-orchestrate/SKILL.md) | Phase 1 Puppet wrappers via AAP | [aap-puppet-coexistence-evolution.md](../automation-whitepaper/architecture/aap-puppet-coexistence-evolution.md) |
+
+### Platform skills (Phase 1)
+
+| Skill | Area | White paper |
+|-------|------|-------------|
+| [aap-live-snapshot](platform/aap-live-snapshot/SKILL.md) | Audit | [aap-platform-administration.md](../automation-whitepaper/operations/aap-platform-administration.md) |
+| [aap-rbac-review](platform/aap-rbac-review/SKILL.md) | Audit | [aap-platform-administration.md](../automation-whitepaper/operations/aap-platform-administration.md) |
+| [aap-job-status](platform/aap-job-status/SKILL.md) | Operate | [aap-platform-administration.md](../automation-whitepaper/operations/aap-platform-administration.md) |
 
 ## 📝 Language
 

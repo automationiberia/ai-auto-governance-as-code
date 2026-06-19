@@ -84,6 +84,7 @@ Folder map: [whitebook-folder-map.md](governance/whitebook-folder-map.md).
 ### Operations
 
 - [Controller & Workflows](operations/controller-and-workflows.md)
+- [AAP Platform Administration](operations/aap-platform-administration.md) — MCP skills, SSOT boundaries, adoption phases
 - [Inventory SSOT](operations/inventory-ssot-integration.md)
 
 ## 💡 Examples

@@ -51,6 +51,7 @@ Declare the profile in the plan before generating files.
 | Role bodies | [automation-role-development](../automation-role-development/SKILL.md) |
 | Playbooks + inventory | [automation-playbook-inventory](../automation-playbook-inventory/SKILL.md) |
 | Lifecycle / intake | [automation-lifecycle](../automation-lifecycle/SKILL.md) |
+| Wire type playbook to Controller (live AAP, after Git exists) | [automation-controller-ops](../automation-controller-ops/SKILL.md) → `platform/aap-job-template-create` (Phase 2) |
 
 ## Reference code (copy patterns, do not paste into chat)
 
