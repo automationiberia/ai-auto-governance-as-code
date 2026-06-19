@@ -3,10 +3,6 @@
     {
       "name": "automation-home",
       "path": "."
-    },
-    {
-      "name": "delivery-collection",
-      "path": "deliveries/automation"
     }
   ],
   "settings": {
@@ -21,7 +17,7 @@
     "python.defaultInterpreterPath": "/usr/bin/python3",
     "terminal.integrated.env.linux": {
       "AUTOMATION_HOME": "${workspaceFolder:automation-home}",
-      "AUTOMATION_REPO": "${workspaceFolder:delivery-collection}"
+      "AUTOMATION_REPO": "${workspaceFolder:automation-home}/deliveries/automation"
     }
   },
   "extensions": {

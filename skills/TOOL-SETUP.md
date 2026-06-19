@@ -46,7 +46,7 @@ export AUTOMATION_REPO="$AUTOMATION_HOME/deliveries/automation"
 
    This symlinks `skills/automation-*` and `skills/platform/aap-*` → `.cursor/skills/` (gitignored; per-machine). Removes stale links (e.g. deprecated `automation-architect`) and links current skills such as `automation-builder`.
 
-3. Open `automation-home.code-workspace` (monorepo + `deliveries/automation`).
+3. Open `automation-home.code-workspace` (monorepo root; `deliveries/automation/` is a nested submodule folder).
 4. Optional: configure AAP MCP per [MCP setup](#mcp-aap-platform-skills).
 5. Optional project rule (Cursor Settings → Rules): *Read AGENTS.md; state Mode 1/2/3 before Ansible output.*
 

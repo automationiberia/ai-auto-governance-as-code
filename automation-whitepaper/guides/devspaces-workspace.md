@@ -10,7 +10,7 @@ Run this repository as a **Dev Spaces workspace** with Ansible tooling, submodul
 |------|---------|
 | [`.devfile.yaml`](../../.devfile.yaml) | Container image, env vars, postStart setup |
 | [`.devfile/setup-workspace.sh`](../../.devfile/setup-workspace.sh) | Submodules, `pip install`, pre-commit |
-| [`automation-home.code-workspace`](../../automation-home.code-workspace) | Multi-root IDE (monorepo + delivery collection) |
+| [`automation-home.code-workspace`](../../automation-home.code-workspace) | VS Code workspace (monorepo root; submodules nested under `deliveries/automation/`, etc.) |
 
 ---
 
