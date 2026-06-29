@@ -97,17 +97,13 @@ Do **not** rely on `.mdc` unless your Claude product documents that format; **`S
 
 ## GitHub Copilot
 
-**When:** VS Code / Visual Studio with Copilot Chat on this workspace.
+**When:** VS Code / Visual Studio with Copilot Chat on this workspace (including **OpenShift Dev Spaces**).
 
 1. Repository prep above.
-2. Point Copilot at repo instructions, e.g. create or extend `.github/copilot-instructions.md`:
-
-   ```markdown
-   For Ansible automation in this repo, follow AGENTS.md and skills/automation-*/SKILL.md.
-   Declare Auditor, Builder, or Librarian mode before technical output.
-   ```
-
-3. In chat, `@AGENTS.md` and role paths if your Copilot build supports file context.
+2. **Dev Spaces:** authenticate with Command Palette → **`GitHub: Device Authentication`** (not the browser popup). Refresh the tab after authorizing in GitHub. Details: [devspaces-workspace.md § Copilot](../automation-whitepaper/guides/devspaces-workspace.md#github-copilot-and-ai-chat).
+3. Repo instructions ship in [`.github/copilot-instructions.md`](../.github/copilot-instructions.md) — Copilot loads this automatically once signed in.
+4. Open `automation-home.code-workspace`.
+5. In chat, `@AGENTS.md` and skill paths if your Copilot build supports file context.
 
 **Invoke:** Same natural-language prompts as [ai-prompt-examples.md](../automation-whitepaper/guides/ai-prompt-examples.md); name the skill explicitly.
 

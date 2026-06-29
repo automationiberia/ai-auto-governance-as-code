@@ -121,6 +121,87 @@ For the **private** delivery repo, configure Git credentials in Dev Spaces (**Us
 
 ---
 
+## GitHub Copilot and AI chat
+
+Repo governance for Copilot is already in [`.github/copilot-instructions.md`](../../.github/copilot-instructions.md) — Copilot loads it automatically once you are signed in. **No extra repo configuration is required.**
+
+What you must configure is **GitHub authentication inside Dev Spaces**. The browser IDE does **not** use the same OAuth popup as desktop VS Code.
+
+### Prerequisites
+
+| Requirement | Notes |
+|-------------|--------|
+| **Copilot seat** | GitHub Copilot Individual, Business, or Enterprise on your GitHub account |
+| **GitHub.com account** | Use **Continue with GitHub** (not GHE.com) unless your org uses GitHub Enterprise exclusively |
+| **Network egress** | Workspace pod must reach `github.com` for device activation |
+
+### Correct sign-in flow (Dev Spaces / Eclipse Che)
+
+Do **not** start with the **Sign in to use AI Features → Continue with GitHub** dialog if it fails — that path often errors in the browser IDE. Use **device authentication** instead:
+
+1. **Sign out** if you already tried and failed:
+   - Activity bar → **Accounts** (person icon) → your GitHub account → **Sign Out**.
+2. Open Command Palette (`F1` / `Ctrl+Shift+P`) → run **`GitHub: Device Authentication`**.
+3. Copy the **device code** from the notification and open the GitHub activation link in your browser (outside Dev Spaces).
+4. Paste the code, authorize, and confirm.
+5. When prompted, **refresh the Dev Spaces browser tab** (F5). Authentication applies only after refresh.
+6. Open **Chat** (right panel) and send a test prompt.
+
+Official reference: [Eclipse Che — GitHub Copilot Chat](https://eclipse.dev/che/docs/stable/end-user-guide/using-github-copilot-chat/).
+
+### If sign-in still fails
+
+| Symptom | Try |
+|---------|-----|
+| **Failed to sign in to GitHub** after popup | Sign out → `GitHub: Device Authentication` → refresh tab (do not retry popup) |
+| **`redhat.devspaces-copilot-chat-integration` not found** | Cluster Open VSX lacks the extension — see below |
+| **Getting chat ready…** (stuck) | Same — Chat waits for the integration extension |
+| **User not authorized** / 401 in Output | Confirm Copilot seat on GitHub; ask org admin to assign Copilot Business |
+| **GHE.com** prompt when you use github.com | Remove `"github.copilot.advanced": { "authProvider": "github-enterprise" }` from user settings |
+| Cluster blocks Copilot | Ask platform team about **Continue + private LLM** ([Red Hat guide](https://developers.redhat.com/learning/learn:openshift-ai:integrate-private-ai-coding-assistant-your-cde-using-ollama-continue-openshift-dev-spaces/resource/resources:access-openshift-dev-spaces-and-create-your-cde)) |
+
+Check logs: Command Palette → **Output** → select **GitHub Copilot** or **GitHub Copilot Chat** from the dropdown.
+
+### Extension not found: `redhat.devspaces-copilot-chat-integration`
+
+Dev Spaces does **not** install marketplace `GitHub.copilot-chat` automatically. Che-Code uses a bridge extension:
+
+| Item | Value |
+|------|--------|
+| Extension ID | `redhat.devspaces-copilot-chat-integration` |
+| Upstream | [redhat-developer/devspaces-copilot-chat-integration](https://github.com/redhat-developer/devspaces-copilot-chat-integration) (experimental) |
+| Registry | Must exist in the cluster **Open VSX** registry |
+
+Error *"cannot be installed because it was not found"* means a **platform configuration gap**, not a problem with this repository.
+
+**Option A — platform team (recommended):** register the extension in the cluster Open VSX registry (version must match the Che editor — docs often cite **0.36.2**), or point Dev Spaces at public Open VSX.
+
+**Option B — manual install (if VSIX download is allowed):**
+
+1. Command Palette → **Help: About** — note the editor version.
+2. Download the matching `.vsix` from [Open VSX](https://open-vsx.org/extension/redhat/devspaces-copilot-chat-integration).
+3. Command Palette → **Extensions: Install from VSIX…**
+4. Reload window → **`GitHub: Device Authentication`** → refresh browser tab.
+
+**Option C — no Copilot on cluster:** use **Continue** + private LLM, or **Cursor locally** with `link-cursor-skills.sh`.
+
+### Using governance once Copilot works
+
+Open `automation-home.code-workspace`, then in Chat:
+
+```text
+@AGENTS.md Operate in Mode 1: The Auditor.
+Follow skills/automation-auditor/SKILL.md. Audit deliveries/automation/roles/<rolename>/.
+```
+
+Prompt library: [ai-prompt-examples.md](ai-prompt-examples.md). Full tool matrix: [skills/TOOL-SETUP.md](../../skills/TOOL-SETUP.md).
+
+### Without Copilot (generic agent)
+
+If your cluster does not provide Copilot seats, use the same prompts in Chat or any agent with file access — point at `AGENTS.md` and `skills/*/SKILL.md` explicitly. See [TOOL-SETUP.md § Generic](../../skills/TOOL-SETUP.md).
+
+---
+
 ## Base image
 
 `ghcr.io/ansible/ansible-devspaces:latest` — Ansible VS Code extension, `ansible-core`, `ansible-lint`, and related ADT tools ([ansible-devspaces](https://github.com/redhat-cop/ansible-devspaces)).
@@ -146,4 +227,5 @@ The default devfile image is Ansible-first. Extend the devfile or use a custom i
 - [aap-puppet-coexistence-evolution.md](../architecture/aap-puppet-coexistence-evolution.md)
 - [git-automation-repository.md](git-automation-repository.md)
 - [pre-commit.md](../quality/pre-commit.md)
+- [skills/TOOL-SETUP.md](../../skills/TOOL-SETUP.md)
 - [README.md](../../README.md)
