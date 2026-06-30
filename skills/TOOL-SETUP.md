@@ -100,8 +100,8 @@ Do **not** rely on `.mdc` unless your Claude product documents that format; **`S
 **When:** VS Code / Visual Studio with Copilot Chat on this workspace (including **OpenShift Dev Spaces**).
 
 1. Repository prep above.
-2. **Dev Spaces — full procedure:** [devspaces-workspace.md § GitHub Copilot Agent](../automation-whitepaper/guides/devspaces-workspace.md#github-copilot-agent--setup-and-authentication) (Device Authentication, Agent mode, recovery from `GitHubLoginFailed`).
-3. **Quick summary (Dev Spaces):** do **not** open Chat first → **`GitHub: Device Authentication`** → authorize in external browser → **F5** → Reload Window → Chat **Agent**.
+2. **Dev Spaces — Copilot:** [devspaces-workspace.md § Copilot Agent](../automation-whitepaper/guides/devspaces-workspace.md#github-copilot-agent--setup-and-authentication).
+3. **Dev Spaces — Continue + Ollama:** same guide, [§ Continue + Ollama](../automation-whitepaper/guides/devspaces-workspace.md#continue--ollama-local-llm-same-workspace) (local `qwen2.5-coder:7b`, no GPU).
 4. Repo instructions ship in [`.github/copilot-instructions.md`](../.github/copilot-instructions.md) — Copilot loads this automatically once signed in.
 5. Open `automation-home.code-workspace`.
 6. In chat, `@AGENTS.md` and skill paths if your Copilot build supports file context.

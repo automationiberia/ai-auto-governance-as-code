@@ -9,8 +9,10 @@ Run this repository as a **Dev Spaces workspace** with Ansible tooling, submodul
 | File | Purpose |
 |------|---------|
 | [`.devfile.yaml`](../../.devfile.yaml) | Container image, env vars, Copilot VSIX path, postStart setup |
-| [`.devfile/setup-workspace.sh`](../../.devfile/setup-workspace.sh) | Submodules, Copilot VSIX download, `pip install`, pre-commit |
-| [`.devfile/continue.yaml`](../../.devfile/continue.yaml) | Optional Continue.dev stack (`?devfilePath=.devfile/continue.yaml`) |
+| [`.devfile/setup-workspace.sh`](../../.devfile/setup-workspace.sh) | Submodules, Copilot VSIX, Continue config, `pip install`, pre-commit |
+| [`.devfile/ollama-pull.sh`](../../.devfile/ollama-pull.sh) | Pull `qwen2.5-coder:7b` into the Ollama sidecar (postStart) |
+| [`.continue/config.yaml`](../../.continue/config.yaml) | Continue → local Ollama (`http://127.0.0.1:11434`) |
+| [`.devfile/continue.yaml`](../../.devfile/continue.yaml) | Legacy UDI-only stack (`?devfilePath=.devfile/continue.yaml`) |
 | [`.vscode/extensions.json`](../../.vscode/extensions.json) | Auto-install `redhat.devspaces-copilot-chat-integration` at workspace start |
 | [`automation-home.code-workspace`](../../automation-home.code-workspace) | VS Code workspace (Agent mode enabled; Ansible + Copilot extensions) |
 
@@ -118,6 +120,7 @@ For the **private** delivery repo, configure Git credentials in Dev Spaces (**Us
 | Command | Action |
 |---------|--------|
 | **Setup workspace** | Re-run submodule init + pip + pre-commit |
+| **Pull Ollama model (qwen2.5-coder:7b)** | Re-download / verify local LLM in sidecar |
 | **Pre-commit (automation-home)** | Lint white paper / skills at repo root |
 | **Pre-commit (delivery collection)** | Lint `deliveries/automation/` |
 | **Syntax-check delivery playbooks** | `ansible-playbook --syntax-check` on type playbooks |
@@ -284,6 +287,84 @@ Prompt library: [ai-prompt-examples.md](ai-prompt-examples.md). Full tool matrix
 ### Without Copilot (generic agent)
 
 If your cluster does not provide Copilot seats, use the same prompts in Chat or any agent with file access — point at `AGENTS.md` and `skills/*/SKILL.md` explicitly. See [TOOL-SETUP.md § Generic](../../skills/TOOL-SETUP.md).
+
+---
+
+## Continue + Ollama (local LLM, same workspace)
+
+The default [`.devfile.yaml`](../../.devfile.yaml) runs **three AI assistants** in one workspace:
+
+| Assistant | Purpose | Auth / setup |
+|-----------|---------|--------------|
+| **GitHub Copilot Agent** | Cloud LLM, Agent mode, `@AGENTS.md` | [Device Authentication](#first-time-setup-step-by-step) |
+| **Continue** | Private / local LLM, air-gapped friendly | Extension + Ollama sidecar (automatic) |
+| **Ollama** | Inference for Continue | Sidecar container, model `qwen2.5-coder:7b`, **CPU only** |
+
+### Architecture
+
+```text
+DevWorkspace pod (shared network namespace)
+├── che-code (IDE)          → Copilot Chat + Continue extension
+├── automation-tools        → Ansible, postStart setup
+└── ollama                  → qwen2.5-coder:7b @ http://127.0.0.1:11434
+```
+
+Continue reads [`.continue/config.yaml`](../../.continue/config.yaml), copied to `/home/user/.continue/` on postStart.
+
+### Cluster requirements (no GPU)
+
+| Resource | Value | Notes |
+|----------|-------|--------|
+| **Ollama memory** | 6–10 Gi | Sidecar limit in devfile |
+| **Ollama PVC** | 15 Gi | Model cache (`ollama-models` volume) |
+| **Pod memory (total)** | ~18 Gi+ | automation-tools 8 Gi + ollama 10 Gi |
+| **CPU** | 4+ cores recommended | 7B model on CPU is slow but usable |
+| **Egress** | First start only | `ollama pull` (~4.5 GiB for qwen2.5-coder:7b) |
+
+Ask your platform team if workspace quota allows this pod size before rolling out to the whole team.
+
+### First start
+
+1. **Recreate existing workspace** after pulling devfile changes.
+2. Wait for postStart:
+   - `setup-workspace` — submodules, Copilot VSIX, Continue config
+   - `ollama-pull-qwen` — may take **several minutes** on first run (model download)
+3. Check logs if needed:
+
+   ```bash
+   cat .devfile/setup-workspace.log
+   cat .devfile/ollama-pull.log
+   ```
+
+4. **Copilot:** complete [Device Authentication](#first-time-setup-step-by-step) (unchanged).
+5. **Continue:** open the Continue icon in the activity bar → select **Qwen2.5 Coder 7B** if prompted → skip onboarding wizard if config is preloaded.
+
+### Using governance with Continue
+
+Continue does not auto-load `.github/copilot-instructions.md`. Start prompts with explicit paths:
+
+```text
+Read AGENTS.md. Operate in Mode 1: The Auditor.
+Follow skills/automation-auditor/SKILL.md. Audit deliveries/automation/roles/<rolename>/.
+```
+
+Prompt library: [ai-prompt-examples.md](ai-prompt-examples.md).
+
+### Optional: Context7 MCP
+
+To enable the Context7 MCP server ([`.continue/mcpServers/mcp.json`](../../.continue/mcpServers/mcp.json)), mount a Secret as env `CONTEXT7_API_KEY` on the workspace (Dev Spaces **mount-as: env**). Without it, Continue works with Ollama only.
+
+### Troubleshooting Continue / Ollama
+
+| Symptom | Check | Fix |
+|---------|-------|-----|
+| Continue cannot connect | `curl -sf http://127.0.0.1:11434/api/tags` from a terminal | Wait for postStart; run **Pull Ollama model** from Command Palette or `bash .devfile/ollama-pull.sh` inside the **ollama** container |
+| Model missing | `cat .devfile/ollama-pull.log` | Command Palette → **Pull Ollama model (qwen2.5-coder:7b)** |
+| Very slow responses | Expected on CPU 7B | Normal without GPU; use Copilot for heavy Agent tasks |
+| Out of memory | Pod OOMKilled on ollama container | Ask platform team for higher quota or use a smaller model |
+| Continue extension missing | Extensions view | Install **Continue** (`Continue.continue`) from Open VSX |
+
+Reference: [Red Hat — Ollama + Continue in Dev Spaces](https://developers.redhat.com/articles/2024/08/12/integrate-private-ai-coding-assistant-ollama).
 
 ---
 

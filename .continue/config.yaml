@@ -1,24 +1,24 @@
-# Continue.dev configuration for Dev Spaces (template)
+# Continue.dev — local Ollama in Dev Spaces (same pod as the IDE).
+# Copied to /home/user/.continue/ on workspace postStart (.devfile/setup-workspace.sh).
+# Ollama sidecar: qwen2.5-coder:7b (CPU, no GPU). API: http://127.0.0.1:11434
 #
-# The copy-continue-config postStart command copies this file to ~/.continue/
-# and replaces placeholders with workspace env vars (from an OpenShift Secret with mount-as: env):
-#   ${CONTINUE_MODEL_NAME}, ${CONTINUE_MODEL_API_KEY}, ${CONTINUE_MODEL_API_URL}
-# Do not put real keys or URLs here.
-#
-# MCP servers are configured via the standard mcp.json file in .continue/mcpServers/
-# (see .continue/mcpServers/mcp.json); Continue picks that up automatically.
-#
-name: Dev Spaces AI
+name: Automation Home (Ollama)
 version: "1.0.0"
 schema: v1
 
 models:
-  - name: "${CONTINUE_MODEL_NAME}"
-    provider: openai
-    model: "${CONTINUE_MODEL_NAME}"
-    apiBase: "${CONTINUE_MODEL_API_URL}"
-    apiKey: "${CONTINUE_MODEL_API_KEY}"
+  - name: Qwen2.5 Coder 7B
+    provider: ollama
+    model: qwen2.5-coder:7b
+    apiBase: http://127.0.0.1:11434
     roles:
       - chat
       - edit
       - apply
+      - autocomplete
+
+tabAutocompleteModel:
+  name: Qwen2.5 Coder 7B
+  provider: ollama
+  model: qwen2.5-coder:7b
+  apiBase: http://127.0.0.1:11434

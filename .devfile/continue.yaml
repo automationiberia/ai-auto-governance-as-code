@@ -1,7 +1,7 @@
 ---
-# Optional Dev Spaces stack — Continue.dev + private LLM (NOT the default devfile).
-# Create workspace with: ?devfilePath=.devfile/continue.yaml
-# Default workspace for this repo: .devfile.yaml (Ansible + GitHub Copilot Agent).
+# Legacy optional devfile — UDI only, external LLM via secrets.
+# Prefer the default .devfile.yaml (Automation Home): Copilot + Continue + Ollama sidecar.
+# Use this file only with: ?devfilePath=.devfile/continue.yaml
 schemaVersion: 2.3.0
 metadata:
   name: vscode-continue-ai-env

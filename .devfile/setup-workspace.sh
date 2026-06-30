@@ -74,6 +74,21 @@ if [[ -x "${AUTOMATION_HOME}/skills/scripts/link-cursor-skills.sh" ]]; then
   "${AUTOMATION_HOME}/skills/scripts/link-cursor-skills.sh" || true
 fi
 
+_continue_home="/home/user/.continue"
+if [[ -d "${AUTOMATION_HOME}/.continue" ]]; then
+  echo "==> Installing Continue config to ${_continue_home} (Ollama qwen2.5-coder:7b)"
+  mkdir -p "${_continue_home}/mcpServers"
+  cp -r "${AUTOMATION_HOME}/.continue/"* "${_continue_home}/"
+  if [[ -n "${CONTEXT7_API_KEY:-}" && -f "${_continue_home}/mcpServers/mcp.json" ]]; then
+    awk -v c7="${CONTEXT7_API_KEY}" '
+      BEGIN { gsub(/\\/, "\\\\", c7); gsub(/"/, "\\\"", c7) }
+      { gsub(/\$\{CONTEXT7_API_KEY\}/, c7); print }
+    ' "${AUTOMATION_HOME}/.continue/mcpServers/mcp.json" >"${_continue_home}/mcpServers/mcp.json"
+    echo "==> Context7 MCP key applied from workspace env"
+  fi
+  echo "==> Continue config OK"
+fi
+
 for rc in "${HOME}/.bashrc" "${HOME}/.zshrc"; do
   if [[ -f "${rc}" ]]; then
     grep -q 'AUTOMATION_HOME=' "${rc}" 2>/dev/null && continue
