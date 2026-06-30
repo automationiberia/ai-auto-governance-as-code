@@ -413,8 +413,12 @@ Open the **Continue** sidebar (not Copilot Chat). Select **Agent** and **Qwen2.5
 **Recommended first prompt** (fast sanity check):
 
 ```text
-Read skills/automation-auditor/SKILL.md only. Summarize it in 5 bullets.
+Use the read file tool on skills/automation-auditor/SKILL.md (workspace path, not read_skill). Summarize in 5 bullets.
 ```
+
+**Alternative:** type `@` in the Continue input and pick `skills/automation-auditor/SKILL.md` from the file list, then: `Summarize in 5 bullets.`
+
+> **Why not "Read skills/…"?** Continue Agent exposes a **`read_skill`** tool for Continue skill blocks (separate from repo `skills/`). Prompts like *Read skills/automation-auditor/SKILL.md* often trigger `read_skill('automation-auditor')` → *Skill not found. Available skills: none*. The file **does exist** in Git; use **read file** or **`@` file context** instead.
 
 You should see **Generating…** and text appearing in the Continue panel within a few minutes. High CPU in the status bar (~4 cores) is normal while Ollama runs.
 
@@ -431,17 +435,19 @@ Re-apply config after pulling repo changes: `bash .devfile/setup-workspace.sh` t
 
 Continue does not auto-load `.github/copilot-instructions.md`. Scope prompts to **one skill or role** on CPU; avoid listing all of `skills/` in a single Agent turn.
 
-**Starter (one skill):**
+**Starter (one SKILL.md file):**
 
 ```text
-Read skills/automation-auditor/SKILL.md only. Summarize it in 5 bullets.
+Use the read file tool on skills/automation-auditor/SKILL.md. Summarize in 5 bullets.
 ```
+
+Or attach the file with `@skills/automation-auditor/SKILL.md` then ask for the summary.
 
 **Full audit (after the starter works):**
 
 ```text
-Read AGENTS.md. Operate in Mode 1: The Auditor.
-Follow skills/automation-auditor/SKILL.md. Audit deliveries/automation/roles/<rolename>/.
+Read AGENTS.md with the read file tool. Operate in Mode 1: The Auditor.
+Read skills/automation-auditor/SKILL.md the same way. Audit deliveries/automation/roles/<rolename>/.
 ```
 
 Use **Copilot Agent** for large multi-file tasks; Continue + Ollama is best for private/offline work with narrow scope.
@@ -458,7 +464,8 @@ To enable the Context7 MCP server ([`.continue/mcpServers/mcp.json`](../../.cont
 |---------|-------|-----|
 | Continue cannot connect | `curl -sf http://127.0.0.1:11434/api/tags` from a terminal | Wait for postStart; run **Pull Ollama model** from Command Palette or `bash .devfile/ollama-pull.sh` inside the **ollama** container |
 | Model missing | `cat .devfile/ollama-pull.log` | Command Palette → **Pull Ollama model (qwen2.5-coder:7b)** |
-| Very slow responses | Expected on CPU 7B | One skill per prompt; starter: `Read skills/automation-auditor/SKILL.md only. Summarize it in 5 bullets.` |
+| `read_skill` / *Skill not found* | Agent used Continue skill tool, not file read | Prompt: *read file tool on skills/…/SKILL.md* or `@` attach the file |
+| Very slow responses | Expected on CPU 7B | One file per prompt; use `@` for context |
 | Agent appears stuck | No new text 15+ min | **Stop** → shorter prompt; Output → **Continue** for errors |
 | Out of memory | Pod OOMKilled on ollama container | Ask platform team for higher quota or use a smaller model |
 | Continue extension missing | Extensions view | Install **Continue** (`Continue.continue`) from Open VSX |
