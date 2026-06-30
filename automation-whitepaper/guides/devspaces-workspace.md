@@ -140,7 +140,9 @@ cat .devfile/setup-workspace.log
 | `git submodule update` | Configure Git/SSH in User Preferences |
 | Workspace storage quota | Ask platform team to raise per-workspace PVC |
 
-**`FailedPostStartHook` on `ollama`** — set `mountSources: false` on the ollama sidecar (current default devfile).
+**`FailedPostStartHook` on `ollama`** — use `sourceMapping: /.ollama` with `mountSources: true` (see `with-ollama.yaml`). Plain `mountSources: false` without a writable volume causes **CrashLoopBackOff** on OpenShift (arbitrary UID cannot write `/root/.ollama`).
+
+**`CrashLoopBackOff` on `ollama`** — check `oc logs <pod> -c ollama --previous`. Usually permissions or PVC size; ensure CheCluster `perUserStrategyPvcConfig.claimSize` ≥ 15Gi when using `pvcStrategy: per-user`.
 
 Setup runs when the IDE opens (VS Code task) or via Command Palette → **Setup workspace**.
 
@@ -366,7 +368,7 @@ On clusters with **limited pod memory**, the Ollama sidecar causes `automation-t
 DevWorkspace pod (shared network namespace)
 ├── che-code (IDE)          → Copilot Chat + Continue extension
 ├── automation-tools        → Ansible, project sources, setup scripts
-└── ollama (mountSources: false) → qwen2.5-coder:7b @ http://127.0.0.1:11434
+└── ollama (sourceMapping: /.ollama) → qwen2.5-coder:7b @ http://127.0.0.1:11434
 ```
 
 Continue reads [`.continue/config.yaml`](../../.continue/config.yaml), copied to `/home/user/.continue/` when **Setup workspace** runs.
@@ -375,13 +377,31 @@ Continue reads [`.continue/config.yaml`](../../.continue/config.yaml), copied to
 
 | Resource | Value | Notes |
 |----------|-------|--------|
-| **Ollama memory** | 2–8 Gi | Sidecar limit in devfile (CPU-only 7B model) |
-| **Ollama PVC** | None (ephemeral) | Model re-pulled after full workspace recreate |
-| **Pod memory (total)** | ~10 Gi+ | automation-tools 8 Gi + ollama 8 Gi + che-code |
+| **Ollama memory** | 4–10 Gi | Sidecar in `with-ollama.yaml` |
+| **User PVC (`per-user`)** | ≥ 15 Gi | CheCluster `perUserStrategyPvcConfig.claimSize`; models under `/.ollama` |
+| **Pod memory (total)** | ~14 Gi+ | automation-tools 8 Gi + ollama 10 Gi + che-code |
 | **CPU** | 4+ cores recommended | 7B model on CPU is slow but usable |
-| **Egress** | First start only | `ollama pull` (~4.5 GiB for qwen2.5-coder:7b) |
+| **Egress** | First start only | model pull ~4.5 GiB |
 
-Ask your platform team if workspace quota allows this pod size before rolling out to the whole team.
+**Platform admin** (your cluster uses `pvcStrategy: per-user`):
+
+```bash
+oc patch checluster devspaces -n openshift-devspaces --type merge -p '
+{
+  "spec": {
+    "devEnvironments": {
+      "storage": {
+        "pvcStrategy": "per-user",
+        "perUserStrategyPvcConfig": {
+          "claimSize": "15Gi"
+        }
+      }
+    }
+  }
+}'
+```
+
+Then resize or recreate the user PVC if it was already provisioned smaller.
 
 ### First start (`with-ollama.yaml`)
 

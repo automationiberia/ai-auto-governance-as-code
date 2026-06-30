@@ -39,12 +39,15 @@ components:
           value: redhat.devspaces-copilot-chat-integration
   - name: ollama
     container:
+      # Red Hat Ollama stack pattern: mount per-user PVC at /.ollama so OpenShift
+      # arbitrary UID can write models (mountSources: false → CrashLoopBackOff).
       image: docker.io/ollama/ollama:0.5.4
-      mountSources: false
-      cpuLimit: 2000m
-      cpuRequest: 250m
-      memoryRequest: 2Gi
-      memoryLimit: 8Gi
+      mountSources: true
+      sourceMapping: /.ollama
+      cpuLimit: 4000m
+      cpuRequest: 500m
+      memoryRequest: 4Gi
+      memoryLimit: 10Gi
       env:
         - name: OLLAMA_HOST
           value: 0.0.0.0:11434
