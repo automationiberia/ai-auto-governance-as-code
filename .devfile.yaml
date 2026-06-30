@@ -12,9 +12,6 @@ metadata:
   language: Ansible
   projectType: Ansible
 components:
-  - name: ollama-models
-    volume:
-      size: 10Gi
   - name: automation-tools
     container:
       image: ghcr.io/ansible/ansible-devspaces:latest
@@ -43,18 +40,15 @@ components:
           value: ${PROJECT_SOURCE}/.venv/bin:${PATH}
   - name: ollama
     container:
-      image: docker.io/ollama/ollama:latest
+      image: docker.io/ollama/ollama:0.5.4
       mountSources: false
       cpuLimit: 4000m
-      cpuRequest: 1000m
-      memoryRequest: 6Gi
+      cpuRequest: 500m
+      memoryRequest: 4Gi
       memoryLimit: 10Gi
       env:
         - name: OLLAMA_HOST
           value: 0.0.0.0:11434
-      volumeMounts:
-        - name: ollama-models
-          path: /root/.ollama
 commands:
   - id: setup-workspace
     exec:
@@ -93,6 +87,6 @@ commands:
       commandLine: bash .devfile/ollama-pull.sh
       workingDir: ${PROJECT_SOURCE}
       label: Pull Ollama model (qwen2.5-coder:7b)
-# No events.postStart — DWO injects source-mount hooks on mountSources containers;
-# ollama must keep mountSources: false to avoid PostStartHook failures.
+# No events.postStart — ollama keeps mountSources: false (no DWO source-sync hook).
+# Models live on container ephemeral storage (re-pulled after full recreate); no extra PVC.
 # Setup: .vscode/tasks.json (folderOpen) + Command Palette → Setup workspace.
