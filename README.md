@@ -95,6 +95,6 @@ See [Makefile](Makefile) for all targets.
 
 ## 🌐 OpenShift Dev Spaces
 
-Import via [`.devfile.yaml`](.devfile.yaml). See [devspaces-workspace.md](automation-whitepaper/guides/devspaces-workspace.md).
+Import via [`.devfile.yaml`](.devfile.yaml) (workspace **Automation Home**). **GitHub Copilot Agent:** follow [devspaces-workspace.md § Copilot setup](automation-whitepaper/guides/devspaces-workspace.md#github-copilot-agent--setup-and-authentication). Optional Continue.dev stack: `.devfile/continue.yaml` with `?devfilePath=.devfile/continue.yaml`.
 
 **Delivery submodule** requires SSH access to `git@github.com:automationiberia/ai-auto-deliveries.git`. See [deliveries/README.md](deliveries/README.md).

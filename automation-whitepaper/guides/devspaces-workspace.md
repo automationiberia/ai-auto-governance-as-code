@@ -10,6 +10,7 @@ Run this repository as a **Dev Spaces workspace** with Ansible tooling, submodul
 |------|---------|
 | [`.devfile.yaml`](../../.devfile.yaml) | Container image, env vars, Copilot VSIX path, postStart setup |
 | [`.devfile/setup-workspace.sh`](../../.devfile/setup-workspace.sh) | Submodules, Copilot VSIX download, `pip install`, pre-commit |
+| [`.devfile/continue.yaml`](../../.devfile/continue.yaml) | Optional Continue.dev stack (`?devfilePath=.devfile/continue.yaml`) |
 | [`.vscode/extensions.json`](../../.vscode/extensions.json) | Auto-install `redhat.devspaces-copilot-chat-integration` at workspace start |
 | [`automation-home.code-workspace`](../../automation-home.code-workspace) | VS Code workspace (Agent mode enabled; Ansible + Copilot extensions) |
 
@@ -19,8 +20,9 @@ Run this repository as a **Dev Spaces workspace** with Ansible tooling, submodul
 
 1. Open your organisation **Dev Spaces** dashboard.
 2. **Create Workspace** → import this Git repository URL.
-3. Ensure **Recreate existing workspace** is used after `.devfile.yaml` changes.
-4. Wait for **postStart** (`setup-workspace`) to finish.
+3. Confirm the workspace uses **`.devfile.yaml`** (name **Automation Home**). Do **not** keep a second `devfile.yaml` at the repo root — Dev Spaces may pick the wrong file and fail with `init-persistent-home` CrashLoopBackOff.
+4. Ensure **Recreate existing workspace** is used after `.devfile.yaml` changes.
+5. Wait for **postStart** (`setup-workspace`) to finish.
 
 Environment variables (set automatically):
 
@@ -122,9 +124,9 @@ For the **private** delivery repo, configure Git credentials in Dev Spaces (**Us
 
 ---
 
-## GitHub Copilot and AI chat
+## GitHub Copilot Agent — setup and authentication
 
-Repo governance for Copilot is in [`.github/copilot-instructions.md`](../../.github/copilot-instructions.md). **This repository pre-configures the Dev Spaces Copilot bridge extension and Agent mode** — you still must sign in to GitHub once per cluster user.
+Repo governance for Copilot is in [`.github/copilot-instructions.md`](../../.github/copilot-instructions.md). **This repository pre-configures the Dev Spaces Copilot bridge extension and Agent mode.** GitHub sign-in is **manual** — once per cluster user — and cannot be automated from the devfile.
 
 ### What the repo configures automatically
 
@@ -133,6 +135,7 @@ Repo governance for Copilot is in [`.github/copilot-instructions.md`](../../.git
 | [`.vscode/extensions.json`](../../.vscode/extensions.json) | Installs `redhat.devspaces-copilot-chat-integration` from Open VSX when the cluster registry has it |
 | `.devfile.yaml` → `DEFAULT_EXTENSIONS` | Pre-installs the same extension from a VSIX downloaded to `.devfile/extensions/` (fallback when embedded Open VSX lacks the extension) |
 | `.devfile/setup-workspace.sh` | Downloads VSIX **0.36.2** from [Open VSX](https://open-vsx.org/extension/redhat/devspaces-copilot-chat-integration) on postStart |
+| `.devfile.yaml` → `VSCODE_TRUSTED_EXTENSIONS` | Allows the bridge extension to access GitHub OAuth tokens |
 | `automation-home.code-workspace` | Enables Copilot **Agent** mode (`chat.agent.enabled`) |
 
 After changing `.devfile.yaml`, **Recreate existing workspace** (not just restart) so env vars apply.
@@ -141,38 +144,108 @@ If Chat still shows *Getting chat ready…* on the **first** start, run **Dev Sp
 
 ### Prerequisites
 
-| Requirement | Notes |
-|-------------|--------|
-| **Copilot seat** | GitHub Copilot Individual, Business, or Enterprise on your GitHub account |
-| **GitHub.com account** | Use **Continue with GitHub** (not GHE.com) unless your org uses GitHub Enterprise exclusively |
-| **Network egress** | Workspace pod must reach `github.com` for device activation |
+| Requirement | How to verify |
+|-------------|---------------|
+| **Copilot seat** | [github.com/settings/copilot](https://github.com/settings/copilot) — Individual, Business, or Enterprise active on your account |
+| **GitHub.com account** | Use github.com (not GHE.com) unless your org uses GitHub Enterprise exclusively |
+| **Network egress** | From a workspace terminal: `curl -sI https://api.githubcopilot.com \| head -1` returns `HTTP/2 200` or similar |
+| **Correct devfile** | Workspace name is **Automation Home** (not `vscode-continue-ai-env`) |
+| **Extension installed** | Extensions view (`Ctrl+Shift+X`) shows **Dev Spaces Copilot Chat Integration** 0.36.2 enabled |
 
-### Correct sign-in flow (Dev Spaces / Eclipse Che)
+### Git credentials ≠ Copilot authentication
 
-Do **not** start with the **Sign in to use AI Features → Continue with GitHub** dialog if it fails — that path often errors in the browser IDE. Use **device authentication** instead:
+| Purpose | Where it is configured | Used for |
+|---------|------------------------|----------|
+| **Git clone / submodules** | Dev Spaces **User Preferences → Git / SSH keys** | `git submodule update`, private `deliveries/automation` |
+| **Copilot Chat / Agent** | **`GitHub: Device Authentication`** inside the IDE | AI chat, code suggestions, Agent mode |
 
-1. **Sign out** if you already tried and failed:
-   - Activity bar → **Accounts** (person icon) → your GitHub account → **Sign Out**.
-2. Open Command Palette (`F1` / `Ctrl+Shift+P`) → run **`GitHub: Device Authentication`**.
-3. Copy the **device code** from the notification and open the GitHub activation link in your browser (outside Dev Spaces).
-4. Paste the code, authorize, and confirm.
-5. When prompted, **refresh the Dev Spaces browser tab** (F5). Authentication applies only after refresh.
-6. Open **Chat**, choose **Agent** in the mode dropdown, and send a test prompt.
+Being able to clone the repo does **not** mean Copilot is authenticated. Configure both independently.
+
+---
+
+### First-time setup (step-by-step)
+
+Complete these steps **in order** after the workspace opens and `setup-workspace` finishes.
+
+**Do not open Chat or send a message until step 5 is done.** Opening Chat before authentication causes `GitHubLoginFailed` and *Chat took too long to get ready*.
+
+| Step | Action |
+|------|--------|
+| **1** | Confirm extension: `Ctrl+Shift+X` → search **Dev Spaces Copilot Chat Integration** → status **Enabled** (version 0.36.2). If missing, see [Extension not found](#extension-not-found-redhatdevspaces-copilot-chat-integration) below. |
+| **2** | If you previously tried and failed: Activity bar → **Accounts** (person icon) → GitHub → **Sign Out** → confirm. |
+| **3** | Command Palette (`F1` / `Ctrl+Shift+P`) → **`GitHub: Device Authentication`**. **Do not** use the popup *Sign in to use AI Features → Continue with GitHub* — that OAuth path often fails in the browser IDE. |
+| **4** | A notification shows a **device code** and link. Open the link in a **normal browser tab** (outside Dev Spaces), paste the code, authorize the application, and confirm on GitHub. |
+| **5** | **Refresh the Dev Spaces browser tab** (`F5`). The token is applied only after refresh. Optional but recommended: Command Palette → **`Developer: Reload Window`**. |
+| **6** | Open **Chat** (right panel). In the mode dropdown, select **Agent** (not only Ask/Edit). |
+| **7** | Send a test prompt, for example: `@AGENTS.md List the available automation skills.` |
+
+Device Authentication is **one-time per cluster user** — credentials are stored as a Secret on the cluster and persist across workspaces.
 
 Official reference: [Eclipse Che — GitHub Copilot Chat](https://eclipse.dev/che/docs/stable/end-user-guide/using-github-copilot-chat/).
 
-### If sign-in still fails
+---
 
-| Symptom | Try |
-|---------|-----|
-| **Failed to sign in to GitHub** after popup | Sign out → `GitHub: Device Authentication` → refresh tab (do not retry popup) |
-| **`redhat.devspaces-copilot-chat-integration` not found** | Cluster Open VSX lacks the extension — see below |
-| **Getting chat ready…** (stuck) | Same — Chat waits for the integration extension |
-| **User not authorized** / 401 in Output | Confirm Copilot seat on GitHub; ask org admin to assign Copilot Business |
-| **GHE.com** prompt when you use github.com | Remove `"github.copilot.advanced": { "authProvider": "github-enterprise" }` from user settings |
-| Cluster blocks Copilot | Ask platform team about **Continue + private LLM** ([Red Hat guide](https://developers.redhat.com/learning/learn:openshift-ai:integrate-private-ai-coding-assistant-your-cde-using-ollama-continue-openshift-dev-spaces/resource/resources:access-openshift-dev-spaces-and-create-your-cde)) |
+### Verify Copilot is working
 
-Check logs: Command Palette → **Output** → select **GitHub Copilot** or **GitHub Copilot Chat** from the dropdown.
+| Check | Expected result |
+|-------|-----------------|
+| **Accounts** menu | GitHub account listed (signed in) |
+| **Chat → Agent** | Response to a test prompt within a few seconds |
+| **Extensions → Runtime Status** | No **Uncaught Errors** such as `GitHubLoginFailed` |
+| **Output → GitHub Copilot Chat** | No repeating `NotAuthorized` or `Failed to get copilot token` |
+
+---
+
+### Recovery: `GitHubLoginFailed` or *Chat took too long to get ready*
+
+These errors mean the extension is installed but **has no valid GitHub/Copilot session**. Typical cause: Chat was opened before Device Authentication completed.
+
+**Reset procedure (confirmed working in Dev Spaces):**
+
+1. Close the Chat panel (do not send more messages).
+2. Activity bar → **Accounts** → **Sign Out** from GitHub (all sessions).
+3. Command Palette → **`GitHub: Device Authentication`**.
+4. Complete the flow in an external browser tab (device code + authorize).
+5. **Refresh** the Dev Spaces tab (`F5`).
+6. Command Palette → **`Developer: Reload Window`**.
+7. Open Chat → **Agent** → test again.
+
+If it still fails, check Output channels (Command Palette → **Output**):
+
+| Output channel | Look for |
+|----------------|----------|
+| **GitHub Authentication** | Device flow completed; OAuth errors |
+| **GitHub Copilot Chat** | `NotAuthorized`, `HTTP401`, `Failed to get copilot token` |
+| **Dev Spaces Copilot Chat Integration** | `GitHubLoginFailed` on activation |
+
+For deeper diagnosis: Command Palette → **Developer: Set Log Level…** → **Trace**, reproduce the error, then copy logs from the channels above.
+
+---
+
+### Troubleshooting reference
+
+| Symptom | Likely cause | Fix |
+|---------|--------------|-----|
+| **`GitHubLoginFailed`** in Runtime Status | Chat used before Device Authentication | [Recovery procedure](#recovery-githubloginfailed-or-chat-took-too-long-to-get-ready) above |
+| *Chat took too long to get ready* | Same as above, or extension still loading | Sign out → Device Authentication → F5 → Reload Window |
+| **Failed to sign in** after OAuth popup | Browser popup OAuth unsupported in Che-Code | Use **`GitHub: Device Authentication`** only |
+| **`redhat.devspaces-copilot-chat-integration` not found** | Cluster Open VSX lacks the extension | See [Extension not found](#extension-not-found-redhatdevspaces-copilot-chat-integration) below |
+| **User not authorized** / 401 in Output | No Copilot seat on account | [github.com/settings/copilot](https://github.com/settings/copilot) or ask org admin (Copilot Business) |
+| **GHE.com** login prompt | User settings force GitHub Enterprise | Remove `"github.copilot.advanced": { "authProvider": "github-enterprise" }` from user settings |
+| **Network** errors in Output | Pod cannot reach Copilot API | Ask platform team to allow `github.com`, `api.github.com`, `api.githubcopilot.com` |
+| Cluster blocks Copilot entirely | Policy or no seats | [Continue + private LLM](https://developers.redhat.com/learning/learn:openshift-ai:integrate-private-ai-coding-assistant-your-cde-using-ollama-continue-openshift-dev-spaces/resource/resources:access-openshift-dev-spaces-and-create-your-cde) — use [`.devfile/continue.yaml`](../../.devfile/continue.yaml) with `?devfilePath=.devfile/continue.yaml` |
+
+---
+
+### `init-persistent-home` CrashLoopBackOff (works only after Restart)
+
+| Symptom | Cause | Fix |
+|---------|-------|-----|
+| Workspace name **`vscode-continue-ai-env`** on first create | Wrong devfile — root `devfile.yaml` was selected instead of `.devfile.yaml` | **Recreate** workspace from repo; only `.devfile.yaml` should exist at root |
+| Same error with a custom **`home-volume`** on `/home/user` | Conflicts with cluster **persistUserHome** (`init-persistent-home`) | Remove devfile `volume` mounts on `/home/user`; use platform persistence |
+| **Automation Home** fails once, succeeds on Restart | PVC or pull-secret race on cluster | Retry once; if recurring, ask platform team (storage class / DWO) |
+
+Optional Continue stack (no custom home volume): append `?devfilePath=.devfile/continue.yaml` to the factory URL.
 
 ### Extension not found: `redhat.devspaces-copilot-chat-integration`
 

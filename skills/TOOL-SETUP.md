@@ -100,10 +100,11 @@ Do **not** rely on `.mdc` unless your Claude product documents that format; **`S
 **When:** VS Code / Visual Studio with Copilot Chat on this workspace (including **OpenShift Dev Spaces**).
 
 1. Repository prep above.
-2. **Dev Spaces:** authenticate with Command Palette → **`GitHub: Device Authentication`** (not the browser popup). Refresh the tab after authorizing in GitHub. Details: [devspaces-workspace.md § Copilot](../automation-whitepaper/guides/devspaces-workspace.md#github-copilot-and-ai-chat).
-3. Repo instructions ship in [`.github/copilot-instructions.md`](../.github/copilot-instructions.md) — Copilot loads this automatically once signed in.
-4. Open `automation-home.code-workspace`.
-5. In chat, `@AGENTS.md` and skill paths if your Copilot build supports file context.
+2. **Dev Spaces — full procedure:** [devspaces-workspace.md § GitHub Copilot Agent](../automation-whitepaper/guides/devspaces-workspace.md#github-copilot-agent--setup-and-authentication) (Device Authentication, Agent mode, recovery from `GitHubLoginFailed`).
+3. **Quick summary (Dev Spaces):** do **not** open Chat first → **`GitHub: Device Authentication`** → authorize in external browser → **F5** → Reload Window → Chat **Agent**.
+4. Repo instructions ship in [`.github/copilot-instructions.md`](../.github/copilot-instructions.md) — Copilot loads this automatically once signed in.
+5. Open `automation-home.code-workspace`.
+6. In chat, `@AGENTS.md` and skill paths if your Copilot build supports file context.
 
 **Invoke:** Same natural-language prompts as [ai-prompt-examples.md](../automation-whitepaper/guides/ai-prompt-examples.md); name the skill explicitly.
 
