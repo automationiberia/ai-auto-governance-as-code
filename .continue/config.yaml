@@ -1,21 +1,35 @@
 # Continue.dev — local Ollama in Dev Spaces (same pod as the IDE).
-# Copied to /home/user/.continue/ on workspace postStart (.devfile/setup-workspace.sh).
+# Copied to /home/user/.continue/ by .devfile/setup-workspace.sh
 # Ollama sidecar: qwen2.5-coder:7b (CPU, no GPU). API: http://127.0.0.1:11434
 #
 name: Automation Home (Ollama)
 version: "1.0.0"
 schema: v1
 
+rules:
+  - >-
+    Before technical Ansible work, read AGENTS.md at the workspace root and
+    follow the matching skills/*/SKILL.md. Declare Mode 1 Auditor, Mode 2 Builder,
+    or Mode 3 Librarian as in AGENTS.md.
+
 models:
   - name: Qwen2.5 Coder 7B
     provider: ollama
     model: qwen2.5-coder:7b
     apiBase: http://127.0.0.1:11434
+    capabilities:
+      - tool_use
+    defaultCompletionOptions:
+      contextLength: 8192
     roles:
       - chat
       - edit
       - apply
       - autocomplete
+    chatOptions:
+      baseAgentSystemMessage: >-
+        You are a Senior Lead Engineer for Ansible automation. Use tools to read
+        and edit files. Follow AGENTS.md and skills/*/SKILL.md for governance.
 
 tabAutocompleteModel:
   name: Qwen2.5 Coder 7B

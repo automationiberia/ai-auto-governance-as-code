@@ -404,16 +404,47 @@ Then resize or recreate the user PVC if it was already provisioned smaller.
 2. Accept **Setup workspace** when the IDE opens.
 3. Model pull may take several minutes: `tail -f .devfile/ollama-pull.log`
 4. **Copilot:** complete [Device Authentication](#first-time-setup-step-by-step).
-5. **Continue:** open the Continue icon → select **Qwen2.5 Coder 7B** if prompted.
+5. **Continue:** sidebar → **Agent** → model **Qwen2.5 Coder 7B** → run the [starter prompt](#continue-agent--starter-prompt) below.
+
+### Continue Agent — starter prompt
+
+Open the **Continue** sidebar (not Copilot Chat). Select **Agent** and **Qwen2.5 Coder 7B**. On CPU without GPU, keep the first request **small** — one file, short output.
+
+**Recommended first prompt** (fast sanity check):
+
+```text
+Read skills/automation-auditor/SKILL.md only. Summarize it in 5 bullets.
+```
+
+You should see **Generating…** and text appearing in the Continue panel within a few minutes. High CPU in the status bar (~4 cores) is normal while Ollama runs.
+
+| Check | Expected |
+|-------|----------|
+| Status | **Generating…** with growing output |
+| Ollama | `curl -sf http://127.0.0.1:11434/api/tags` succeeds |
+| Config | `grep tool_use ~/.continue/config.yaml` after **Setup workspace** |
+| Stuck | No new text for **15+ min** → **Stop**, use a shorter prompt, or **Reload Window** |
+
+Re-apply config after pulling repo changes: `bash .devfile/setup-workspace.sh` then **Developer: Reload Window**.
 
 ### Using governance with Continue
 
-Continue does not auto-load `.github/copilot-instructions.md`. Start prompts with explicit paths:
+Continue does not auto-load `.github/copilot-instructions.md`. Scope prompts to **one skill or role** on CPU; avoid listing all of `skills/` in a single Agent turn.
+
+**Starter (one skill):**
+
+```text
+Read skills/automation-auditor/SKILL.md only. Summarize it in 5 bullets.
+```
+
+**Full audit (after the starter works):**
 
 ```text
 Read AGENTS.md. Operate in Mode 1: The Auditor.
 Follow skills/automation-auditor/SKILL.md. Audit deliveries/automation/roles/<rolename>/.
 ```
+
+Use **Copilot Agent** for large multi-file tasks; Continue + Ollama is best for private/offline work with narrow scope.
 
 Prompt library: [ai-prompt-examples.md](ai-prompt-examples.md).
 
@@ -427,7 +458,8 @@ To enable the Context7 MCP server ([`.continue/mcpServers/mcp.json`](../../.cont
 |---------|-------|-----|
 | Continue cannot connect | `curl -sf http://127.0.0.1:11434/api/tags` from a terminal | Wait for postStart; run **Pull Ollama model** from Command Palette or `bash .devfile/ollama-pull.sh` inside the **ollama** container |
 | Model missing | `cat .devfile/ollama-pull.log` | Command Palette → **Pull Ollama model (qwen2.5-coder:7b)** |
-| Very slow responses | Expected on CPU 7B | Normal without GPU; use Copilot for heavy Agent tasks |
+| Very slow responses | Expected on CPU 7B | One skill per prompt; starter: `Read skills/automation-auditor/SKILL.md only. Summarize it in 5 bullets.` |
+| Agent appears stuck | No new text 15+ min | **Stop** → shorter prompt; Output → **Continue** for errors |
 | Out of memory | Pod OOMKilled on ollama container | Ask platform team for higher quota or use a smaller model |
 | Continue extension missing | Extensions view | Install **Continue** (`Continue.continue`) from Open VSX |
 
