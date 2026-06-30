@@ -5,7 +5,8 @@ metadata:
   displayName: Automation Home
   description: >-
     AI-Driven Governance-as-Code for Ansible Automation — Copilot Agent,
-    Continue + Ollama (qwen2.5-coder:7b), white paper, skills, and delivery submodule.
+    white paper, skills, and delivery submodule. Optional Ollama + Continue:
+    ?devfilePath=.devfile/with-ollama.yaml
   tags:
     - ansible
     - automation
@@ -36,17 +37,6 @@ components:
         # Copilot: extensions.json + setup-workspace VSIX; PATH → automation-home.code-workspace.
         - name: VSCODE_TRUSTED_EXTENSIONS
           value: redhat.devspaces-copilot-chat-integration
-  - name: ollama
-    container:
-      image: docker.io/ollama/ollama:0.5.4
-      mountSources: false
-      cpuLimit: 2000m
-      cpuRequest: 250m
-      memoryRequest: 2Gi
-      memoryLimit: 8Gi
-      env:
-        - name: OLLAMA_HOST
-          value: 0.0.0.0:11434
 commands:
   - id: setup-workspace
     exec:
@@ -79,12 +69,4 @@ commands:
         playbooks/type_windows_ntp.yml'
       workingDir: ${PROJECT_SOURCE}
       label: Syntax-check delivery playbooks
-  - id: ollama-pull-qwen
-    exec:
-      component: automation-tools
-      commandLine: bash .devfile/ollama-pull.sh
-      workingDir: ${PROJECT_SOURCE}
-      label: Pull Ollama model (qwen2.5-coder:7b)
-# No events.postStart — ollama keeps mountSources: false (no DWO source-sync hook).
-# Models live on container ephemeral storage (re-pulled after full recreate); no extra PVC.
 # Setup: .vscode/tasks.json (folderOpen) + Command Palette → Setup workspace.

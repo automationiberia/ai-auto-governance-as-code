@@ -1,15 +1,18 @@
 ---
-# Deprecated alias — use the repo root .devfile.yaml (same content, no Ollama sidecar).
-# Kept so existing factory URLs with ?devfilePath=.devfile/base.yaml keep working.
+# Optional Dev Spaces stack — adds Ollama sidecar for Continue (qwen2.5-coder:7b, CPU).
+# Requires higher pod memory quota than the default .devfile.yaml.
+# Create with: ?devfilePath=.devfile/with-ollama.yaml
 schemaVersion: 2.3.0
 metadata:
   name: automation-home
-  displayName: Automation Home
+  displayName: Automation Home + Ollama
   description: >-
-    Alias for default .devfile.yaml — Ansible + Copilot Agent (no Ollama sidecar).
+    Automation Home with local LLM sidecar (Continue + qwen2.5-coder:7b).
+    Use only when the cluster allows ~10 Gi+ pod memory; otherwise use default .devfile.yaml.
   tags:
     - ansible
     - automation
+    - ollama
   language: Ansible
   projectType: Ansible
 components:
@@ -34,6 +37,17 @@ components:
             /usr/share/ansible/collections
         - name: VSCODE_TRUSTED_EXTENSIONS
           value: redhat.devspaces-copilot-chat-integration
+  - name: ollama
+    container:
+      image: docker.io/ollama/ollama:0.5.4
+      mountSources: false
+      cpuLimit: 2000m
+      cpuRequest: 250m
+      memoryRequest: 2Gi
+      memoryLimit: 8Gi
+      env:
+        - name: OLLAMA_HOST
+          value: 0.0.0.0:11434
 commands:
   - id: setup-workspace
     exec:
@@ -66,3 +80,9 @@ commands:
         playbooks/type_windows_ntp.yml'
       workingDir: ${PROJECT_SOURCE}
       label: Syntax-check delivery playbooks
+  - id: ollama-pull-qwen
+    exec:
+      component: automation-tools
+      commandLine: bash .devfile/ollama-pull.sh
+      workingDir: ${PROJECT_SOURCE}
+      label: Pull Ollama model (qwen2.5-coder:7b)
