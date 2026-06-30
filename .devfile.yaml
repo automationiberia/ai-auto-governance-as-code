@@ -58,7 +58,10 @@ commands:
   - id: setup-workspace
     exec:
       component: automation-tools
-      commandLine: bash .devfile/setup-workspace.sh
+      commandLine: >-
+        bash -lc 'mkdir -p .devfile &&
+        nohup bash .devfile/setup-workspace.sh </dev/null >> .devfile/setup-workspace.log 2>&1 &
+        exit 0'
       workingDir: ${PROJECT_SOURCE}
       label: Setup workspace (submodules, pip, pre-commit)
   - id: pre-commit-home
@@ -89,7 +92,10 @@ commands:
   - id: ollama-pull-qwen
     exec:
       component: ollama
-      commandLine: sh ${PROJECT_SOURCE}/.devfile/ollama-pull.sh
+      commandLine: >-
+        sh -lc 'mkdir -p .devfile &&
+        nohup sh .devfile/ollama-pull.sh </dev/null >> .devfile/ollama-pull.log 2>&1 &
+        exit 0'
       workingDir: ${PROJECT_SOURCE}
       label: Pull Ollama model (qwen2.5-coder:7b)
 events:

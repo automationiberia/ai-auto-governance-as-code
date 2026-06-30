@@ -24,7 +24,14 @@ Run this repository as a **Dev Spaces workspace** with Ansible tooling, submodul
 2. **Create Workspace** → import this Git repository URL.
 3. Confirm the workspace uses **`.devfile.yaml`** (name **Automation Home**). Do **not** keep a second `devfile.yaml` at the repo root — Dev Spaces may pick the wrong file and fail with `init-persistent-home` CrashLoopBackOff.
 4. Ensure **Recreate existing workspace** is used after `.devfile.yaml` changes.
-5. Wait for **postStart** (`setup-workspace`) to finish.
+5. Wait for **postStart** to finish (runs in background — IDE may open before setup completes). Track progress:
+
+   ```bash
+   tail -f .devfile/setup-workspace.log
+   tail -f .devfile/ollama-pull.log
+   ```
+
+   When setup finishes, open a **new terminal** so `.venv/bin` is on PATH.
 
 Environment variables (set automatically):
 
@@ -103,7 +110,15 @@ cat .devfile/setup-workspace.log
 
 ### Typical `postStart` failure
 
-`git submodule update` on the private delivery repo without SSH/PAT in **User Preferences → Git**. Configure credentials, then in a terminal:
+**`[postStart hook] failed`** on `automation-tools` usually means the setup script exited non-zero or timed out. This repo runs setup **asynchronously** (`nohup`) so the hook returns immediately; recreate the workspace after pulling the latest `.devfile.yaml`.
+
+If failure persists, check `.devfile/setup-workspace.log` (or pod logs). Common causes:
+
+| Cause | Fix |
+|-------|-----|
+| Script exited before `exit 0` (older revisions) | Pull latest; setup uses `HOME` default and no `set -u` |
+| Hook timeout (submodules + pip + VSIX download) | Async postStart — wait for log; run **Setup workspace** manually |
+| `git submodule update` | Configure Git/SSH in User Preferences |
 
 ```bash
 bash .devfile/setup-workspace.sh
