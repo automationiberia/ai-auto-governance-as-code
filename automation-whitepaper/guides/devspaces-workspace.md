@@ -91,8 +91,8 @@ cat .devfile/setup-workspace.log
 
 ### If the workspace never opens
 
-1. **Restart with default devfile** — only to confirm it is a custom `postStart` issue; you lose this repo’s devfile until you import it again.
-2. **Debug mode** (cluster admin or advanced): add to the DevWorkspace before create:
+1. **Restart with default devfile** — only to confirm it is a custom devfile issue; you lose this repo’s devfile until you import it again.
+2. **Debug mode** — the Failed workspace has **zero running pods** (deployment scaled to 0). Adding the annotation alone is not enough:
 
    ```yaml
    metadata:
@@ -100,7 +100,16 @@ cat .devfile/setup-workspace.log
        controller.devfile.io/debug-start: "true"
    ```
 
-   The pod stays up after a failed hook; then check `/tmp/poststart-stdout.txt` and `/tmp/poststart-stderr.txt` inside the container (`oc exec`).
+   **Edit the DevWorkspace spec** → add the annotation → **Save** → **Restart** (or delete and recreate). On the next start attempt the pod should stay up for ~5 minutes after a postStart failure so you can inspect logs.
+
+   Inside the **`automation-tools`** container (not ollama):
+
+   ```bash
+   cat /tmp/poststart-stderr.txt
+   cat /tmp/poststart-stdout.txt
+   ```
+
+   Requires cluster DevWorkspace Operator with debug-start support (Dev Spaces 3.25+). If pods still disappear instantly, use the **Logs** tab during startup or ask a cluster admin for `oc describe pod`.
 
 3. **OpenShift CLI** (if you have access):
 
@@ -110,19 +119,27 @@ cat .devfile/setup-workspace.log
    oc describe pod <workspace-pod>
    ```
 
+4. **Fallback without Ollama** — create the workspace with  
+   `?devfilePath=.devfile/base.yaml`  
+   (same repo URL and branch). If that opens, the failure is pod size / sidecar related; ask the platform team for higher workspace quota.
+
 ### Typical `postStart` failure
 
-**`FailedPostStartHook`** — this repo **does not define `events.postStart`**. The usual cause on **`ollama`** is `mountSources: true` (DevWorkspace injects a source-sync hook that fails on the minimal Ollama image). Current devfile sets **`mountSources: false`** on the ollama sidecar.
-
-Setup runs when the IDE opens (VS Code task) or via Command Palette → **Setup workspace**.
+**`FailedPostStartHook` on `automation-tools`** — this repo **does not define `events.postStart`**. DevWorkspace injects a **git sync + che-code entrypoint** postStart on every `mountSources: true` container. Common causes:
 
 | Cause | Fix |
 |-------|-----|
-| **`FailedPostStartHook` on ollama** | Pull latest devfile; ollama must have `mountSources: false` |
+| **`DEFAULT_EXTENSIONS` points to missing VSIX** | Pull latest devfile — VSIX path removed from env; use `extensions.json` + **Setup workspace** |
+| **`PATH` / `.venv` before setup** | PATH is set in `automation-home.code-workspace` only, not the devfile |
+| **Ollama sidecar + low quota** | Try `.devfile/base.yaml` (no Ollama) or ask platform to raise memory/storage |
 | Legacy postStart in devfile | Recreate workspace from latest branch |
-| Setup not finished | Check `.devfile/setup-workspace.log`; run **Setup workspace** |
+| Setup not finished (after IDE opens) | Check `.devfile/setup-workspace.log`; run **Setup workspace** |
 | `git submodule update` | Configure Git/SSH in User Preferences |
-| Workspace storage quota | Ask platform team to raise per-workspace PVC (Ollama needs ~10 Gi for models) |
+| Workspace storage quota | Ask platform team to raise per-workspace PVC |
+
+**`FailedPostStartHook` on `ollama`** — set `mountSources: false` on the ollama sidecar (current default devfile).
+
+Setup runs when the IDE opens (VS Code task) or via Command Palette → **Setup workspace**.
 
 ```bash
 bash .devfile/setup-workspace.sh
@@ -174,14 +191,10 @@ Repo governance for Copilot is in [`.github/copilot-instructions.md`](../../.git
 | Mechanism | Purpose |
 |-----------|---------|
 | [`.vscode/extensions.json`](../../.vscode/extensions.json) | Installs `redhat.devspaces-copilot-chat-integration` from Open VSX when the cluster registry has it |
-| `.devfile.yaml` → `DEFAULT_EXTENSIONS` | Pre-installs the same extension from a VSIX downloaded to `.devfile/extensions/` (fallback when embedded Open VSX lacks the extension) |
-| `.devfile/setup-workspace.sh` | Downloads VSIX **0.36.2** from [Open VSX](https://open-vsx.org/extension/redhat/devspaces-copilot-chat-integration) on postStart |
-| `.devfile.yaml` → `VSCODE_TRUSTED_EXTENSIONS` | Allows the bridge extension to access GitHub OAuth tokens |
-| `automation-home.code-workspace` | Enables Copilot **Agent** mode (`chat.agent.enabled`) |
+| `.devfile/setup-workspace.sh` | Downloads VSIX **0.36.2** to `.devfile/extensions/` (fallback when Open VSX lacks the extension) |
+| `automation-home.code-workspace` | Enables Copilot **Agent** mode (`chat.agent.enabled`); sets `.venv` on PATH for terminals |
 
-After changing `.devfile.yaml`, **Recreate existing workspace** (not just restart) so env vars apply.
-
-If Chat still shows *Getting chat ready…* on the **first** start, run **Dev Spaces: Restart Workspace** once — the VSIX download may finish after the editor first checked `DEFAULT_EXTENSIONS`.
+**Note:** `DEFAULT_EXTENSIONS` is **not** set in the devfile — the VSIX path does not exist during the injected postStart hook and can prevent the workspace from opening. After **Setup workspace**, run **Dev Spaces: Restart Workspace** once if Chat does not load the bridge extension.
 
 ### Prerequisites
 
@@ -355,9 +368,9 @@ Continue reads [`.continue/config.yaml`](../../.continue/config.yaml), copied to
 
 | Resource | Value | Notes |
 |----------|-------|--------|
-| **Ollama memory** | 6–10 Gi | Sidecar limit in devfile |
-| **Ollama PVC** | 10 Gi | Model cache (`ollama-models` volume) |
-| **Pod memory (total)** | ~18 Gi+ | automation-tools 8 Gi + ollama 10 Gi |
+| **Ollama memory** | 2–8 Gi | Sidecar limit in devfile (CPU-only 7B model) |
+| **Ollama PVC** | None (ephemeral) | Model re-pulled after full workspace recreate |
+| **Pod memory (total)** | ~10 Gi+ | automation-tools 8 Gi + ollama 8 Gi + che-code |
 | **CPU** | 4+ cores recommended | 7B model on CPU is slow but usable |
 | **Egress** | First start only | `ollama pull` (~4.5 GiB for qwen2.5-coder:7b) |
 

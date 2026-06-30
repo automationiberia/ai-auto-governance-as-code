@@ -1,11 +1,14 @@
 ---
+# Minimal Dev Spaces stack — Automation Home without Ollama (debug / quota recovery).
+# Create with: ?devfilePath=.devfile/base.yaml
+# Default (with Ollama sidecar): .devfile.yaml
 schemaVersion: 2.3.0
 metadata:
   name: automation-home
-  displayName: Automation Home
+  displayName: Automation Home (no Ollama)
   description: >-
-    AI-Driven Governance-as-Code for Ansible Automation — Copilot Agent,
-    Continue + Ollama (qwen2.5-coder:7b), white paper, skills, and delivery submodule.
+    Ansible + Copilot Agent only — use when the full stack fails to start
+    (postStart on automation-tools or pod quota). Same setup scripts as .devfile.yaml.
   tags:
     - ansible
     - automation
@@ -31,22 +34,6 @@ components:
           value: >-
             ${PROJECT_SOURCE}/deliveries/automation/.ansible/collections:
             /usr/share/ansible/collections
-        # Do NOT set DEFAULT_EXTENSIONS or PATH here — paths under ${PROJECT_SOURCE}
-        # do not exist during the DWO-injected postStart hook and can fail automation-tools.
-        # Copilot: extensions.json + setup-workspace VSIX; PATH → automation-home.code-workspace.
-        - name: VSCODE_TRUSTED_EXTENSIONS
-          value: redhat.devspaces-copilot-chat-integration
-  - name: ollama
-    container:
-      image: docker.io/ollama/ollama:0.5.4
-      mountSources: false
-      cpuLimit: 2000m
-      cpuRequest: 250m
-      memoryRequest: 2Gi
-      memoryLimit: 8Gi
-      env:
-        - name: OLLAMA_HOST
-          value: 0.0.0.0:11434
 commands:
   - id: setup-workspace
     exec:
@@ -79,12 +66,3 @@ commands:
         playbooks/type_windows_ntp.yml'
       workingDir: ${PROJECT_SOURCE}
       label: Syntax-check delivery playbooks
-  - id: ollama-pull-qwen
-    exec:
-      component: automation-tools
-      commandLine: bash .devfile/ollama-pull.sh
-      workingDir: ${PROJECT_SOURCE}
-      label: Pull Ollama model (qwen2.5-coder:7b)
-# No events.postStart — ollama keeps mountSources: false (no DWO source-sync hook).
-# Models live on container ephemeral storage (re-pulled after full recreate); no extra PVC.
-# Setup: .vscode/tasks.json (folderOpen) + Command Palette → Setup workspace.
