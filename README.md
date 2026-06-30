@@ -95,6 +95,6 @@ See [Makefile](Makefile) for all targets.
 
 ## 🌐 OpenShift Dev Spaces
 
-Import via [`.devfile.yaml`](.devfile.yaml) (workspace **Automation Home**): **Copilot Agent** + Ansible tooling by default. Optional **Continue + Ollama** (`qwen2.5-coder:7b`): `?devfilePath=.devfile/with-ollama.yaml`. See [devspaces-workspace.md](automation-whitepaper/guides/devspaces-workspace.md).
+Import via [`.devfile.yaml`](.devfile.yaml) (workspace **Automation Home**): **Copilot Agent** + **Continue** + **Ollama** (`qwen2.5-coder:7b`, CPU). Fallback without Ollama: `?devfilePath=.devfile/base.yaml`. See [devspaces-workspace.md](automation-whitepaper/guides/devspaces-workspace.md).
 
 **Delivery submodule** requires SSH access to `git@github.com:automationiberia/ai-auto-deliveries.git`. See [deliveries/README.md](deliveries/README.md).

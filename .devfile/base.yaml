@@ -1,12 +1,13 @@
 ---
-# Deprecated alias — use the repo root .devfile.yaml (same content, no Ollama sidecar).
-# Kept so existing factory URLs with ?devfilePath=.devfile/base.yaml keep working.
+# Fallback Dev Spaces stack — Automation Home without Ollama (low quota / debug).
+# Create with: ?devfilePath=.devfile/base.yaml
 schemaVersion: 2.3.0
 metadata:
   name: automation-home
-  displayName: Automation Home
+  displayName: Automation Home (no Ollama)
   description: >-
-    Alias for default .devfile.yaml — Ansible + Copilot Agent (no Ollama sidecar).
+    Ansible + Copilot Agent only — fallback when the default devfile (with Ollama)
+    exceeds cluster quota. Use ?devfilePath=.devfile/base.yaml
   tags:
     - ansible
     - automation

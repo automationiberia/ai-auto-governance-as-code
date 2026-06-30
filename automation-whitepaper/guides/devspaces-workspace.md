@@ -8,11 +8,11 @@ Run this repository as a **Dev Spaces workspace** with Ansible tooling, submodul
 
 | File | Purpose |
 |------|---------|
-| [`.devfile.yaml`](../../.devfile.yaml) | **Default** — Ansible + Copilot Agent (no Ollama; reliable startup) |
-| [`.devfile/with-ollama.yaml`](../../.devfile/with-ollama.yaml) | Optional — adds Ollama sidecar (`?devfilePath=.devfile/with-ollama.yaml`) |
-| [`.devfile/base.yaml`](../../.devfile/base.yaml) | Alias of default (keeps older factory URLs working) |
+| [`.devfile.yaml`](../../.devfile.yaml) | **Default** — Copilot Agent + Continue + Ollama (`qwen2.5-coder:7b`) |
+| [`.devfile/base.yaml`](../../.devfile/base.yaml) | Fallback without Ollama (`?devfilePath=.devfile/base.yaml`) |
+| [`.devfile/with-ollama.yaml`](../../.devfile/with-ollama.yaml) | Alias of default (legacy factory URLs) |
 | [`.devfile/setup-workspace.sh`](../../.devfile/setup-workspace.sh) | Submodules, Copilot VSIX, Continue config, `pip install`, pre-commit |
-| [`.devfile/ollama-pull.sh`](../../.devfile/ollama-pull.sh) | Pull `qwen2.5-coder:7b` (only with `with-ollama.yaml`) |
+| [`.devfile/ollama-pull.sh`](../../.devfile/ollama-pull.sh) | Pull `qwen2.5-coder:7b` into Ollama sidecar |
 | [`.continue/config.yaml`](../../.continue/config.yaml) | Continue → local Ollama (`http://127.0.0.1:11434`) |
 | [`.devfile/continue.yaml`](../../.devfile/continue.yaml) | Legacy UDI-only stack (`?devfilePath=.devfile/continue.yaml`) |
 | [`.vscode/extensions.json`](../../.vscode/extensions.json) | Auto-install Copilot + Continue extensions |
@@ -25,8 +25,8 @@ Run this repository as a **Dev Spaces workspace** with Ansible tooling, submodul
 
 1. Open your organisation **Dev Spaces** dashboard.
 2. **Create Workspace** → Git URL `https://github.com/automationiberia/ai-auto-governance-as-code` → branch `main` (or your feature branch). **Do not** put `/tree/branch` in the URL.
-3. Default devfile: **`.devfile.yaml`** (name **Automation Home**). Starts reliably with Copilot + Ansible tooling.
-4. **Optional local LLM:** append `?devfilePath=.devfile/with-ollama.yaml` to the factory URL — only if the cluster allows ~10 Gi+ pod memory (see [Continue + Ollama](#continue--ollama-local-llm-same-workspace)).
+3. Default devfile: **`.devfile.yaml`** (name **Automation Home**) — Copilot + Continue + Ollama sidecar.
+4. **Fallback without Ollama** (low quota): `?devfilePath=.devfile/base.yaml` — see [Cluster requirements](#cluster-requirements-no-gpu).
 5. **One running workspace** — Dev Spaces may allow only one active workspace per user; stop others before creating a new one.
 6. After `.devfile.yaml` changes, **Recreate existing workspace** (not only Restart).
 7. On first open, **Setup workspace** runs automatically (`.vscode/tasks.json`). If tools are missing, Command Palette → **Setup workspace**.
@@ -34,7 +34,6 @@ Run this repository as a **Dev Spaces workspace** with Ansible tooling, submodul
 
    ```bash
    tail -f .devfile/setup-workspace.log
-   # With with-ollama.yaml only:
    tail -f .devfile/ollama-pull.log
    ```
 
@@ -124,7 +123,7 @@ cat .devfile/setup-workspace.log
    oc describe pod <workspace-pod>
    ```
 
-4. **Fallback without Ollama** — use default `.devfile.yaml` (or legacy `?devfilePath=.devfile/base.yaml`). If that opens but `with-ollama.yaml` fails, ask the platform team for higher workspace memory quota.
+4. **Fallback without Ollama** — `?devfilePath=.devfile/base.yaml` when the default devfile fails (quota / Ollama CrashLoopBackOff).
 
 ### Typical `postStart` failure
 
@@ -134,7 +133,7 @@ cat .devfile/setup-workspace.log
 |-------|-----|
 | **`DEFAULT_EXTENSIONS` points to missing VSIX** | Pull latest devfile — VSIX path removed from env; use `extensions.json` + **Setup workspace** |
 | **`PATH` / `.venv` before setup** | PATH is set in `automation-home.code-workspace` only, not the devfile |
-| **Ollama sidecar + low quota** | Use default `.devfile.yaml`; optional `with-ollama.yaml` when quota allows |
+| **Ollama sidecar + low quota** | Use `?devfilePath=.devfile/base.yaml`; raise `perUserStrategyPvcConfig.claimSize` |
 | Legacy postStart in devfile | Recreate workspace from latest branch |
 | Setup not finished (after IDE opens) | Check `.devfile/setup-workspace.log`; run **Setup workspace** |
 | `git submodule update` | Configure Git/SSH in User Preferences |
@@ -346,23 +345,19 @@ If your cluster does not provide Copilot seats, use the same prompts in Chat or 
 
 ---
 
-## Continue + Ollama (local LLM, optional)
+## Continue + Ollama (local LLM, default devfile)
 
-The **default** [`.devfile.yaml`](../../.devfile.yaml) includes **Copilot Agent** only. For a **local LLM** with Continue, create the workspace with:
+The default [`.devfile.yaml`](../../.devfile.yaml) runs **three AI assistants** in one workspace:
 
-```text
-?devfilePath=.devfile/with-ollama.yaml
-```
+| Assistant | Purpose | Auth / setup |
+|-----------|---------|--------------|
+| **GitHub Copilot Agent** | Cloud LLM, Agent mode, `@AGENTS.md` | [Device Authentication](#first-time-setup-step-by-step) |
+| **Continue** | Private / local LLM | Extension + Ollama sidecar |
+| **Ollama** | Inference for Continue | `qwen2.5-coder:7b` @ `http://127.0.0.1:11434`, CPU only |
 
-| Assistant | Default devfile | `with-ollama.yaml` |
-|-----------|-----------------|---------------------|
-| **GitHub Copilot Agent** | Yes | Yes |
-| **Continue** | Extension only (no local model) | Extension + Ollama |
-| **Ollama** | — | Sidecar `qwen2.5-coder:7b`, CPU |
+**Fallback:** [`.devfile/base.yaml`](../../.devfile/base.yaml) omits the Ollama sidecar when cluster quota is insufficient.
 
-On clusters with **limited pod memory**, the Ollama sidecar causes `automation-tools` postStart failure — use the default devfile (confirmed working) until the platform team raises quota.
-
-### Architecture (`with-ollama.yaml`)
+### Architecture
 
 ```text
 DevWorkspace pod (shared network namespace)
@@ -377,7 +372,7 @@ Continue reads [`.continue/config.yaml`](../../.continue/config.yaml), copied to
 
 | Resource | Value | Notes |
 |----------|-------|--------|
-| **Ollama memory** | 4–10 Gi | Sidecar in `with-ollama.yaml` |
+| **Ollama memory** | 4–10 Gi | Sidecar in default `.devfile.yaml` |
 | **User PVC (`per-user`)** | ≥ 15 Gi | CheCluster `perUserStrategyPvcConfig.claimSize`; models under `/.ollama` |
 | **Pod memory (total)** | ~14 Gi+ | automation-tools 8 Gi + ollama 10 Gi + che-code |
 | **CPU** | 4+ cores recommended | 7B model on CPU is slow but usable |
@@ -403,12 +398,13 @@ oc patch checluster devspaces -n openshift-devspaces --type merge -p '
 
 Then resize or recreate the user PVC if it was already provisioned smaller.
 
-### First start (`with-ollama.yaml`)
+### First start
 
-1. **Recreate existing workspace** with `?devfilePath=.devfile/with-ollama.yaml`.
+1. **Recreate existing workspace** after pulling devfile changes (default `.devfile.yaml` includes Ollama).
 2. Accept **Setup workspace** when the IDE opens.
 3. Model pull may take several minutes: `tail -f .devfile/ollama-pull.log`
-5. **Continue:** open the Continue icon in the activity bar → select **Qwen2.5 Coder 7B** if prompted → skip onboarding wizard if config is preloaded.
+4. **Copilot:** complete [Device Authentication](#first-time-setup-step-by-step).
+5. **Continue:** open the Continue icon → select **Qwen2.5 Coder 7B** if prompted.
 
 ### Using governance with Continue
 

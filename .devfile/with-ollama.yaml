@@ -1,14 +1,12 @@
 ---
-# Optional Dev Spaces stack — adds Ollama sidecar for Continue (qwen2.5-coder:7b, CPU).
-# Requires higher pod memory quota than the default .devfile.yaml.
-# Create with: ?devfilePath=.devfile/with-ollama.yaml
+# Alias of the repo root .devfile.yaml (same stack). Kept for factory URLs that use
+# ?devfilePath=.devfile/with-ollama.yaml — new workspaces should use the default devfile.
 schemaVersion: 2.3.0
 metadata:
   name: automation-home
-  displayName: Automation Home + Ollama
+  displayName: Automation Home
   description: >-
-    Automation Home with local LLM sidecar (Continue + qwen2.5-coder:7b).
-    Use only when the cluster allows ~10 Gi+ pod memory; otherwise use default .devfile.yaml.
+    Alias of .devfile.yaml — Copilot Agent + Continue + Ollama (qwen2.5-coder:7b).
   tags:
     - ansible
     - automation
@@ -39,8 +37,6 @@ components:
           value: redhat.devspaces-copilot-chat-integration
   - name: ollama
     container:
-      # Red Hat Ollama stack pattern: mount per-user PVC at /.ollama so OpenShift
-      # arbitrary UID can write models (mountSources: false → CrashLoopBackOff).
       image: docker.io/ollama/ollama:0.5.4
       mountSources: true
       sourceMapping: /.ollama
