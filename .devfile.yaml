@@ -58,10 +58,7 @@ commands:
   - id: setup-workspace
     exec:
       component: automation-tools
-      commandLine: >-
-        bash -lc 'mkdir -p .devfile &&
-        nohup bash .devfile/setup-workspace.sh </dev/null >> .devfile/setup-workspace.log 2>&1 &
-        exit 0'
+      commandLine: bash .devfile/setup-workspace.sh
       workingDir: ${PROJECT_SOURCE}
       label: Setup workspace (submodules, pip, pre-commit)
   - id: pre-commit-home
@@ -92,13 +89,8 @@ commands:
   - id: ollama-pull-qwen
     exec:
       component: ollama
-      commandLine: >-
-        sh -lc 'mkdir -p .devfile &&
-        nohup sh .devfile/ollama-pull.sh </dev/null >> .devfile/ollama-pull.log 2>&1 &
-        exit 0'
+      commandLine: sh .devfile/ollama-pull.sh
       workingDir: ${PROJECT_SOURCE}
       label: Pull Ollama model (qwen2.5-coder:7b)
-events:
-  postStart:
-    - setup-workspace
-    - ollama-pull-qwen
+# postStart hooks removed — they caused PostStartHook failures on some clusters.
+# Setup runs via .vscode/tasks.json (folderOpen) and Command Palette → Setup workspace.

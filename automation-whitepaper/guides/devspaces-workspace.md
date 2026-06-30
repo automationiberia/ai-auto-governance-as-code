@@ -13,7 +13,8 @@ Run this repository as a **Dev Spaces workspace** with Ansible tooling, submodul
 | [`.devfile/ollama-pull.sh`](../../.devfile/ollama-pull.sh) | Pull `qwen2.5-coder:7b` into the Ollama sidecar (postStart) |
 | [`.continue/config.yaml`](../../.continue/config.yaml) | Continue → local Ollama (`http://127.0.0.1:11434`) |
 | [`.devfile/continue.yaml`](../../.devfile/continue.yaml) | Legacy UDI-only stack (`?devfilePath=.devfile/continue.yaml`) |
-| [`.vscode/extensions.json`](../../.vscode/extensions.json) | Auto-install `redhat.devspaces-copilot-chat-integration` at workspace start |
+| [`.vscode/extensions.json`](../../.vscode/extensions.json) | Auto-install Copilot + Continue extensions |
+| [`.vscode/tasks.json`](../../.vscode/tasks.json) | Run **Setup workspace** when the IDE opens (replaces postStart) |
 | [`automation-home.code-workspace`](../../automation-home.code-workspace) | VS Code workspace (Agent mode enabled; Ansible + Copilot extensions) |
 
 ---
@@ -24,7 +25,8 @@ Run this repository as a **Dev Spaces workspace** with Ansible tooling, submodul
 2. **Create Workspace** → import this Git repository URL.
 3. Confirm the workspace uses **`.devfile.yaml`** (name **Automation Home**). Do **not** keep a second `devfile.yaml` at the repo root — Dev Spaces may pick the wrong file and fail with `init-persistent-home` CrashLoopBackOff.
 4. Ensure **Recreate existing workspace** is used after `.devfile.yaml` changes.
-5. Wait for **postStart** to finish (runs in background — IDE may open before setup completes). Track progress:
+5. On first open, **Setup workspace** runs automatically (`.vscode/tasks.json`). If tools are missing, Command Palette → **Setup workspace**.
+6. Track background setup:
 
    ```bash
    tail -f .devfile/setup-workspace.log
@@ -110,14 +112,14 @@ cat .devfile/setup-workspace.log
 
 ### Typical `postStart` failure
 
-**`[postStart hook] failed`** on `automation-tools` usually means the setup script exited non-zero or timed out. This repo runs setup **asynchronously** (`nohup`) so the hook returns immediately; recreate the workspace after pulling the latest `.devfile.yaml`.
+**`[postStart hook] failed`** on `automation-tools` — this repo **no longer uses postStart hooks** (they failed on some clusters with login-shell, timeout, or lifecycle-handler quirks). Setup runs when the IDE opens (VS Code task) or via Command Palette → **Setup workspace**.
 
-If failure persists, check `.devfile/setup-workspace.log` (or pod logs). Common causes:
+If an **older devfile revision** still has `events.postStart`, recreate the workspace from the latest branch.
 
 | Cause | Fix |
 |-------|-----|
-| Script exited before `exit 0` (older revisions) | Pull latest; setup uses `HOME` default and no `set -u` |
-| Hook timeout (submodules + pip + VSIX download) | Async postStart — wait for log; run **Setup workspace** manually |
+| Legacy postStart in devfile | Pull latest — postStart removed |
+| Setup not finished | Check `.devfile/setup-workspace.log`; run **Setup workspace** |
 | `git submodule update` | Configure Git/SSH in User Preferences |
 
 ```bash
