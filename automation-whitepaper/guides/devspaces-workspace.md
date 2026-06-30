@@ -287,6 +287,39 @@ If your cluster does not provide Copilot seats, use the same prompts in Chat or 
 
 ---
 
+## Ansible extension: PET binary warning (OpenVSX)
+
+Dev Spaces distributes extensions via **Open VSX**. The universal build of `ms-python.python` / `ms-python.vscode-python-envs` often **omits the `pet` (Python Environment Tools) binary**. The Ansible extension then shows:
+
+> *Python environment discovery is degraded (PET binary missing). This commonly occurs in OpenVSX-based editors (Dev Spaces, VSCodium).*
+
+This is an **upstream packaging gap** ([Open VSX #1662](https://github.com/eclipse-openvsx/openvsx/issues/1662), [vscode-python #25820](https://github.com/microsoft/vscode-python/issues/25820)), not a defect in this repository.
+
+### What the repo configures
+
+[`automation-home.code-workspace`](../../automation-home.code-workspace) sets:
+
+| Setting | Purpose |
+|---------|---------|
+| `python.useEnvironmentsExtension` → `false` | Use legacy interpreter discovery (works without PET) |
+| `python.defaultInterpreterPath` → `/usr/bin/python3` | System Python in the devfile image |
+| `ansible.python.interpreterPath` → `/usr/bin/python3` | Ansible Language Server and ansible-lint use the same interpreter |
+
+After pulling this change, run **Developer: Reload Window** (or recreate the workspace). The warning may appear once more until settings reload; click **Don't show again** if offered.
+
+### If you use a virtualenv
+
+Activate manually in the terminal:
+
+```bash
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements-dev.txt
+```
+
+Or Command Palette → **Python: Select Interpreter** → choose `.venv/bin/python`.
+
+---
+
 ## Base image
 
 `ghcr.io/ansible/ansible-devspaces:latest` — Ansible VS Code extension, `ansible-core`, `ansible-lint`, and related ADT tools ([ansible-devspaces](https://github.com/redhat-cop/ansible-devspaces)).

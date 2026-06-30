@@ -15,6 +15,8 @@
     "files.insertFinalNewline": true,
     "editor.wordWrap": "on",
     "python.defaultInterpreterPath": "/usr/bin/python3",
+    "python.useEnvironmentsExtension": false,
+    "ansible.python.interpreterPath": "/usr/bin/python3",
     "terminal.integrated.env.linux": {
       "AUTOMATION_HOME": "${workspaceFolder:automation-home}",
       "AUTOMATION_REPO": "${workspaceFolder:automation-home}/deliveries/automation"
