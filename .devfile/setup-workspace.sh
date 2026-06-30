@@ -51,22 +51,36 @@ else
   _fail "git submodule update failed (configure Git/SSH in Dev Spaces User Preferences)"
 fi
 
-echo "==> Installing Python dev dependencies (user)"
-if python3 -m pip install --user --upgrade pip \
-  && python3 -m pip install --user -r "${AUTOMATION_HOME}/requirements-dev.txt"; then
-  echo "==> Python dependencies OK"
+echo "==> Installing Python dev dependencies (.venv)"
+_venv="${AUTOMATION_HOME}/.venv"
+if [[ ! -d "${_venv}" ]]; then
+  if ! python3 -m venv "${_venv}"; then
+    _fail "python3 -m venv failed (install python3-virtualenv in image?)"
+  fi
+fi
+if [[ -f "${_venv}/bin/activate" ]]; then
+  # shellcheck source=/dev/null
+  source "${_venv}/bin/activate"
+  if pip install --upgrade pip \
+    && pip install -r "${AUTOMATION_HOME}/requirements-dev.txt"; then
+    echo "==> Python venv OK (${_venv})"
+    echo "==> pre-commit: $(command -v pre-commit)"
+    echo "==> ansible-lint: $(command -v ansible-lint)"
+  else
+    _fail "pip install into .venv failed (network or requirements-dev.txt)"
+  fi
 else
-  _fail "pip install failed (network or requirements-dev.txt)"
+  _fail "venv activate script missing at ${_venv}/bin/activate"
 fi
 
 echo "==> Installing pre-commit hooks (monorepo)"
 if [[ -f "${AUTOMATION_HOME}/.pre-commit-config.yaml" ]]; then
-  pre-commit install -c "${AUTOMATION_HOME}/.pre-commit-config.yaml" || true
+  "${_venv}/bin/pre-commit" install -c "${AUTOMATION_HOME}/.pre-commit-config.yaml" || true
 fi
 
 echo "==> Installing pre-commit hooks (delivery collection)"
 if [[ -f "${AUTOMATION_REPO}/.pre-commit-config.yaml" ]]; then
-  (cd "${AUTOMATION_REPO}" && pre-commit install) || true
+  (cd "${AUTOMATION_REPO}" && "${_venv}/bin/pre-commit" install) || true
 fi
 
 if [[ -x "${AUTOMATION_HOME}/skills/scripts/link-cursor-skills.sh" ]]; then
@@ -91,11 +105,16 @@ fi
 
 for rc in "${HOME}/.bashrc" "${HOME}/.zshrc"; do
   if [[ -f "${rc}" ]]; then
-    grep -q 'AUTOMATION_HOME=' "${rc}" 2>/dev/null && continue
-    {
-      echo "export AUTOMATION_HOME=${AUTOMATION_HOME}"
-      echo "export AUTOMATION_REPO=${AUTOMATION_REPO}"
-    } >>"${rc}"
+    if ! grep -q 'AUTOMATION_HOME=' "${rc}" 2>/dev/null; then
+      {
+        echo "export AUTOMATION_HOME=${AUTOMATION_HOME}"
+        echo "export AUTOMATION_REPO=${AUTOMATION_REPO}"
+      } >>"${rc}"
+    fi
+    if ! grep -q '${AUTOMATION_HOME}/.venv/bin' "${rc}" 2>/dev/null \
+      && ! grep -q "${AUTOMATION_HOME}/.venv/bin" "${rc}" 2>/dev/null; then
+      echo "export PATH=\"${AUTOMATION_HOME}/.venv/bin:\${PATH}\"" >>"${rc}"
+    fi
   fi
 done
 

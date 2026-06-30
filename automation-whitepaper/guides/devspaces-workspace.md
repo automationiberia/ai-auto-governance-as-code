@@ -31,7 +31,26 @@ Environment variables (set automatically):
 ```bash
 AUTOMATION_HOME=${PROJECT_SOURCE}          # monorepo root
 AUTOMATION_REPO=${PROJECT_SOURCE}/deliveries/automation
+PATH=${PROJECT_SOURCE}/.venv/bin:...       # pre-commit, ansible-lint, black, etc.
 ```
+
+### Dev tools (pre-commit, ansible-lint, …)
+
+`setup-workspace` creates a project **virtualenv** at `.venv/` and installs [requirements-dev.txt](../../requirements-dev.txt). This avoids `pip install --user` (packages in `~/.local/bin` were **not** on PATH for Copilot Agent or devfile commands).
+
+| Tool | Path after setup |
+|------|------------------|
+| `pre-commit` | `${AUTOMATION_HOME}/.venv/bin/pre-commit` |
+| `ansible-lint` | `${AUTOMATION_HOME}/.venv/bin/ansible-lint` |
+| `ansible-playbook` | `/usr/bin/ansible-playbook` (image) + venv `ansible-core` |
+
+The workspace file sets `python.defaultInterpreterPath` and `terminal.integrated.env.linux.PATH` to `.venv/bin`.
+
+If an agent or terminal reports `pre-commit: command not found`:
+
+1. Command Palette → **Setup workspace** (or `bash .devfile/setup-workspace.sh`)
+2. Open a **new** terminal (reload PATH)
+3. Verify: `which pre-commit` → `.../.venv/bin/pre-commit`
 
 ---
 
@@ -383,8 +402,8 @@ This is an **upstream packaging gap** ([Open VSX #1662](https://github.com/eclip
 | Setting | Purpose |
 |---------|---------|
 | `python.useEnvironmentsExtension` → `false` | Use legacy interpreter discovery (works without PET) |
-| `python.defaultInterpreterPath` → `/usr/bin/python3` | System Python in the devfile image |
-| `ansible.python.interpreterPath` → `/usr/bin/python3` | Ansible Language Server and ansible-lint use the same interpreter |
+| `python.defaultInterpreterPath` → `.venv/bin/python` | Project venv from postStart (not global pip) |
+| `ansible.python.interpreterPath` → `.venv/bin/python` | Ansible Language Server uses venv Python |
 
 After pulling this change, run **Developer: Reload Window** (or recreate the workspace). The warning may appear once more until settings reload; click **Don't show again** if offered.
 

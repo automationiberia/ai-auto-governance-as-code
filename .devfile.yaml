@@ -38,6 +38,8 @@ components:
             ${PROJECT_SOURCE}/.devfile/extensions/redhat.devspaces-copilot-chat-integration-0.36.2.vsix
         - name: VSCODE_TRUSTED_EXTENSIONS
           value: redhat.devspaces-copilot-chat-integration
+        - name: PATH
+          value: ${PROJECT_SOURCE}/.venv/bin:${PATH}
   - name: ollama
     container:
       image: docker.io/ollama/ollama:latest
@@ -62,14 +64,16 @@ commands:
   - id: pre-commit-home
     exec:
       component: automation-tools
-      commandLine: pre-commit run --all-files
+      commandLine: >-
+        bash -lc '"${AUTOMATION_HOME}/.venv/bin/pre-commit" run --all-files'
       workingDir: ${PROJECT_SOURCE}
       label: Pre-commit (automation-home)
   - id: pre-commit-delivery
     exec:
       component: automation-tools
       commandLine: >-
-        bash -lc 'cd "${AUTOMATION_REPO}" && pre-commit run --all-files'
+        bash -lc 'cd "${AUTOMATION_REPO}" &&
+        "${AUTOMATION_HOME}/.venv/bin/pre-commit" run --all-files'
       workingDir: ${PROJECT_SOURCE}
       label: Pre-commit (delivery collection)
   - id: syntax-check-delivery

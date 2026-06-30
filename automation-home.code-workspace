@@ -14,12 +14,15 @@
     "files.trimTrailingWhitespace": true,
     "files.insertFinalNewline": true,
     "editor.wordWrap": "on",
-    "python.defaultInterpreterPath": "/usr/bin/python3",
+    "python.defaultInterpreterPath": "${workspaceFolder:automation-home}/.venv/bin/python",
+    "python.terminal.activateEnvironment": true,
     "python.useEnvironmentsExtension": false,
-    "ansible.python.interpreterPath": "/usr/bin/python3",
+    "ansible.python.interpreterPath": "${workspaceFolder:automation-home}/.venv/bin/python",
+    "ansible.validation.lint.path": "${workspaceFolder:automation-home}/.venv/bin/ansible-lint",
     "terminal.integrated.env.linux": {
       "AUTOMATION_HOME": "${workspaceFolder:automation-home}",
-      "AUTOMATION_REPO": "${workspaceFolder:automation-home}/deliveries/automation"
+      "AUTOMATION_REPO": "${workspaceFolder:automation-home}/deliveries/automation",
+      "PATH": "${workspaceFolder:automation-home}/.venv/bin:${env:PATH}"
     },
     "chat.agent.enabled": true,
     "github.copilot.chat.agent.enabled": true
