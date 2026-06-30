@@ -18,10 +18,13 @@
     "terminal.integrated.env.linux": {
       "AUTOMATION_HOME": "${workspaceFolder:automation-home}",
       "AUTOMATION_REPO": "${workspaceFolder:automation-home}/deliveries/automation"
-    }
+    },
+    "chat.agent.enabled": true,
+    "github.copilot.chat.agent.enabled": true
   },
   "extensions": {
     "recommendations": [
+      "redhat.devspaces-copilot-chat-integration",
       "redhat.ansible",
       "redhat.vscode-yaml",
       "ms-python.python",

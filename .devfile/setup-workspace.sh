@@ -29,6 +29,21 @@ echo "==> AUTOMATION_HOME=${AUTOMATION_HOME}"
 echo "==> AUTOMATION_REPO=${AUTOMATION_REPO}"
 echo "==> Log file: ${LOG}"
 
+_copilot_vsix_dir="${AUTOMATION_HOME}/.devfile/extensions"
+_copilot_vsix="${_copilot_vsix_dir}/redhat.devspaces-copilot-chat-integration-0.36.2.vsix"
+_copilot_vsix_url="https://open-vsx.org/api/redhat/devspaces-copilot-chat-integration/0.36.2/file/redhat.devspaces-copilot-chat-integration-0.36.2.vsix"
+
+echo "==> Ensuring Dev Spaces Copilot Chat Integration VSIX (0.36.2)"
+mkdir -p "${_copilot_vsix_dir}"
+if [[ -f "${_copilot_vsix}" ]]; then
+  echo "==> Copilot VSIX already present"
+elif curl -fsSL "${_copilot_vsix_url}" -o "${_copilot_vsix}"; then
+  echo "==> Copilot VSIX downloaded"
+else
+  rm -f "${_copilot_vsix}"
+  _fail "Copilot VSIX download failed (Open VSX egress or cluster registry — install manually from VSIX)"
+fi
+
 echo "==> Initializing Git submodules"
 if git submodule sync --recursive && git submodule update --init --recursive; then
   echo "==> Submodules OK"

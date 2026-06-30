@@ -8,9 +8,10 @@ Run this repository as a **Dev Spaces workspace** with Ansible tooling, submodul
 
 | File | Purpose |
 |------|---------|
-| [`.devfile.yaml`](../../.devfile.yaml) | Container image, env vars, postStart setup |
-| [`.devfile/setup-workspace.sh`](../../.devfile/setup-workspace.sh) | Submodules, `pip install`, pre-commit |
-| [`automation-home.code-workspace`](../../automation-home.code-workspace) | VS Code workspace (monorepo root; submodules nested under `deliveries/automation/`, etc.) |
+| [`.devfile.yaml`](../../.devfile.yaml) | Container image, env vars, Copilot VSIX path, postStart setup |
+| [`.devfile/setup-workspace.sh`](../../.devfile/setup-workspace.sh) | Submodules, Copilot VSIX download, `pip install`, pre-commit |
+| [`.vscode/extensions.json`](../../.vscode/extensions.json) | Auto-install `redhat.devspaces-copilot-chat-integration` at workspace start |
+| [`automation-home.code-workspace`](../../automation-home.code-workspace) | VS Code workspace (Agent mode enabled; Ansible + Copilot extensions) |
 
 ---
 
@@ -123,9 +124,20 @@ For the **private** delivery repo, configure Git credentials in Dev Spaces (**Us
 
 ## GitHub Copilot and AI chat
 
-Repo governance for Copilot is already in [`.github/copilot-instructions.md`](../../.github/copilot-instructions.md) — Copilot loads it automatically once you are signed in. **No extra repo configuration is required.**
+Repo governance for Copilot is in [`.github/copilot-instructions.md`](../../.github/copilot-instructions.md). **This repository pre-configures the Dev Spaces Copilot bridge extension and Agent mode** — you still must sign in to GitHub once per cluster user.
 
-What you must configure is **GitHub authentication inside Dev Spaces**. The browser IDE does **not** use the same OAuth popup as desktop VS Code.
+### What the repo configures automatically
+
+| Mechanism | Purpose |
+|-----------|---------|
+| [`.vscode/extensions.json`](../../.vscode/extensions.json) | Installs `redhat.devspaces-copilot-chat-integration` from Open VSX when the cluster registry has it |
+| `.devfile.yaml` → `DEFAULT_EXTENSIONS` | Pre-installs the same extension from a VSIX downloaded to `.devfile/extensions/` (fallback when embedded Open VSX lacks the extension) |
+| `.devfile/setup-workspace.sh` | Downloads VSIX **0.36.2** from [Open VSX](https://open-vsx.org/extension/redhat/devspaces-copilot-chat-integration) on postStart |
+| `automation-home.code-workspace` | Enables Copilot **Agent** mode (`chat.agent.enabled`) |
+
+After changing `.devfile.yaml`, **Recreate existing workspace** (not just restart) so env vars apply.
+
+If Chat still shows *Getting chat ready…* on the **first** start, run **Dev Spaces: Restart Workspace** once — the VSIX download may finish after the editor first checked `DEFAULT_EXTENSIONS`.
 
 ### Prerequisites
 
@@ -145,7 +157,7 @@ Do **not** start with the **Sign in to use AI Features → Continue with GitHub*
 3. Copy the **device code** from the notification and open the GitHub activation link in your browser (outside Dev Spaces).
 4. Paste the code, authorize, and confirm.
 5. When prompted, **refresh the Dev Spaces browser tab** (F5). Authentication applies only after refresh.
-6. Open **Chat** (right panel) and send a test prompt.
+6. Open **Chat**, choose **Agent** in the mode dropdown, and send a test prompt.
 
 Official reference: [Eclipse Che — GitHub Copilot Chat](https://eclipse.dev/che/docs/stable/end-user-guide/using-github-copilot-chat/).
 

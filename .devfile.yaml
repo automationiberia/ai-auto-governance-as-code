@@ -30,6 +30,11 @@ components:
           value: >-
             ${PROJECT_SOURCE}/deliveries/automation/.ansible/collections:
             /usr/share/ansible/collections
+        - name: DEFAULT_EXTENSIONS
+          value: >-
+            ${PROJECT_SOURCE}/.devfile/extensions/redhat.devspaces-copilot-chat-integration-0.36.2.vsix
+        - name: VSCODE_TRUSTED_EXTENSIONS
+          value: redhat.devspaces-copilot-chat-integration
 commands:
   - id: setup-workspace
     exec:

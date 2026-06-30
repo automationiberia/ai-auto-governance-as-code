@@ -7,7 +7,9 @@ __pycache__/
 *.retry
 
 .idea/
-.vscode/
+.vscode/*
+!.vscode/extensions.json
+.devfile/extensions/*.vsix
 *.swp
 *~
 .DS_Store
