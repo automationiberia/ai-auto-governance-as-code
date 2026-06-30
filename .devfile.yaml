@@ -14,10 +14,11 @@ metadata:
 components:
   - name: ollama-models
     volume:
-      size: 15Gi
+      size: 10Gi
   - name: automation-tools
     container:
       image: ghcr.io/ansible/ansible-devspaces:latest
+      mountSources: true
       cpuLimit: 4000m
       cpuRequest: 250m
       memoryRequest: 512Mi
@@ -43,7 +44,7 @@ components:
   - name: ollama
     container:
       image: docker.io/ollama/ollama:latest
-      mountSources: true
+      mountSources: false
       cpuLimit: 4000m
       cpuRequest: 1000m
       memoryRequest: 6Gi
@@ -88,9 +89,10 @@ commands:
       label: Syntax-check delivery playbooks
   - id: ollama-pull-qwen
     exec:
-      component: ollama
-      commandLine: sh .devfile/ollama-pull.sh
+      component: automation-tools
+      commandLine: bash .devfile/ollama-pull.sh
       workingDir: ${PROJECT_SOURCE}
       label: Pull Ollama model (qwen2.5-coder:7b)
-# postStart hooks removed — they caused PostStartHook failures on some clusters.
-# Setup runs via .vscode/tasks.json (folderOpen) and Command Palette → Setup workspace.
+# No events.postStart — DWO injects source-mount hooks on mountSources containers;
+# ollama must keep mountSources: false to avoid PostStartHook failures.
+# Setup: .vscode/tasks.json (folderOpen) + Command Palette → Setup workspace.

@@ -112,15 +112,17 @@ cat .devfile/setup-workspace.log
 
 ### Typical `postStart` failure
 
-**`[postStart hook] failed`** on `automation-tools` — this repo **no longer uses postStart hooks** (they failed on some clusters with login-shell, timeout, or lifecycle-handler quirks). Setup runs when the IDE opens (VS Code task) or via Command Palette → **Setup workspace**.
+**`FailedPostStartHook`** — this repo **does not define `events.postStart`**. The usual cause on **`ollama`** is `mountSources: true` (DevWorkspace injects a source-sync hook that fails on the minimal Ollama image). Current devfile sets **`mountSources: false`** on the ollama sidecar.
 
-If an **older devfile revision** still has `events.postStart`, recreate the workspace from the latest branch.
+Setup runs when the IDE opens (VS Code task) or via Command Palette → **Setup workspace**.
 
 | Cause | Fix |
 |-------|-----|
-| Legacy postStart in devfile | Pull latest — postStart removed |
+| **`FailedPostStartHook` on ollama** | Pull latest devfile; ollama must have `mountSources: false` |
+| Legacy postStart in devfile | Recreate workspace from latest branch |
 | Setup not finished | Check `.devfile/setup-workspace.log`; run **Setup workspace** |
 | `git submodule update` | Configure Git/SSH in User Preferences |
+| Workspace storage quota | Ask platform team to raise per-workspace PVC (Ollama needs ~10 Gi for models) |
 
 ```bash
 bash .devfile/setup-workspace.sh
@@ -341,9 +343,11 @@ The default [`.devfile.yaml`](../../.devfile.yaml) runs **three AI assistants** 
 ```text
 DevWorkspace pod (shared network namespace)
 ├── che-code (IDE)          → Copilot Chat + Continue extension
-├── automation-tools        → Ansible, postStart setup
-└── ollama                  → qwen2.5-coder:7b @ http://127.0.0.1:11434
+├── automation-tools        → Ansible, project sources, setup scripts
+└── ollama (mountSources: false) → qwen2.5-coder:7b @ http://127.0.0.1:11434
 ```
+
+The **ollama** sidecar must **not** mount project sources (`mountSources: false`). With `mountSources: true`, DevWorkspace injects a source-sync postStart hook that fails on the minimal Ollama image (`FailedPostStartHook`).
 
 Continue reads [`.continue/config.yaml`](../../.continue/config.yaml), copied to `/home/user/.continue/` on postStart.
 
@@ -352,7 +356,7 @@ Continue reads [`.continue/config.yaml`](../../.continue/config.yaml), copied to
 | Resource | Value | Notes |
 |----------|-------|--------|
 | **Ollama memory** | 6–10 Gi | Sidecar limit in devfile |
-| **Ollama PVC** | 15 Gi | Model cache (`ollama-models` volume) |
+| **Ollama PVC** | 10 Gi | Model cache (`ollama-models` volume) |
 | **Pod memory (total)** | ~18 Gi+ | automation-tools 8 Gi + ollama 10 Gi |
 | **CPU** | 4+ cores recommended | 7B model on CPU is slow but usable |
 | **Egress** | First start only | `ollama pull` (~4.5 GiB for qwen2.5-coder:7b) |

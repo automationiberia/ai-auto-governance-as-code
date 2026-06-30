@@ -159,7 +159,7 @@ _trigger_ollama_pull() {
 
   echo "==> Pulling ${_model} via Ollama API (background, log: ${_pull_log})"
   mkdir -p "$(dirname "${_pull_log}")"
-  nohup curl -sf "${_api}/api/pull" -d "{\"name\":\"${_model}\"}" >>"${_pull_log}" 2>&1 &
+  nohup bash "${AUTOMATION_HOME}/.devfile/ollama-pull.sh" >>"${_pull_log}" 2>&1 &
 }
 
 : >"${LOG}"
