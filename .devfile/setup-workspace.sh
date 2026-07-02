@@ -142,40 +142,24 @@ _run_setup() {
   else
     echo "==> Workspace ready"
   fi
-
-  _trigger_ollama_pull || true
 }
 
 _trigger_ollama_pull() {
   _model="qwen2.5-coder:7b"
-  _api="http://127.0.0.1:11434"
   _pull_log="${AUTOMATION_HOME}/.devfile/ollama-pull.log"
 
-  echo "==> Ensuring Ollama model ${_model} (sidecar API)"
-  _ready=0
-  _i=1
-  while [[ "${_i}" -le 36 ]]; do
-    if curl -sf "${_api}/api/tags" >/dev/null 2>&1; then
-      _ready=1
-      break
-    fi
-    sleep 5
-    _i=$((_i + 1))
-  done
-
-  if [[ "${_ready}" -ne 1 ]]; then
-    echo "WARN: Ollama API not reachable — run Command Palette → Pull Ollama model later"
-    return 0
-  fi
-
-  if curl -sf "${_api}/api/tags" 2>/dev/null | grep -q "${_model}"; then
-    echo "==> Ollama model ${_model} already present"
-    return 0
-  fi
-
-  echo "==> Pulling ${_model} via Ollama API (background, log: ${_pull_log})"
+  echo "==> Ensuring Ollama model ${_model} (background, log: ${_pull_log})"
   mkdir -p "$(dirname "${_pull_log}")"
-  nohup env AUTOMATION_HOME="${AUTOMATION_HOME}" bash "${_script_dir}/ollama-pull.sh" >>"${_pull_log}" 2>&1 &
+  # Must run outside the setup | tee pipeline — a background child there keeps the pipe open.
+  if command -v setsid >/dev/null 2>&1; then
+    setsid nohup env AUTOMATION_HOME="${AUTOMATION_HOME}" OLLAMA_MODEL="${_model}" \
+      bash "${_script_dir}/ollama-pull.sh" >>"${_pull_log}" 2>&1 </dev/null &
+  else
+    nohup env AUTOMATION_HOME="${AUTOMATION_HOME}" OLLAMA_MODEL="${_model}" \
+      bash "${_script_dir}/ollama-pull.sh" >>"${_pull_log}" 2>&1 </dev/null &
+  fi
+  disown -h 2>/dev/null || disown 2>/dev/null || true
+  echo "==> Ollama model pull (if needed): tail -f .devfile/ollama-pull.log"
 }
 
 : >"${LOG}"
@@ -183,6 +167,11 @@ if [[ -t 1 ]]; then
   _run_setup 2>&1 | tee -a "${LOG}"
 else
   _run_setup >>"${LOG}" 2>&1
+fi
+
+# After tee/pipeline closes — never start background work inside _run_setup (pipe would block).
+if [[ "${_errors}" -eq 0 ]]; then
+  _trigger_ollama_pull || true
 fi
 
 # Do not block workspace start; fix issues from the IDE terminal.

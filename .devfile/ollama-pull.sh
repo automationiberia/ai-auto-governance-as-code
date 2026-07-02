@@ -13,7 +13,10 @@ mkdir -p "$(dirname "${LOG}")"
 : >"${LOG}"
 
 log() {
-  echo "$*" | tee -a "${LOG}"
+  echo "$*" >>"${LOG}"
+  if [ -t 1 ]; then
+    echo "$*"
+  fi
 }
 
 log "==> Ollama model pull (API): ${OLLAMA_MODEL}"
