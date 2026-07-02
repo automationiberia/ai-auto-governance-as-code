@@ -85,3 +85,14 @@ commands:
       commandLine: bash .devfile/ollama-pull.sh
       workingDir: ${PROJECT_SOURCE}
       label: Pull Ollama model (qwen2.5-coder:7b)
+  - id: setup-workspace-bg
+    exec:
+      component: automation-tools
+      commandLine: >-
+        sh -c 'mkdir -p .devfile &&
+        nohup bash .devfile/setup-workspace.sh </dev/null >>.devfile/setup-workspace.log 2>&1 &
+        exit 0'
+      workingDir: ${PROJECT_SOURCE}
+events:
+  postStart:
+    - setup-workspace-bg

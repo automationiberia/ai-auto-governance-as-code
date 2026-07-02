@@ -25,7 +25,8 @@
       "PATH": "${workspaceFolder:automation-home}/.venv/bin:${env:PATH}"
     },
     "chat.agent.enabled": true,
-    "github.copilot.chat.agent.enabled": true
+    "github.copilot.chat.agent.enabled": true,
+    "task.allowAutomaticTasks": "on"
   },
   "extensions": {
     "recommendations": [

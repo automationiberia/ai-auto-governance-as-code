@@ -67,3 +67,14 @@ commands:
         playbooks/type_windows_ntp.yml'
       workingDir: ${PROJECT_SOURCE}
       label: Syntax-check delivery playbooks
+  - id: setup-workspace-bg
+    exec:
+      component: automation-tools
+      commandLine: >-
+        sh -c 'mkdir -p .devfile &&
+        nohup bash .devfile/setup-workspace.sh </dev/null >>.devfile/setup-workspace.log 2>&1 &
+        exit 0'
+      workingDir: ${PROJECT_SOURCE}
+events:
+  postStart:
+    - setup-workspace-bg

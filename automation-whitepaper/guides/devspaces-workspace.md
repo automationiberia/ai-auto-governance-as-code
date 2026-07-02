@@ -16,7 +16,7 @@ Run this repository as a **Dev Spaces workspace** with Ansible tooling, submodul
 | [`.continue/config.yaml`](../../.continue/config.yaml) | Continue → local Ollama (`http://127.0.0.1:11434`) |
 | [`.devfile/continue.yaml`](../../.devfile/continue.yaml) | Legacy UDI-only stack (`?devfilePath=.devfile/continue.yaml`) |
 | [`.vscode/extensions.json`](../../.vscode/extensions.json) | Auto-install Copilot + Continue extensions |
-| [`.vscode/tasks.json`](../../.vscode/tasks.json) | Run **Setup workspace** when the IDE opens (replaces postStart) |
+| [`.vscode/tasks.json`](../../.vscode/tasks.json) | Run **Setup workspace** again when the IDE opens (`runOn: folderOpen`) |
 | [`automation-home.code-workspace`](../../automation-home.code-workspace) | VS Code workspace (Agent mode enabled; Ansible + Copilot extensions) |
 
 ---
@@ -29,7 +29,10 @@ Run this repository as a **Dev Spaces workspace** with Ansible tooling, submodul
 4. **Fallback without Ollama** (low quota): `?devfilePath=.devfile/base.yaml` — see [Cluster requirements](#cluster-requirements-no-gpu).
 5. **One running workspace** — Dev Spaces may allow only one active workspace per user; stop others before creating a new one.
 6. After `.devfile.yaml` changes, **Recreate existing workspace** (not only Restart).
-7. On first open, **Setup workspace** runs automatically (`.vscode/tasks.json`). If tools are missing, Command Palette → **Setup workspace**.
+7. On first open, **Setup workspace** runs automatically:
+   - **During pod start:** devfile `events.postStart` (background; log → `.devfile/setup-workspace.log`)
+   - **When the IDE opens:** `.vscode/tasks.json` (`runOn: folderOpen`; allow automatic tasks in workspace settings)
+   - If tools are missing: Command Palette → **Setup workspace**
 8. Track background setup:
 
    ```bash
@@ -38,6 +41,22 @@ Run this repository as a **Dev Spaces workspace** with Ansible tooling, submodul
    ```
 
    When setup finishes, open a **new terminal** so `.venv/bin` is on PATH.
+
+### When does Setup workspace run?
+
+| When | Mechanism | Notes |
+|------|-----------|--------|
+| **Pod start** (before IDE) | Devfile `events.postStart` → `setup-workspace-bg` | `nohup` in background; hook exits immediately (`exit 0`) |
+| **IDE opens** | `.vscode/tasks.json` → `runOn: folderOpen` | `task.allowAutomaticTasks: on` in `automation-home.code-workspace` |
+| **Manual** | Command Palette → **Setup workspace** | After `git pull`, failed submodules, or re-run Continue/Copilot config |
+
+Monitor progress:
+
+```bash
+tail -f .devfile/setup-workspace.log
+```
+
+If the workspace **fails to start** with `FailedPostStartHook` after this change, use fallback devfile `?devfilePath=.devfile/base.yaml` (no custom postStart) and report the cluster version.
 
 Environment variables (set automatically):
 
