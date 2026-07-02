@@ -7,9 +7,25 @@
 set -o pipefail
 
 _script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-AUTOMATION_HOME="${AUTOMATION_HOME:-${PROJECT_SOURCE:-$(dirname "${_script_dir}")}}"
+_repo_root="$(dirname "${_script_dir}")"
+
+# Devfile env may be literal ${PROJECT_SOURCE} during early postStart (before DWO expands it).
+_automation_home_env="${AUTOMATION_HOME:-}"
+_project_source="${PROJECT_SOURCE:-}"
+AUTOMATION_HOME="${_repo_root}"
+for _candidate in "${_automation_home_env}" "${_project_source}" "${_repo_root}"; do
+  if [[ -n "${_candidate}" && "${_candidate}" != *'${'* \
+    && -f "${_candidate}/.devfile/setup-workspace.sh" ]]; then
+    AUTOMATION_HOME="${_candidate}"
+    break
+  fi
+done
 export AUTOMATION_HOME
-export AUTOMATION_REPO="${AUTOMATION_REPO:-${AUTOMATION_HOME}/deliveries/automation}"
+
+if [[ -z "${AUTOMATION_REPO:-}" || "${AUTOMATION_REPO}" == *'${'* ]]; then
+  AUTOMATION_REPO="${AUTOMATION_HOME}/deliveries/automation"
+fi
+export AUTOMATION_REPO
 _HOME="${HOME:-/home/user}"
 
 mkdir -p "${AUTOMATION_HOME}/.devfile"
@@ -159,7 +175,7 @@ _trigger_ollama_pull() {
 
   echo "==> Pulling ${_model} via Ollama API (background, log: ${_pull_log})"
   mkdir -p "$(dirname "${_pull_log}")"
-  nohup bash "${AUTOMATION_HOME}/.devfile/ollama-pull.sh" >>"${_pull_log}" 2>&1 &
+  nohup env AUTOMATION_HOME="${AUTOMATION_HOME}" bash "${_script_dir}/ollama-pull.sh" >>"${_pull_log}" 2>&1 &
 }
 
 : >"${LOG}"

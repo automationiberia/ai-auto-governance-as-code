@@ -4,7 +4,10 @@ set -u
 
 OLLAMA_MODEL="${OLLAMA_MODEL:-qwen2.5-coder:7b}"
 OLLAMA_API="${OLLAMA_API:-http://127.0.0.1:11434}"
-LOG="${AUTOMATION_HOME:-${PROJECT_SOURCE:-.}}/.devfile/ollama-pull.log"
+
+_script_dir=$(cd "$(dirname "$0")" && pwd)
+_repo_root=$(dirname "${_script_dir}")
+LOG="${_repo_root}/.devfile/ollama-pull.log"
 
 mkdir -p "$(dirname "${LOG}")"
 : >"${LOG}"
