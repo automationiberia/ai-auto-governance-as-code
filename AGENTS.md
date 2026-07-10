@@ -15,7 +15,9 @@ Strategic proposal (AAP, Puppet, Dev Spaces, GenAI): [automation-whitepaper/gove
 Monorepo layout: [automation-whitepaper/architecture/monorepo-layout.md](automation-whitepaper/architecture/monorepo-layout.md).
 
 **Skill setup (choose tool):** [skills/TOOL-SETUP.md](skills/TOOL-SETUP.md) — Cursor, Claude, Copilot, or generic.
-**Copy-paste prompts:** [automation-whitepaper/guides/ai-prompt-examples.md](automation-whitepaper/guides/ai-prompt-examples.md).
+**Copy-paste prompts:** [automation-whitepaper/guides/ai-prompt-examples.md](automation-whitepaper/guides/ai-prompt-examples.md)
+
+**AI Mob Design:** [guides/ai-mob-design.md](guides/ai-mob-design.md) · [skills/ai-mob-design/SKILL.md](skills/ai-mob-design/SKILL.md).
 
 ---
 
@@ -30,6 +32,7 @@ The **human engineer is the Architect** — strategic design, Red Lines, and fin
 | Path | Operator | Use |
 |------|----------|-----|
 | **Manual** | Human engineer | Follow `automation-whitepaper/guides/` and examples; no AI mode declaration |
+| **AI Mob Design** | Human mob + AI implementer | Group designs together; AI implements in session — see [guides/ai-mob-design.md](guides/ai-mob-design.md); mob co-authors resulting PR |
 | **Mode 1 — Auditor** | AI agent | Review and remediate existing code |
 | **Mode 2 — Builder** | AI agent | Greenfield or refactor to compliance |
 | **Mode 3 — Librarian** | AI agent (+ human approval) | Evolve white book and `SKILL.md` |
