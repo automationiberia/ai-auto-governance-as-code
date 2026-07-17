@@ -10,7 +10,8 @@ One-page path from zero to productive. Deep reference: [01-main-guide.md](../01-
 |-------|--------|----------------|
 | **Standards** | `automation-whitepaper/` | Read how we build and ship Ansible |
 | **AI rules** | `skills/` + `AGENTS.md` | Let agents audit, build, or update standards |
-| **Upstream baseline** | `automation-good-practices/` | Compare with Red Hat CoP (submodule) |
+| **CoP baseline** | `automation-good-practices/` | Pinned Red Hat CoP (submodule) |
+| **SDLC skills** | ai-forge via Lola | `/commit`, `/create-pr`, `/release` — run `make install` |
 | **Real Ansible code** | `deliveries/automation/` | Roles and playbooks in production (submodule) |
 
 **You are the Architect** (design + approval). AI agents work in **Auditor**, **Builder**, or **Librarian** mode — see [AGENTS.md](../../AGENTS.md). You can also work **manually** (no AI): same standards, no mode declaration.
@@ -30,7 +31,7 @@ Folder map: [whitebook-folder-map.md](../governance/whitebook-folder-map.md).
 ```bash
 git clone --recurse-submodules git@github.com:automationiberia/ai-auto-governance-as-code.git
 cd ai-auto-governance-as-code
-pip install -r requirements-dev.txt
+make install
 pre-commit install
 ```
 

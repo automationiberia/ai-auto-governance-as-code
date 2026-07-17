@@ -27,6 +27,16 @@ AI agents must declare their mode and precedence evaluation before generating co
 | **2 — Builder** | [automation-builder](automation-builder/SKILL.md) | Create new automation from scratch |
 | **3 — Librarian** | [automation-librarian](automation-librarian/SKILL.md) | Maintain governance layer |
 
+## AI Mob Design
+
+Mob programming evolved: **group designs, AI implements** — all participants co-author the PR:
+
+| Skill | When |
+|-------|------|
+| [ai-mob-design](ai-mob-design/SKILL.md) | Complex design + same-session implementation with a human mob |
+
+Guide: [guides/ai-mob-design.md](../guides/ai-mob-design.md) · ADR: [docs/adrs/ADR-007](../docs/adrs/ADR-007-ai-mob-design.md)
+
 ## 🛠️ Task Skills
 
 Used within Auditor or Builder modes as needed.
@@ -123,6 +133,7 @@ Use **Mode 3 — Librarian** when updating:
 | [automation-governance](automation-governance/SKILL.md) | Stakeholders, CAB | [governance/](../automation-whitepaper/governance/) |
 | [automation-controller-ops](automation-controller-ops/SKILL.md) | Controller, SSOT | [operations/](../automation-whitepaper/operations/) |
 | [automation-puppet-orchestrate](automation-puppet-orchestrate/SKILL.md) | Phase 1 Puppet wrappers via AAP | [aap-puppet-coexistence-evolution.md](../automation-whitepaper/architecture/aap-puppet-coexistence-evolution.md) |
+| [ai-mob-design](ai-mob-design/SKILL.md) | AI Mob Design | [guides/ai-mob-design.md](../guides/ai-mob-design.md) |
 
 ### Platform skills (Phase 1)
 

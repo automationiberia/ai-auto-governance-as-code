@@ -24,12 +24,15 @@ Prompt copy-paste library (tool-neutral): [ai-prompt-examples.md](../automation-
 
 ```bash
 cd /path/to/ai-auto-governance-as-code
-git submodule update --init --recursive
-pip install -r requirements-dev.txt
-pre-commit install   # optional but recommended for humans
+make install          # Lola SDLC (ai-forge) + git submodules (CoP + delivery)
+pre-commit install    # optional but recommended for humans
 export AUTOMATION_HOME="$(pwd)"
 export AUTOMATION_REPO="$AUTOMATION_HOME/deliveries/automation"
 ```
+
+**SDLC from ai-forge (via Lola):** `/commit`, `/create-pr`, `/release`, `/changelog-fragment`.
+**CoP compliance:** `automation-good-practices/` submodule + GaC Auditor skills — not ai-forge `/ansible-cop-review`.
+See [ai-forge-gac-integration.md](../automation-whitepaper/architecture/ai-forge-gac-integration.md).
 
 ---
 
