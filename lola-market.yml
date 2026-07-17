@@ -1,0 +1,16 @@
+---
+name: Governance as Code
+description: Governance as Code platform for Ansible automation
+version: 1.0.0
+
+modules:
+  - name: gac
+    description: >-
+      Governance as Code platform with version-controlled CoP compliance,
+      AAP architecture patterns, and AI agents. Consumes ai-forge for SDLC.
+    version: 1.0.0
+    repository: https://github.com/automationiberia/ai-auto-governance-as-code.git
+    path: .
+    dependencies:
+      - @ansible-content/ansible-collection-sdlc
+    tags: [governance, aap, automation, compliance]

@@ -1,0 +1,5 @@
+# GaC consumes ai-forge for SDLC skills only
+# Install: make install  (or: lola sync)
+
+# SDLC workflows: commit, PR, release, changelog
+@ansible-content/ansible-collection-sdlc

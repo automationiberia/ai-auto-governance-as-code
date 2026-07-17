@@ -28,7 +28,8 @@ Production implementation code lives in a **separate delivery collection** (subm
 | **`automation-whitepaper/`** | Guide-first white book: lifecycle, architecture, guides, optional `adrs/` | Authoritative enterprise standards (human-authored) | Internal |
 | **`skills/`** | Agent Skills (`SKILL.md`; tool mirrors optional) | AI enforcement layer (Librarian-synced) | Internal |
 | **`AGENTS.md`** | Mode selection, Builder bootstrap, precedence confirmation | AI entry point | Internal |
-| **`automation-good-practices/`** | Red Hat CoP GPA reference | Compliance baseline | Red Hat CoP (submodule) |
+| **`automation-good-practices/`** | Red Hat CoP GPA reference (submodule pin) | Compliance baseline | Red Hat CoP (submodule) |
+| **`.lola-req`**, **`lola-market.yml`** | Lola manifests | SDLC via ai-forge; GaC installable as module | Internal + [ai-forge](https://github.com/ansible-community/ai-forge) |
 | **`deliveries/automation/`** | Shared collection [`ai-auto-deliveries`](https://github.com/automationiberia/ai-auto-deliveries) | Production execution | Internal (submodule) |
 
 Additional root artifacts:
@@ -41,6 +42,8 @@ Additional root artifacts:
 Canonical skill format is **`SKILL.md`**. There is **no automated compile pipeline** to `.mdc` or other formats.
 
 White book folder map: [../governance/whitebook-folder-map.md](../governance/whitebook-folder-map.md).
+
+**GaC vs ai-forge:** [ai-forge-gac-integration.md](ai-forge-gac-integration.md) — SDLC from ai-forge; CoP from submodule.
 
 ---
 
@@ -98,6 +101,7 @@ export AUTOMATION_REPO="$AUTOMATION_HOME/deliveries/automation"
 ## Related documents
 
 - [AI-Driven Governance-as-Code](../governance/governance-as-code-ai-enforcement.md)
+- [GaC + ai-forge integration](ai-forge-gac-integration.md)
 - [whitebook-folder-map.md](../governance/whitebook-folder-map.md)
 - [landscape-type-function-component.md](landscape-type-function-component.md)
 - [collections-and-execution-environments.md](collections-and-execution-environments.md)
