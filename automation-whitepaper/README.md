@@ -39,6 +39,9 @@ Folder map: [whitebook-folder-map.md](governance/whitebook-folder-map.md).
 ### Governance
 
 - **[AI-Driven Governance](governance/governance-as-code-ai-enforcement.md)** — Human as Architect; manual path + AI modes
+- [GaC + ai-forge integration](architecture/ai-forge-gac-integration.md) — Architecture, rationale, installation
+- [ai-forge and GaC (quick reference)](governance/ai-forge-and-gac.md)
+- **[Philosophy](governance/philosophy.md)** · **[CoP overrides](governance/cop-overrides.md)**
 - **[White book folder map](governance/whitebook-folder-map.md)** — WHEN/WHERE/HOW guide to each directory
 - **[Optional ADRs](adrs/README.md)** — Exceptions and major decisions
 - **[Strategic Proposal v1.0](governance/strategic-proposal-aap-governance-evolution.md)** — AAP, Puppet, GenAI, Dev Spaces

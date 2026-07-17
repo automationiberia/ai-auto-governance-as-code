@@ -3,7 +3,7 @@
 
 SHELL := /bin/bash
 .DEFAULT_GOAL := help
-.PHONY: help setup install-hooks init-submodules install-python validate validate-yaml validate-python validate-skills lint test clean clean-cache clean-venv
+.PHONY: help setup install install-hooks init-submodules install-python validate validate-yaml validate-python validate-skills lint test clean clean-cache clean-venv
 
 # Detect repository root
 REPO_ROOT := $(shell git rev-parse --show-toplevel 2>/dev/null || pwd)
@@ -39,8 +39,19 @@ help: ## Display this help message
 
 ##@ Setup
 
-setup: init-submodules install-python install-hooks ## Complete initial setup (submodules + Python deps + pre-commit hooks)
+setup: install install-hooks ## Complete setup (Lola + submodules + pre-commit hooks)
 	@echo "$(COLOR_GREEN)✓ Setup complete. Run 'make validate' to verify installation.$(COLOR_RESET)"
+
+install: ## Install Lola SDLC modules and initialize Git submodules
+	@echo "$(COLOR_BLUE)Installing Lola and syncing ai-forge SDLC modules...$(COLOR_RESET)"
+	@command -v lola >/dev/null 2>&1 || $(PIP) install lola-ai
+	@lola market add ansible-content \
+		https://raw.githubusercontent.com/ansible-community/ai-forge/main/lola-market.yml \
+		2>/dev/null || true
+	@lola sync
+	@git submodule sync --recursive
+	@git submodule update --init --recursive
+	@echo "$(COLOR_GREEN)✓ Install complete$(COLOR_RESET)"
 
 init-submodules: ## Initialize Git submodules (automation-good-practices, deliveries/automation)
 	@echo "$(COLOR_BLUE)Initializing Git submodules...$(COLOR_RESET)"
@@ -72,8 +83,12 @@ venv: ## Create Python virtual environment in .venv/
 
 ##@ Validation
 
-validate: validate-yaml validate-python validate-skills ## Run all validation checks
-	@echo "$(COLOR_GREEN)✓ All validation checks passed$(COLOR_RESET)"
+validate: ## Run pre-commit hooks on all files (quality gates)
+	@echo "$(COLOR_BLUE)Running pre-commit hooks on all files...$(COLOR_RESET)"
+	@pre-commit run --all-files
+
+validate-all: validate-yaml validate-python validate-skills ## Extended validation (yaml, python, skills)
+	@echo "$(COLOR_GREEN)✓ Extended validation complete$(COLOR_RESET)"
 
 validate-yaml: ## Validate YAML files with yamllint and ansible-lint
 	@echo "$(COLOR_BLUE)Validating YAML files...$(COLOR_RESET)"
@@ -112,7 +127,7 @@ lint: ## Run pre-commit hooks on all files
 
 ##@ Testing
 
-test: lint validate ## Run all tests (currently lint + validate; expand as needed)
+test: lint validate-all ## Run all tests (lint + extended validate)
 	@echo "$(COLOR_GREEN)✓ All tests passed$(COLOR_RESET)"
 
 check-links: ## Check for broken links in markdown files (requires markdown-link-check)

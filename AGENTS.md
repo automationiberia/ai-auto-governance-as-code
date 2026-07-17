@@ -15,6 +15,7 @@ Strategic proposal (AAP, Puppet, Dev Spaces, GenAI): [automation-whitepaper/gove
 Monorepo layout: [automation-whitepaper/architecture/monorepo-layout.md](automation-whitepaper/architecture/monorepo-layout.md).
 
 **Skill setup (choose tool):** [skills/TOOL-SETUP.md](skills/TOOL-SETUP.md) — Cursor, Claude, Copilot, or generic.
+**SDLC skills (ai-forge via Lola):** Run `make install` — provides `/commit`, `/create-pr`, `/release`. See [ai-forge-gac-integration.md](automation-whitepaper/architecture/ai-forge-gac-integration.md).
 **Copy-paste prompts:** [automation-whitepaper/guides/ai-prompt-examples.md](automation-whitepaper/guides/ai-prompt-examples.md).
 
 ---

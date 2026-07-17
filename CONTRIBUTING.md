@@ -30,18 +30,10 @@ This project adheres to professional standards of collaboration. Be respectful, 
 ### Initial Setup
 
 ```bash
-# Clone with submodules
-git clone --recurse-submodules <repository-url>
+git clone --recurse-submodules https://github.com/automationiberia/ai-auto-governance-as-code.git
 cd ai-auto-governance-as-code
-
-# Install development dependencies
-pip install -r requirements-dev.txt
-
-# Install pre-commit hooks
+make install
 pre-commit install
-
-# Initialize delivery submodule (requires SSH access)
-git submodule update --init deliveries/automation
 ```
 
 Set environment variables:
@@ -339,7 +331,8 @@ Skills should declare which mode they support and provide mode-specific instruct
 - [AGENTS.md](AGENTS.md) - AI agent operating instructions
 - [skills/README.md](skills/README.md) - Skill catalog and setup
 - [automation-whitepaper/guides/ai-prompt-examples.md](automation-whitepaper/guides/ai-prompt-examples.md) - Prompt examples
-- [Red Hat CoP Automation Good Practices](https://github.com/redhat-cop/automation-good-practices) - Upstream reference
+- [Red Hat CoP Automation Good Practices](https://github.com/redhat-cop/automation-good-practices) - Pinned CoP baseline (`automation-good-practices/` submodule)
+- [Ansible Community AI Forge](https://github.com/ansible-community/ai-forge) - SDLC skills consumed via Lola
 
 ---
 
