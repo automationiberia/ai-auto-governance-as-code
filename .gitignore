@@ -7,7 +7,10 @@ __pycache__/
 *.retry
 
 .idea/
-.vscode/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/tasks.json
+.devfile/extensions/*.vsix
 *.swp
 *~
 .DS_Store
@@ -15,3 +18,4 @@ __pycache__/
 .cursor-build.log
 .cursor/
 .devfile/setup-workspace.log
+.devfile/ollama-pull.log

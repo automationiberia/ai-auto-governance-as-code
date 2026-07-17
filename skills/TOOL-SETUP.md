@@ -47,14 +47,15 @@ See [ai-forge-gac-integration.md](../automation-whitepaper/architecture/ai-forge
    ./skills/scripts/link-cursor-skills.sh
    ```
 
-   This symlinks `skills/automation-*` → `.cursor/skills/` (gitignored; per-machine). Removes stale links (e.g. deprecated `automation-architect`) and links current skills such as `automation-builder`.
+   This symlinks `skills/automation-*` and `skills/platform/aap-*` → `.cursor/skills/` (gitignored; per-machine). Removes stale links (e.g. deprecated `automation-architect`) and links current skills such as `automation-builder`.
 
-3. Open `automation-home.code-workspace` (monorepo + `deliveries/automation`).
-4. Optional project rule (Cursor Settings → Rules): *Read AGENTS.md; state Mode 1/2/3 before Ansible output.*
+3. Open `automation-home.code-workspace` (monorepo root; `deliveries/automation/` is a nested submodule folder).
+4. Optional: configure AAP MCP per [MCP setup](#mcp-aap-platform-skills).
+5. Optional project rule (Cursor Settings → Rules): *Read AGENTS.md; state Mode 1/2/3 before Ansible output.*
 
-**Invoke:** `Use skill automation-builder` · `@AGENTS.md` · `@skills/automation-auditor/SKILL.md`
+**Invoke:** `Use skill automation-builder` · `Use skill aap-live-snapshot` · `@AGENTS.md` · `@skills/automation-auditor/SKILL.md`
 
-**Refresh:** After `git pull` adds or renames skills, re-run `link-cursor-skills.sh` (replaces deprecated `automation-architect` with `automation-builder`).
+**Refresh:** After `git pull` adds or renames skills, re-run `link-cursor-skills.sh`.
 
 ---
 
@@ -76,7 +77,8 @@ Claude has **no standard “skills folder”** shared with Cursor. Configure **c
 # Project instructions
 
 Before Ansible or automation-whitepaper work, read AGENTS.md and declare
-Auditor / Builder / Librarian mode (human = Architect). Skills live under skills/automation-*/SKILL.md.
+Auditor / Builder / Librarian mode (human = Architect). Content skills: skills/automation-*/SKILL.md.
+Platform skills: skills/platform/aap-*/SKILL.md (MCP required).
 Delivery code: deliveries/automation/ ($AUTOMATION_REPO).
 ```
 
@@ -98,17 +100,14 @@ Do **not** rely on `.mdc` unless your Claude product documents that format; **`S
 
 ## GitHub Copilot
 
-**When:** VS Code / Visual Studio with Copilot Chat on this workspace.
+**When:** VS Code / Visual Studio with Copilot Chat on this workspace (including **OpenShift Dev Spaces**).
 
 1. Repository prep above.
-2. Point Copilot at repo instructions, e.g. create or extend `.github/copilot-instructions.md`:
-
-   ```markdown
-   For Ansible automation in this repo, follow AGENTS.md and skills/automation-*/SKILL.md.
-   Declare Auditor, Builder, or Librarian mode before technical output.
-   ```
-
-3. In chat, `@AGENTS.md` and role paths if your Copilot build supports file context.
+2. **Dev Spaces — Copilot:** [devspaces-workspace.md § Copilot Agent](../automation-whitepaper/guides/devspaces-workspace.md#github-copilot-agent--setup-and-authentication).
+3. **Dev Spaces — Continue + Ollama:** same guide, [§ Continue + Ollama](../automation-whitepaper/guides/devspaces-workspace.md#continue--ollama-local-llm-same-workspace) (local `qwen2.5-coder:7b`, no GPU).
+4. Repo instructions ship in [`.github/copilot-instructions.md`](../.github/copilot-instructions.md) — Copilot loads this automatically once signed in.
+5. Open `automation-home.code-workspace`.
+6. In chat, `@AGENTS.md` and skill paths if your Copilot build supports file context.
 
 **Invoke:** Same natural-language prompts as [ai-prompt-examples.md](../automation-whitepaper/guides/ai-prompt-examples.md); name the skill explicitly.
 
@@ -134,13 +133,38 @@ Do **not** rely on `.mdc` unless your Claude product documents that format; **`S
 
 ---
 
+## MCP (AAP platform skills)
+
+**When:** You use `skills/platform/aap-*` skills to operate or audit live Ansible Automation Platform via MCP.
+
+Platform skills are **optional** — engineers without MCP follow [aap-platform-administration.md](../automation-whitepaper/operations/aap-platform-administration.md) and the Controller UI manually.
+
+1. Deploy AAP MCP servers in your environment (see upstream [AAP Skills Library](https://github.com/automationiberia/aap-skills-library)).
+2. Copy [config/mcp.json.example](../config/mcp.json.example) to your client config (e.g. `.cursor/mcp.json`). **Never commit secrets.**
+3. Set `AAP_MCP_TOKEN` or equivalent in your environment — not in Git.
+4. Link platform skills: `./skills/scripts/link-cursor-skills.sh` (Cursor) or reference `skills/platform/aap-*/SKILL.md` directly (Claude/Copilot/generic).
+
+**Invoke (read-only Phase 1 example):**
+
+```text
+Platform area: Audit (read-only).
+I have evaluated Red Hat CoP baseline rules against white book overrides.
+Use skill aap-live-snapshot for organization "Lab".
+```
+
+More prompts: [ai-prompt-examples.md](../automation-whitepaper/guides/ai-prompt-examples.md) §12.
+
+---
+
 ## Adding a new skill (Librarian — all tools)
 
-1. Add `skills/automation-<name>/SKILL.md` (see [skills/README.md](README.md)).
+1. Add `skills/automation-<name>/SKILL.md` or `skills/platform/aap-<name>/SKILL.md` (see [SKILL-TEMPLATE.md](SKILL-TEMPLATE.md)).
 2. Update white paper + catalog in `skills/README.md`.
 3. **Tool-specific sync:**
    - **Cursor:** `./skills/scripts/link-cursor-skills.sh`
    - **Claude / Copilot / generic:** Update project knowledge or instruction file if you mirror paths there
+
+For platform skills sourced from AAPSL: update white book first, merge from `skills/vendor/aap-skills-library/`, run `./skills/scripts/sync-aapsl-skills.sh --diff`.
 
 ---
 

@@ -2,31 +2,51 @@
 name: automation-controller-ops
 description: >-
   Ansible Automation Platform Controller: workflows, job templates, RBAC, SSOT
-  inventory integration. Use when deploying to Controller or connecting CMDB/cloud
-  inventory. Standard example maps type playbook to job template.
+  inventory integration, and routing to platform MCP skills.
+  Use when deploying to Controller, connecting CMDB/cloud inventory, or operating live AAP.
 ---
 
 # Controller and Operations
 
-Docs: `operations/controller-and-workflows.md`, `operations/inventory-ssot-integration.md`
+Docs: `operations/controller-and-workflows.md`, `operations/inventory-ssot-integration.md`, `operations/aap-platform-administration.md`
 
-## Map example to Controller
+## Git-side standards
+
+### Map example to Controller
 
 | GPA | Standard example |
-|-----|----------------|
+|-----|------------------|
 | Type playbook | `examples/standard-rsyslog-forwarding/playbooks/type_linux_logging.yml` |
 | Sample inventory | `examples/standard-rsyslog-forwarding/inventory/sample/` |
 | Prod inventory | CMDB plugin (not in example tree) |
 
 Light example: CLI from `examples/light-dev-packages/` — no prod template required.
 
-## Job template rules
+### Job template rules
 
 - No desired state in prod extra vars
 - Runbook in description
 - Limit documented
+- Name pattern: `landscape_type_environment`
+
+## Platform skill routing (live AAP via MCP)
+
+When the user intent is **live platform** operation (not Git YAML authoring), route to `skills/platform/aap-*`. Requires MCP — see [TOOL-SETUP.md](../TOOL-SETUP.md#mcp-aap-platform-skills).
+
+| User intent | Platform skill |
+|-------------|----------------|
+| Full platform snapshot / pre-change baseline | [platform/aap-live-snapshot](../platform/aap-live-snapshot/SKILL.md) |
+| RBAC / who can execute a template | [platform/aap-rbac-review](../platform/aap-rbac-review/SKILL.md) |
+| Check job status / failed jobs | [platform/aap-job-status](../platform/aap-job-status/SKILL.md) |
+| Launch approved job template | `aap-job-executor` (Phase 3 — planned) |
+| Create job template from Git type playbook | `aap-job-template-create` (Phase 2 — planned) |
+| Update template inventory/credential bundle | `aap-template-bundle-update` (Phase 2 — planned) |
+
+**Handoff:** Mode 2 **Builder** produces Git artifacts (`type_*.yml`, roles) → Platform **Build** wires Controller (later phase).
 
 ## Agent behavior
 
 - Declare active mode per [AGENTS.md](../../AGENTS.md).
-- Reference example playbook path for template configuration; do not duplicate inventory YAML.
+- For Git content: reference example playbook paths; do not duplicate inventory YAML.
+- For live AAP: declare platform area (Audit / Operate / Build / Maintain) and load the matching platform skill.
+- SSOT: prod inventory via CMDB/cloud — block manual inventory curation skills in prod orgs.

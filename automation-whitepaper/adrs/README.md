@@ -32,6 +32,7 @@ ADRs **supplement** the white book; they do not replace Guide-first standards.
 | [ADR-004](ADR-004-librarian-synchronization.md) | Librarian synchronization (not compilation) |
 | [ADR-005](ADR-005-native-first-execution.md) | Native-first execution |
 | [ADR-006](ADR-006-ltfc-mandatory.md) | L/T/F/C mandatory classification |
+| [ADR-007](ADR-007-aap-platform-skills-plane.md) | AAP platform skills as second plane |
 | [ADR-007 (mob design)](../docs/adrs/ADR-007-ai-mob-design.md) | AI Mob Design |
 
 ## Related

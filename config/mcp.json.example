@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "aap-mcp-servers": {
+      "comment": "Copy to .cursor/mcp.json or your client MCP config. Replace URL and credentials with your environment values. Never commit secrets.",
+      "url": "https://your-aap-gateway.example.com/mcp",
+      "headers": {
+        "Authorization": "Bearer ${AAP_MCP_TOKEN}"
+      }
+    }
+  }
+}

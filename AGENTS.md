@@ -77,6 +77,19 @@ If the task spans modes (e.g. audit then build), state the **current** mode for 
 
 Task skills (use **inside** Builder or Auditor modes as needed): see [skills/README.md](skills/README.md).
 
+**Platform administration** (live AAP via MCP): `skills/platform/aap-*` — see [aap-platform-administration.md](automation-whitepaper/operations/aap-platform-administration.md). Declare **platform area** (Audit / Operate / Build / Maintain) in addition to content modes when operating live AAP.
+
+---
+
+## Skill planes
+
+| Plane | Path | Domain |
+|-------|------|--------|
+| **Content governance** | `skills/automation-*` | Ansible in Git (roles, playbooks, collections) |
+| **Platform administration** | `skills/platform/aap-*` | Live AAP objects via MCP |
+
+Both planes share white book precedence and human Architect approval. **Mode 2 Builder** writes Ansible content; platform **Build** area wires Controller objects (later adoption phases).
+
 ---
 
 ## Rule of precedence
@@ -176,10 +189,12 @@ automation-good-practices/   ← Red Hat CoP baseline (where white book silent)
         ↓
 automation-whitepaper/     ← Guide-first standards (human-authored; wins on conflict)
         ↓ Librarian sync
-skills/*/SKILL.md          ← AI operationalization
+skills/automation-*/       ← content AI operationalization
+skills/platform/aap-*/     ← platform AI operationalization (MCP)
+skills/vendor/aap-skills-library/  ← upstream reference (submodule)
 AGENTS.md (this file)      ← mode selection + Builder bootstrap
         ↓
-Manual path  OR  AI modes (Auditor / Builder / Librarian)
+Manual path  OR  AI modes (Auditor / Builder / Librarian) + platform areas
         ↓
 pre-commit + CI            ← mechanical validation (code artifacts)
 ```

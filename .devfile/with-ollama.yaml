@@ -1,11 +1,12 @@
 ---
+# Alias of the repo root .devfile.yaml (same stack). Kept for factory URLs that use
+# ?devfilePath=.devfile/with-ollama.yaml — new workspaces should use the default devfile.
 schemaVersion: 2.3.0
 metadata:
   name: automation-home
   displayName: Automation Home
   description: >-
-    AI-Driven Governance-as-Code for Ansible Automation — Copilot Agent,
-    Continue + Ollama (qwen2.5-coder:7b, CPU), white paper, skills, and delivery submodule.
+    Alias of .devfile.yaml — Copilot Agent + Continue + Ollama (qwen2.5-coder:7b).
   tags:
     - ansible
     - automation
@@ -32,14 +33,10 @@ components:
           value: >-
             ${PROJECT_SOURCE}/deliveries/automation/.ansible/collections:
             /usr/share/ansible/collections
-        # Do NOT set DEFAULT_EXTENSIONS or PATH here — paths under ${PROJECT_SOURCE}
-        # do not exist during the DWO-injected postStart hook and can fail automation-tools.
-        # Copilot: extensions.json + setup-workspace VSIX; PATH → automation-home.code-workspace.
         - name: VSCODE_TRUSTED_EXTENSIONS
           value: redhat.devspaces-copilot-chat-integration
   - name: ollama
     container:
-      # Red Hat Ollama stack: per-user PVC at /.ollama (OpenShift arbitrary UID).
       image: docker.io/ollama/ollama:0.5.4
       mountSources: true
       sourceMapping: /.ollama
@@ -96,9 +93,6 @@ commands:
         nohup bash .devfile/setup-workspace.sh </dev/null >>.devfile/setup-workspace.log 2>&1 &
         exit 0'
       workingDir: ${PROJECT_SOURCE}
-      label: Setup workspace (background, postStart)
 events:
   postStart:
     - setup-workspace-bg
-# Also runs via .vscode/tasks.json (folderOpen) when the IDE opens.
-# Log: .devfile/setup-workspace.log — manual: Command Palette → Setup workspace.

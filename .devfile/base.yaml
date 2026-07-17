@@ -1,15 +1,16 @@
 ---
+# Fallback Dev Spaces stack — Automation Home without Ollama (low quota / debug).
+# Create with: ?devfilePath=.devfile/base.yaml
 schemaVersion: 2.3.0
 metadata:
   name: automation-home
-  displayName: Automation Home
+  displayName: Automation Home (no Ollama)
   description: >-
-    AI-Driven Governance-as-Code for Ansible Automation — Copilot Agent,
-    Continue + Ollama (qwen2.5-coder:7b, CPU), white paper, skills, and delivery submodule.
+    Ansible + Copilot Agent only — fallback when the default devfile (with Ollama)
+    exceeds cluster quota. Use ?devfilePath=.devfile/base.yaml
   tags:
     - ansible
     - automation
-    - ollama
   language: Ansible
   projectType: Ansible
 components:
@@ -32,24 +33,8 @@ components:
           value: >-
             ${PROJECT_SOURCE}/deliveries/automation/.ansible/collections:
             /usr/share/ansible/collections
-        # Do NOT set DEFAULT_EXTENSIONS or PATH here — paths under ${PROJECT_SOURCE}
-        # do not exist during the DWO-injected postStart hook and can fail automation-tools.
-        # Copilot: extensions.json + setup-workspace VSIX; PATH → automation-home.code-workspace.
         - name: VSCODE_TRUSTED_EXTENSIONS
           value: redhat.devspaces-copilot-chat-integration
-  - name: ollama
-    container:
-      # Red Hat Ollama stack: per-user PVC at /.ollama (OpenShift arbitrary UID).
-      image: docker.io/ollama/ollama:0.5.4
-      mountSources: true
-      sourceMapping: /.ollama
-      cpuLimit: 4000m
-      cpuRequest: 500m
-      memoryRequest: 4Gi
-      memoryLimit: 10Gi
-      env:
-        - name: OLLAMA_HOST
-          value: 0.0.0.0:11434
 commands:
   - id: setup-workspace
     exec:
@@ -82,12 +67,6 @@ commands:
         playbooks/type_windows_ntp.yml'
       workingDir: ${PROJECT_SOURCE}
       label: Syntax-check delivery playbooks
-  - id: ollama-pull-qwen
-    exec:
-      component: automation-tools
-      commandLine: bash .devfile/ollama-pull.sh
-      workingDir: ${PROJECT_SOURCE}
-      label: Pull Ollama model (qwen2.5-coder:7b)
   - id: setup-workspace-bg
     exec:
       component: automation-tools
@@ -96,9 +75,6 @@ commands:
         nohup bash .devfile/setup-workspace.sh </dev/null >>.devfile/setup-workspace.log 2>&1 &
         exit 0'
       workingDir: ${PROJECT_SOURCE}
-      label: Setup workspace (background, postStart)
 events:
   postStart:
     - setup-workspace-bg
-# Also runs via .vscode/tasks.json (folderOpen) when the IDE opens.
-# Log: .devfile/setup-workspace.log — manual: Command Palette → Setup workspace.

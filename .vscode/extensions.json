@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "Continue.continue",
+    "redhat.devspaces-copilot-chat-integration",
+    "redhat.ansible",
+    "redhat.vscode-yaml",
+    "ms-python.python",
+    "redhat.vscode-openshift-connector"
+  ]
+}

@@ -10,7 +10,16 @@ CURSOR_SKILLS="${ROOT}/.cursor/skills"
 
 mkdir -p "${CURSOR_SKILLS}"
 
-# Remove stale symlinks (e.g. deprecated automation-architect)
+link_skill() {
+  local rel_path="$1"
+  local name="$2"
+  local target="${CURSOR_SKILLS}/${name}"
+  rm -f "${target}"
+  ln -sf "../../skills/${rel_path}" "${target}"
+  echo "Linked ${name} -> .cursor/skills/${name}"
+}
+
+# Remove stale automation-* symlinks
 for existing in "${CURSOR_SKILLS}"/automation-*; do
   [[ -e "${existing}" ]] || continue
   name="$(basename "${existing}")"
@@ -20,13 +29,26 @@ for existing in "${CURSOR_SKILLS}"/automation-*; do
   fi
 done
 
+# Remove stale aap-* symlinks
+for existing in "${CURSOR_SKILLS}"/aap-*; do
+  [[ -e "${existing}" ]] || continue
+  name="$(basename "${existing}")"
+  if [[ ! -d "${SKILLS_SRC}/platform/${name}" ]]; then
+    rm -f "${existing}"
+    echo "Removed stale ${name}"
+  fi
+done
+
 for skill_dir in "${SKILLS_SRC}"/automation-*/; do
   [[ -d "${skill_dir}" ]] || continue
   name="$(basename "${skill_dir}")"
-  target="${CURSOR_SKILLS}/${name}"
-  rm -f "${target}"
-  ln -sf "../../skills/${name}" "${target}"
-  echo "Linked ${name} -> .cursor/skills/${name}"
+  link_skill "${name}" "${name}"
 done
 
-echo "Done. Cursor skills point to ${SKILLS_SRC}/automation-*"
+for skill_dir in "${SKILLS_SRC}"/platform/aap-*/; do
+  [[ -d "${skill_dir}" ]] || continue
+  name="$(basename "${skill_dir}")"
+  link_skill "platform/${name}" "${name}"
+done
+
+echo "Done. Cursor skills: automation-* and platform aap-*"
