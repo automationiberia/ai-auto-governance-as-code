@@ -4,6 +4,10 @@ description: >-
   AI-Driven Governance-as-Code — Phase 1 centralized orchestration. Generate AAP
   wrapper playbooks that invoke Puppet via community.general.puppet (noop/check mode,
   tags, environment, summarize). Use for short-term coexistence; not Phase 2 native refactor.
+user-invocable: true
+metadata:
+  author: gac
+  version: "1.0"
 ---
 
 # Phase 1 — Puppet orchestration wrappers

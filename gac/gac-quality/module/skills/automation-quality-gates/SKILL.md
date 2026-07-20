@@ -4,6 +4,10 @@ description: >-
   Quality gates: mandatory pre-commit at automation-home, idempotency, check mode,
   PR review checklists. Use before merge or when tests fail. Validates example
   trees under automation-whitepaper/examples/.
+user-invocable: true
+metadata:
+  author: gac
+  version: "1.0"
 ---
 
 # Quality Gates

@@ -3,23 +3,24 @@ name: aap-job-status
 description: >-
   Tracks Ansible Automation Platform job execution status via MCP. Use when the
   user asks to check, monitor, or follow up on a running or completed job.
-domain: platform-administration
-skill_plane: platform
-platform_areas:
-  - operate
-lifecycle_stages:
-  - 6
-profile_min: light
-whitepaper: automation-whitepaper/operations/aap-platform-administration.md
-mcp_domains:
-  - job-management
-write_capability: false
-human_gate: none
+user-invocable: true
 triggers:
   - check job status
   - job finished
   - failed jobs
   - follow up on job
+metadata:
+  author: gac
+  version: "1.0"
+  domain: platform-administration
+  skill_plane: platform
+  platform_areas: [operate]
+  lifecycle_stages: [6]
+  profile_min: light
+  whitepaper: automation-whitepaper/operations/aap-platform-administration.md
+  mcp_domains: [job-management]
+  write_capability: "false"
+  human_gate: none
 ---
 
 # AAP Job Status

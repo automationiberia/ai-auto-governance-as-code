@@ -4,6 +4,10 @@ description: >-
   Thin playbooks, inventory structure, SSOT, As-Is vs To-Be, variable precedence.
   Use for playbooks, inventory directories, or variable debugging. Examples in
   automation-whitepaper/examples/*/playbooks and inventory/.
+user-invocable: true
+metadata:
+  author: gac
+  version: "1.0"
 ---
 
 # Playbooks and Inventory

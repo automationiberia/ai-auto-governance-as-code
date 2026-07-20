@@ -4,6 +4,10 @@ description: >-
   Applies landscape, type, function, component structure and collection packaging
   for Ansible. Use when structuring repos, splitting playbooks/roles, or Controller
   workflows. Points to runnable standard example tree.
+user-invocable: true
+metadata:
+  author: gac
+  version: "1.0"
 ---
 
 # Automation Architecture

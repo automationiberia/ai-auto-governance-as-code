@@ -5,6 +5,10 @@ description: >-
   and roles for technical debt,
   legacy Ansible patterns, and white-paper violations; propose refactors. Use for
   PR review, lint remediation, or alignment audits. State mode before output.
+user-invocable: true
+metadata:
+  author: gac
+  version: "1.0"
 ---
 
 # Mode 1 — The Auditor

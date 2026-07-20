@@ -6,6 +6,9 @@ description: >-
   what the group designs together, and generates co-authored PRs with proper
   attribution.
 user-invocable: true
+metadata:
+  author: gac
+  version: "1.0"
 ---
 
 # AI Mob Design

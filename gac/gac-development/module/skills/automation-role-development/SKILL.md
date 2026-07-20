@@ -4,6 +4,10 @@ description: >-
   Ansible role standards: naming, defaults, platform vars, idempotency,
   argument_specs. Use when writing or reviewing roles. Reference implementations
   in automation-whitepaper/examples/*/roles/.
+user-invocable: true
+metadata:
+  author: gac
+  version: "1.0"
 ---
 
 # Role Development

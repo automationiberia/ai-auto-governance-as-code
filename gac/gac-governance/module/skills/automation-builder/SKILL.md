@@ -5,6 +5,10 @@ description: >-
   playbooks, and collection
   artifacts from scratch using AGENTS.md bootstrap rules (FQCN, naming, L/T/F/C).
   Use for greenfield automation. State mode before output.
+user-invocable: true
+metadata:
+  author: gac
+  version: "1.0"
 ---
 
 # Mode 2 — The Builder

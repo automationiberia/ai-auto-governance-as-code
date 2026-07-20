@@ -5,6 +5,10 @@ description: >-
   paper and SKILL.md when the
   team adopts new patterns or Red Hat CoP GPA updates. Propose governance diffs;
   do not silently drift standards. State mode before output.
+user-invocable: true
+metadata:
+  author: gac
+  version: "1.0"
 ---
 
 # Mode 3 — The Librarian

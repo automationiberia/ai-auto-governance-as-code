@@ -4,6 +4,10 @@ description: >-
   Ansible Automation Platform Controller: workflows, job templates, RBAC, SSOT
   inventory integration, and routing to platform MCP skills.
   Use when deploying to Controller, connecting CMDB/cloud inventory, or operating live AAP.
+user-invocable: true
+metadata:
+  author: gac
+  version: "1.0"
 ---
 
 # Controller and Operations

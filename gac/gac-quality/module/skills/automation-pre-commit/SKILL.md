@@ -4,6 +4,10 @@ description: >-
   Enforces mandatory pre-commit hooks for Ansible at automation-home repo root:
   ansible-lint, yamllint, black, pylint, YAML checks. Use when setting up dev environment,
   fixing hook failures, or before commit/PR.
+user-invocable: true
+metadata:
+  author: gac
+  version: "1.0"
 ---
 
 # Pre-commit (Mandatory)

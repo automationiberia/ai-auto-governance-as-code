@@ -4,6 +4,10 @@ description: >-
   New Ansible capability in the shared delivery collection under deliveries/automation/:
   galaxy.yml, one function role, type playbook, pre-commit. Not a new repo per automation.
   Use when creating automation greenfield.
+user-invocable: true
+metadata:
+  author: gac
+  version: "1.0"
 ---
 
 # New Automation (Step-by-Step)

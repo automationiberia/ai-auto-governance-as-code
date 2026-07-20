@@ -4,29 +4,31 @@ description: >-
   Generates a real-time Ansible Automation Platform snapshot via MCP for
   infrastructure visibility, operational auditing, and RBAC analysis. Use when
   the user requests a platform report, AAP audit, or pre-change baseline.
-domain: platform-administration
-skill_plane: platform
-platform_areas:
-  - audit
-lifecycle_stages:
-  - 6
-profile_min: light
-whitepaper: automation-whitepaper/operations/aap-platform-administration.md
-mcp_domains:
-  - job-management
-  - inventory-management
-  - system-monitoring
-  - user-management
-  - security-compliance
-  - platform-configuration
-write_capability: false
-human_gate: none
+user-invocable: true
 triggers:
   - aap snapshot
   - automation platform report
   - ansible controller audit
   - eda status
   - mcp aap overview
+metadata:
+  author: gac
+  version: "1.0"
+  domain: platform-administration
+  skill_plane: platform
+  platform_areas: [audit]
+  lifecycle_stages: [6]
+  profile_min: light
+  whitepaper: automation-whitepaper/operations/aap-platform-administration.md
+  mcp_domains:
+    - job-management
+    - inventory-management
+    - system-monitoring
+    - user-management
+    - security-compliance
+    - platform-configuration
+  write_capability: "false"
+  human_gate: none
 ---
 
 # AAP Live Snapshot

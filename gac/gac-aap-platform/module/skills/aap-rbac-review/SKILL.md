@@ -3,26 +3,28 @@ name: aap-rbac-review
 description: >-
   Reviews Ansible Automation Platform RBAC — users, teams, roles, and object
   permissions — via MCP. Use for access audits narrower than a full platform snapshot.
-domain: platform-administration
-skill_plane: platform
-platform_areas:
-  - audit
-lifecycle_stages:
-  - 6
-profile_min: standard
-whitepaper: automation-whitepaper/operations/aap-platform-administration.md
-mcp_domains:
-  - user-management
-  - security-compliance
-  - job-management
-  - platform-configuration
-write_capability: false
-human_gate: none
+user-invocable: true
 triggers:
   - rbac audit
   - who can execute
   - access control review
   - team permissions
+metadata:
+  author: gac
+  version: "1.0"
+  domain: platform-administration
+  skill_plane: platform
+  platform_areas: [audit]
+  lifecycle_stages: [6]
+  profile_min: standard
+  whitepaper: automation-whitepaper/operations/aap-platform-administration.md
+  mcp_domains:
+    - user-management
+    - security-compliance
+    - job-management
+    - platform-configuration
+  write_capability: "false"
+  human_gate: none
 ---
 
 # AAP RBAC Review

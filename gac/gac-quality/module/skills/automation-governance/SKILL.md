@@ -4,6 +4,10 @@ description: >-
   Stakeholders and RACI for automation in enterprise environments including
   Spanish IT teams, CAB, Security, CMDB. Use when planning involvement or change
   records. Light profile skips most governance; see light walkthrough example.
+user-invocable: true
+metadata:
+  author: gac
+  version: "1.0"
 ---
 
 # Governance and Stakeholders

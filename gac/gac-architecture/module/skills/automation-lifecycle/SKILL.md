@@ -3,6 +3,10 @@ name: automation-lifecycle
 description: >-
   Extends an existing capability in the shared deliveries/automation collection:
   same repo, same function role, new platform tasks or inventory. Not greenfield.
+user-invocable: true
+metadata:
+  author: gac
+  version: "1.0"
 ---
 
 # Automation Lifecycle (changes)
