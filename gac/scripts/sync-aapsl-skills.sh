@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Librarian helper — compare vendor/aap-skills-library with gac/module/skills/aap-*.
+# Inspection tool — compare vendor/aap-skills-library with gac/gac-aap-platform/module/skills/aap-*.
 # Does not overwrite enterprise adaptations automatically.
 # Usage:
 #   ./gac/scripts/sync-aapsl-skills.sh --diff
@@ -7,7 +7,7 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 VENDOR="${ROOT}/skills/vendor/aap-skills-library/skills"
-PLATFORM="${ROOT}/gac/module/skills"
+PLATFORM="${ROOT}/gac/gac-aap-platform/module/skills"
 MODE="diff"
 
 for arg in "$@"; do
@@ -42,7 +42,7 @@ for vendor_skill in "${VENDOR}"/aap-*/SKILL.md; do
   found=$((found + 1))
 
   if [[ ! -f "${platform_skill}" ]]; then
-    echo "[MISSING] ${name} — in vendor, not yet in gac/module/skills/"
+    echo "[MISSING] ${name} — in vendor, not yet in gac/gac-aap-platform/module/skills/"
     continue
   fi
 
@@ -63,4 +63,4 @@ if [[ "${found}" -eq 0 ]]; then
   exit 1
 fi
 
-echo "Done. Librarian merges vendor changes into gac/module/skills/aap-* after white book review."
+echo "Done. Review output and merge relevant vendor changes into gac/gac-aap-platform/module/skills/aap-* following white book rules."

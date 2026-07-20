@@ -79,7 +79,7 @@ The **authoritative source** for Ansible automation standards.
 3. Update related skills (see below)
 4. Add examples if appropriate
 
-### 2. Agent Skills (`gac/module/skills/`)
+### 2. Agent Skills (`gac/gac-*/module/skills/`)
 
 AI-consumable **translation** of white paper standards into `SKILL.md` files. Skills encode human rules; they do not replace the white book.
 
@@ -91,7 +91,7 @@ AI-consumable **translation** of white paper standards into `SKILL.md` files. Sk
 **Process:**
 1. Update **white paper** first ([ADR-004](automation-whitepaper/adrs/ADR-004-librarian-synchronization.md))
 2. Read [gac/README.md](gac/README.md), [gac/SKILL_GUIDELINES.md](gac/SKILL_GUIDELINES.md), and [AGENTS.md](AGENTS.md)
-3. Create or update `gac/module/skills/<name>/SKILL.md`
+3. Create or update `gac/gac-<category>/module/skills/<name>/SKILL.md`
 4. Keep skills under ~500 lines
 5. Update [gac/README.md](gac/README.md) catalog
 6. `lola install gac -a <assistant>` to refresh local assistant

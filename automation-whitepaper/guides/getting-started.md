@@ -102,7 +102,7 @@ lola install gac -a <assistant>
 | What gets installed | Goes into `automation-whitepaper/`? | How you use it |
 |---------------------|-------------------------------------|----------------|
 | SDLC (`ansible-collection-sdlc`) | **No** | `/commit`, `/create-pr` in chat |
-| Governance skills (`gac/module/skills/`) | **No** | `Use skill automation-builder` in chat |
+| Governance skills (`gac/gac-*/module/skills/`) | **No** | `Use skill automation-builder` in chat |
 | White book guides | **No** (read from clone) | `@automation-whitepaper/guides/…` or prompts |
 
 | Assistant | Command |

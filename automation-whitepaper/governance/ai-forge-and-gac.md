@@ -9,13 +9,13 @@ Full architecture: **[GaC Architecture: ai-forge Integration](../architecture/ai
 | Source | Type | Role |
 |--------|------|------|
 | `skills/vendor/ai-forge/` | Git submodule (pinned) | SDLC slash commands (`/commit`, `/create-pr`, …) — Lola marketplace served locally |
-| `gac/module/` | Owned | Governance skills, white book encoding |
+| `gac/gac-*/module/` | Owned | Governance skills, white book encoding |
 | `automation-good-practices/` | Git submodule (pinned) | CoP baseline |
 
 | In git (not installed by Lola into the white book) | Path |
 |----------------------------------------------------|------|
 | White book | `automation-whitepaper/` |
-| Governance skills (source) | `gac/module/skills/` |
+| Governance skills (source) | `gac/gac-*/module/skills/` |
 | AI Forge vendor (SDLC + standards) | `skills/vendor/ai-forge/` |
 | CoP baseline | `automation-good-practices/` |
 | Agent bootstrap | `AGENTS.md` |

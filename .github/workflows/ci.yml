@@ -94,7 +94,8 @@ jobs:
           skills_valid=0
           skills_invalid=()
 
-          for skill in $(find gac/module/skills -name "SKILL.md" 2>/dev/null); do
+          shopt -s nullglob
+          for skill in gac/gac-*/module/skills/*/SKILL.md; do
             skills_found=$((skills_found + 1))
             echo "Checking: $skill"
 

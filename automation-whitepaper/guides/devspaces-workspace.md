@@ -353,14 +353,14 @@ Open `automation-home.code-workspace`, then in Chat:
 
 ```text
 @AGENTS.md Operate in Mode 1: The Auditor.
-Follow gac/module/skills/automation-auditor/SKILL.md. Audit deliveries/automation/roles/<rolename>/.
+Follow gac/gac-governance/module/skills/automation-auditor/SKILL.md. Audit deliveries/automation/roles/<rolename>/.
 ```
 
 Prompt library: [ai-prompt-examples.md](ai-prompt-examples.md). Full tool matrix: [skills/TOOL-SETUP.md](../../skills/TOOL-SETUP.md).
 
 ### Without Copilot (generic agent)
 
-If your cluster does not provide Copilot seats, use the same prompts in Chat or any agent with file access — point at `AGENTS.md` and `gac/module/skills/*/SKILL.md` explicitly. See [TOOL-SETUP.md § Generic](../../skills/TOOL-SETUP.md).
+If your cluster does not provide Copilot seats, use the same prompts in Chat or any agent with file access — point at `AGENTS.md` and `gac/gac-*/module/skills/*/SKILL.md` explicitly. See [TOOL-SETUP.md § Generic](../../skills/TOOL-SETUP.md).
 
 ---
 
@@ -432,12 +432,12 @@ Open the **Continue** sidebar (not Copilot Chat). Select **Agent** and **Qwen2.5
 **Recommended first prompt** (fast sanity check):
 
 ```text
-Use the read file tool on gac/module/skills/automation-auditor/SKILL.md (workspace path, not read_skill). Summarize in 5 bullets.
+Use the read file tool on gac/gac-governance/module/skills/automation-auditor/SKILL.md (workspace path, not read_skill). Summarize in 5 bullets.
 ```
 
-**Alternative:** type `@` in the Continue input and pick `gac/module/skills/automation-auditor/SKILL.md` from the file list, then: `Summarize in 5 bullets.`
+**Alternative:** type `@` in the Continue input and pick `gac/gac-governance/module/skills/automation-auditor/SKILL.md` from the file list, then: `Summarize in 5 bullets.`
 
-> **Why not "Read skills/…"?** Continue Agent exposes a **`read_skill`** tool for Continue skill blocks (separate from repo `skills/`). Prompts like *Read gac/module/skills/automation-auditor/SKILL.md* often trigger `read_skill('automation-auditor')` → *Skill not found. Available skills: none*. The file **does exist** in Git; use **read file** or **`@` file context** instead.
+> **Why not "Read skills/…"?** Continue Agent exposes a **`read_skill`** tool for Continue skill blocks (separate from repo `skills/`). Prompts like *Read gac/gac-governance/module/skills/automation-auditor/SKILL.md* often trigger `read_skill('automation-auditor')` → *Skill not found. Available skills: none*. The file **does exist** in Git; use **read file** or **`@` file context** instead.
 
 You should see **Generating…** and text appearing in the Continue panel within a few minutes. High CPU in the status bar (~4 cores) is normal while Ollama runs.
 
@@ -457,16 +457,16 @@ Continue does not auto-load `.github/copilot-instructions.md`. Scope prompts to 
 **Starter (one SKILL.md file):**
 
 ```text
-Use the read file tool on gac/module/skills/automation-auditor/SKILL.md. Summarize in 5 bullets.
+Use the read file tool on gac/gac-governance/module/skills/automation-auditor/SKILL.md. Summarize in 5 bullets.
 ```
 
-Or attach the file with `@gac/module/skills/automation-auditor/SKILL.md` then ask for the summary.
+Or attach the file with `@gac/gac-governance/module/skills/automation-auditor/SKILL.md` then ask for the summary.
 
 **Full audit (after the starter works):**
 
 ```text
 Read AGENTS.md with the read file tool. Operate in Mode 1: The Auditor.
-Read gac/module/skills/automation-auditor/SKILL.md the same way. Audit deliveries/automation/roles/<rolename>/.
+Read gac/gac-governance/module/skills/automation-auditor/SKILL.md the same way. Audit deliveries/automation/roles/<rolename>/.
 ```
 
 Use **Copilot Agent** for large multi-file tasks; Continue + Ollama is best for private/offline work with narrow scope.

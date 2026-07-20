@@ -58,8 +58,8 @@ export AUTOMATION_REPO="$AUTOMATION_HOME/deliveries/automation"
 |-----------|---------|
 | **Name the skill** | `Use skill automation-auditor` |
 | **Name the mode** | `Operate in Mode 1: The Auditor` |
-| **Point to files** | `Read AGENTS.md and gac/module/skills/automation-auditor/SKILL.md` |
-| **IDE attachment** | `@AGENTS.md` `@gac/module/skills/automation-auditor/SKILL.md` `@deliveries/automation/roles/rolename/` |
+| **Point to files** | `Read AGENTS.md and gac/gac-governance/module/skills/automation-auditor/SKILL.md` |
+| **IDE attachment** | `@AGENTS.md` `@gac/gac-governance/module/skills/automation-auditor/SKILL.md` `@deliveries/automation/roles/rolename/` |
 | **Reference example** | `Align with standard-rsyslog-forwarding example role` |
 
 Expected reply prefix: *I am operating in Mode N: The …*
@@ -79,7 +79,7 @@ Use this **same chat thread** for delivery roles in `deliveries/automation/`.
 
 ### Step 1 — Role compliance review (Mode 1)
 
-Attach: `@AGENTS.md` `@gac/module/skills/automation-auditor/SKILL.md` `@gac/module/skills/automation-role-development/SKILL.md` `@deliveries/automation/roles/rolename/`
+Attach: `@AGENTS.md` `@gac/gac-governance/module/skills/automation-auditor/SKILL.md` `@gac/gac-development/module/skills/automation-role-development/SKILL.md` `@deliveries/automation/roles/rolename/`
 
 ```text
 Read AGENTS.md and use skills automation-auditor and automation-role-development.
@@ -110,7 +110,7 @@ Example: substitute `rolename` → `ntp_sync`.
 
 Same thread — use the findings table and refactor plan **already in context**.
 
-Attach: `@AGENTS.md` `@gac/module/skills/automation-builder/SKILL.md` `@gac/module/skills/automation-role-development/SKILL.md` `@deliveries/automation/roles/rolename/`
+Attach: `@AGENTS.md` `@gac/gac-governance/module/skills/automation-builder/SKILL.md` `@gac/gac-development/module/skills/automation-role-development/SKILL.md` `@deliveries/automation/roles/rolename/`
 
 ```text
 Read AGENTS.md. Use skills automation-builder and automation-role-development.
@@ -145,7 +145,7 @@ Use **only** when Steps 1–2 exposed a **recurring gap** or **new pattern** tha
 
 Same thread — use Auditor findings and Builder summary **already in context**.
 
-Attach: `@AGENTS.md` `@gac/module/skills/automation-librarian/SKILL.md`
+Attach: `@AGENTS.md` `@gac/gac-governance/module/skills/automation-librarian/SKILL.md`
 
 ```text
 Read AGENTS.md. Use skill automation-librarian.
@@ -288,7 +288,7 @@ Do not edit files until I approve.
 Mode 3 — Librarian.
 
 I updated automation-whitepaper/quality/pre-commit.md. Sync
-gac/module/skills/automation-pre-commit/SKILL.md (under 500 lines) and check gac/README.md catalog.
+gac/gac-quality/module/skills/automation-pre-commit/SKILL.md (under 500 lines) and check gac/README.md catalog.
 ```
 
 ### GPA submodule review

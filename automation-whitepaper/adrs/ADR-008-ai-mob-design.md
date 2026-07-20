@@ -101,7 +101,7 @@ See [AI Mob Design guide](../guides/ai-mob-design.md).
 
 | Artifact | Path |
 |----------|------|
-| Mob facilitation skill | [gac/module/skills/ai-mob-design/SKILL.md](../../gac/module/skills/ai-mob-design/SKILL.md) |
+| Mob facilitation skill | [gac/gac-design/module/skills/ai-mob-design/SKILL.md](../../gac/gac-design/module/skills/ai-mob-design/SKILL.md) |
 | Practitioner guide | [guides/ai-mob-design.md](../guides/ai-mob-design.md) |
 | Session template | [templates/ai-mob-design-session-template.md](../templates/ai-mob-design-session-template.md) |
 

@@ -36,7 +36,7 @@ GaC may wrap ai-forge skills with enterprise-specific extensions:
 - `org-create-pr` wrapping `/create-pr` with mandatory reviewers or labels
 - Module activation as the team evaluates `ansible-collection-standards`, `ansible-role`, etc.
 
-Wrapping is tracked in this table and implemented in `gac/module/skills/` following the synchronization workflow ([ADR-004](../adrs/ADR-004-librarian-synchronization.md)). Use `gac/scripts/sync-ai-forge-skills.sh` to inspect upstream changes after a submodule bump.
+Wrapping is tracked in this table and implemented in `gac/gac-*/module/skills/` following the synchronization workflow ([ADR-004](../adrs/ADR-004-librarian-synchronization.md)). Use `gac/scripts/sync-ai-forge-skills.sh` to inspect upstream changes after a submodule bump.
 
 ## Related
 

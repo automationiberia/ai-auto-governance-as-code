@@ -10,7 +10,7 @@ This repository is a **governance monorepo**: it holds your organisation’s **h
 |-------|------------|-------------|
 | **White book** | Company rules, lifecycle, architecture, CAB, profiles | Humans (`automation-whitepaper/`) |
 | **CoP baseline** | Red Hat GPA where the white book is silent | Submodule `automation-good-practices/` |
-| **Agent Skills** | Executable encoding of the white book for AI | Humans write; agents consume (`gac/module/skills/`) |
+| **Agent Skills** | Executable encoding of the white book for AI | Humans write; agents consume (`gac/gac-*/module/skills/`) |
 | **Delivery code** | Production roles and playbooks | Engineers (`deliveries/automation/`) |
 
 On conflict: **white book wins** over CoP. Skills must match the white book — never the reverse.
@@ -32,7 +32,7 @@ On conflict: **white book wins** over CoP. Skills must match the white book — 
 ```text
   Human rules (white book)          AI enforcement (skills)
   ─────────────────────────         ─────────────────────────
-  automation-whitepaper/*.md   →    gac/module/skills/*/SKILL.md
+  automation-whitepaper/*.md   →    gac/gac-*/module/skills/*/SKILL.md
          ↑                                    │
          └──────── Librarian sync ────────────┘
 
@@ -82,9 +82,12 @@ Details: [skills/TOOL-SETUP.md](skills/TOOL-SETUP.md) · [Where Lola installs](a
 ai-auto-governance-as-code/
 ├── automation-whitepaper/      # Human-authored governance (source of truth)
 ├── gac/
-│   └── module/
-│       ├── skills/             # Skills = white book rules for AI
-│       └── commands/           # /audit, /build, /librarian, …
+│   ├── gac-governance/module/  # Auditor, Builder, Librarian skills + commands
+│   ├── gac-design/module/      # Mob-design skill + commands
+│   ├── gac-architecture/module/# Architecture, Lifecycle skills
+│   ├── gac-development/module/ # New-automation, Role-dev, Playbook, Puppet skills
+│   ├── gac-quality/module/     # Quality-gates, Pre-commit, Governance skills
+│   └── gac-aap-platform/module/# AAP snapshot, RBAC, Job-status, Controller-ops
 ├── skills/
 │   ├── TOOL-SETUP.md           # Lola install per assistant
 │   └── vendor/                 # AAP skills upstream reference (submodule)

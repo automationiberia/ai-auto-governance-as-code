@@ -1,16 +1,80 @@
 ---
 name: Governance as Code
-description: Governance as Code platform for Ansible automation
+description: >-
+  Governance as Code platform for Ansible automation —
+  version-controlled CoP compliance, AAP architecture patterns,
+  and AI agents (Auditor, Builder, Librarian)
 version: 1.0.0
 
 modules:
   - name: gac
     description: >-
-      Governance as Code platform with version-controlled CoP compliance,
-      AAP architecture patterns, and AI agents (Auditor, Builder, Librarian).
+      Meta-module — installs all GaC governance modules and
+      the AI Forge SDLC dependency in one command.
     version: 1.0.0
     repository: https://github.com/automationiberia/ai-auto-governance-as-code.git
-    path: gac/module
+    path: gac/gac-governance/module
     dependencies:
+      - "@gac/gac-design"
+      - "@gac/gac-architecture"
+      - "@gac/gac-development"
+      - "@gac/gac-quality"
+      - "@gac/gac-aap-platform"
       - "@ansible-content/ansible-collection-sdlc"
     tags: [governance, aap, automation, compliance]
+
+  - name: gac-governance
+    description: >-
+      Core AI governance modes — Auditor, Builder, Librarian.
+      Slash commands: /audit, /build, /librarian.
+    version: 1.0.0
+    repository: https://github.com/automationiberia/ai-auto-governance-as-code.git
+    path: gac/gac-governance/module
+    tags: [governance, modes, auditor, builder, librarian]
+
+  - name: gac-design
+    description: >-
+      AI Mob Design — collaborative human design sessions
+      with AI implementation. Slash command: /mob-design.
+    version: 1.0.0
+    repository: https://github.com/automationiberia/ai-auto-governance-as-code.git
+    path: gac/gac-design/module
+    tags: [governance, design, mob]
+
+  - name: gac-architecture
+    description: >-
+      L/T/F/C classification, collections layout, and
+      six-stage automation lifecycle.
+    version: 1.0.0
+    repository: https://github.com/automationiberia/ai-auto-governance-as-code.git
+    path: gac/gac-architecture/module
+    tags: [governance, architecture, lifecycle, ltfc]
+
+  - name: gac-development
+    description: >-
+      Role, playbook, inventory, and content development
+      patterns following white book standards.
+    version: 1.0.0
+    repository: https://github.com/automationiberia/ai-auto-governance-as-code.git
+    path: gac/gac-development/module
+    tags: [governance, development, roles, playbooks]
+
+  - name: gac-quality
+    description: >-
+      Quality gates, pre-commit hooks, and CAB governance
+      for compliance validation.
+    version: 1.0.0
+    repository: https://github.com/automationiberia/ai-auto-governance-as-code.git
+    path: gac/gac-quality/module
+    tags: [governance, quality, lint, compliance]
+
+  - name: gac-aap-platform
+    description: >-
+      AAP platform administration via MCP — live snapshot,
+      RBAC review, job status, controller operations.
+    version: 1.0.0
+    repository: https://github.com/automationiberia/ai-auto-governance-as-code.git
+    path: gac/gac-aap-platform/module
+    dependencies:
+      - "@gac/gac-governance"
+    tags: [governance, aap, platform, mcp]

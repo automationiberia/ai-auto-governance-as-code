@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Inspection tool — compare vendor/ai-forge skills with gac/module/skills/ enterprise adaptations.
+# Inspection tool — compare vendor/ai-forge skills with gac/gac-*/module/skills/ enterprise adaptations.
 # Run by a human engineer to review upstream changes after a submodule bump.
 # Does not overwrite enterprise adaptations automatically.
 # Usage:
@@ -8,7 +8,7 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 VENDOR="${ROOT}/skills/vendor/ai-forge"
-ENTERPRISE="${ROOT}/gac/module/skills"
+ENTERPRISE_GLOB="${ROOT}/gac/gac-*/module/skills"
 MODE="diff"
 FILTER_MODULE=""
 
@@ -45,7 +45,7 @@ if [[ ! -d "${VENDOR}" ]]; then
 fi
 
 echo "AI Forge upstream : ${VENDOR}"
-echo "Enterprise skills : ${ENTERPRISE}"
+echo "Enterprise skills : ${ROOT}/gac/gac-*/module/skills/"
 echo "Pinned commit     : $(cd "${VENDOR}" && git rev-parse --short HEAD)"
 echo ""
 
@@ -71,10 +71,17 @@ for module_dir in "${VENDOR}"/*/; do
   for vendor_skill in "${module_dir}"/module/skills/*/SKILL.md; do
     [[ -f "${vendor_skill}" ]] || continue
     name="$(basename "$(dirname "${vendor_skill}")")"
-    enterprise_skill="${ENTERPRISE}/${name}/SKILL.md"
+    # Search across all categorized enterprise modules
+    enterprise_skill=""
+    for edir in ${ENTERPRISE_GLOB}; do
+      if [[ -f "${edir}/${name}/SKILL.md" ]]; then
+        enterprise_skill="${edir}/${name}/SKILL.md"
+        break
+      fi
+    done
     found=$((found + 1))
 
-    if [[ ! -f "${enterprise_skill}" ]]; then
+    if [[ -z "${enterprise_skill}" ]]; then
       echo "[UPSTREAM] ${name} — in ai-forge, no enterprise adaptation"
       new_upstream=$((new_upstream + 1))
       continue
@@ -102,4 +109,4 @@ fi
 
 echo "---"
 echo "Summary: ${found} skills found | ${identical} identical | ${overridden} overridden | ${new_upstream} upstream-only"
-echo "Done. Review output and merge relevant vendor changes into gac/module/skills/ following white book rules."
+echo "Done. Review output and merge relevant vendor changes into gac/gac-*/module/skills/ following white book rules."

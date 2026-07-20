@@ -19,7 +19,7 @@ Implementation in this monorepo:
 | Component | Path | Content | Functional role | Source |
 |-----------|------|---------|-----------------|--------|
 | White book | `automation-whitepaper/` | Guide-first topic guides, lifecycle, architecture, examples | Authoritative enterprise standards (human-authored) | Internal |
-| Agent Skills | `gac/module/skills/` | `SKILL.md` per skill (Lola module) | Translation of white book rules for AI agents | Internal (Librarian-synced) |
+| Agent Skills | `gac/gac-*/module/skills/` | `SKILL.md` per skill (Lola module) | Translation of white book rules for AI agents | Internal (Librarian-synced) |
 | Agent bootstrap | `AGENTS.md` | Mode selection, Builder rules, precedence confirmation | AI entry point | Internal |
 | GPA baseline | `automation-good-practices/` | Red Hat CoP reference standards | Compliance baseline | Red Hat CoP (submodule) |
 | Delivery collection | `deliveries/automation/` | Production roles and playbooks (`ai-auto-deliveries`) | Production execution | Internal (submodule) |
@@ -98,9 +98,9 @@ Manual operation is **first-class**. AI modes apply the **same rules**, faster.
 
 | Mode | Skill |
 |------|--------|
-| 1 — Auditor | `gac/module/skills/automation-auditor/SKILL.md` |
-| 2 — Builder | `gac/module/skills/automation-builder/SKILL.md` |
-| 3 — Librarian | `gac/module/skills/automation-librarian/SKILL.md` |
+| 1 — Auditor | `gac/gac-governance/module/skills/automation-auditor/SKILL.md` |
+| 2 — Builder | `gac/gac-governance/module/skills/automation-builder/SKILL.md` |
+| 3 — Librarian | `gac/gac-governance/module/skills/automation-librarian/SKILL.md` |
 
 Supporting task skills (lifecycle, roles, pre-commit, etc.): [gac/README.md](../../gac/README.md).
 
@@ -140,7 +140,7 @@ Teams **may** write an ADR when a decision needs formal traceability. ADRs **sup
 |----------|--------|------|
 | **1 — Foundation** | Red Hat CoP [automation-good-practices](https://github.com/redhat-cop/automation-good-practices) | Default baseline where the white book is **silent** |
 | **2 — Supreme override** | Enterprise white book (`automation-whitepaper/`) | On conflict, **white book wins** |
-| **3 — AI encoding** | `gac/module/skills/*/SKILL.md` + `AGENTS.md` | Operationalizes 1–2 for AI; must match white book |
+| **3 — AI encoding** | `gac/gac-*/module/skills/*/SKILL.md` + `AGENTS.md` | Operationalizes 1–2 for AI; must match white book |
 | **4 — Mechanical** | pre-commit, ansible-lint, CI | Validates **code artifacts** |
 
 Violations of the effective rule set are **non-compliant** and must be remediated before merge — via review policy, agents, and mechanical hooks.

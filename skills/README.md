@@ -7,7 +7,7 @@ This folder is **not** where governance skills live in source control.
 Your organisation’s **human rules** are written in [`automation-whitepaper/`](../automation-whitepaper/). They are **encoded** as Agent Skills under:
 
 ```text
-gac/module/skills/<name>/SKILL.md
+gac/gac-<category>/module/skills/<name>/SKILL.md
 ```
 
 Catalog and Librarian workflow: **[gac/README.md](../gac/README.md)**

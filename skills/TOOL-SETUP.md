@@ -1,6 +1,6 @@
 # Agent Skills — tool-agnostic setup
 
-**Canonical source (all tools):** `gac/module/skills/*/SKILL.md` and [AGENTS.md](../AGENTS.md) in the **`ai-auto-governance-as-code`** repository.
+**Canonical source (all tools):** `gac/gac-*/module/skills/*/SKILL.md` and [AGENTS.md](../AGENTS.md) in the **`ai-auto-governance-as-code`** repository.
 Do not fork skill text into tool-specific copies unless your platform requires it — link or load from here.
 
 **Recommended:** Install skills with **[Lola](#lola-recommended)** — one command per assistant. Manual per-tool setup below is a fallback.
@@ -20,7 +20,7 @@ Prompt copy-paste library (tool-neutral): [ai-prompt-examples.md](../automation-
 | Content | Lola writes to `automation-whitepaper/`? | Where it goes |
 |---------|------------------------------------------|---------------|
 | ai-forge SDLC (`/commit`, …) | **No** | Lola cache → assistant-native format |
-| GaC skills (`gac/module/skills/`) | **No** | e.g. `.cursor/skills/` (gitignored) |
+| GaC skills (`gac/gac-*/module/skills/`) | **No** | e.g. `.cursor/skills/` (gitignored) |
 | White book (`automation-whitepaper/`) | **No** — read only | Stays in your git clone |
 
 Full table: [ai-forge-gac-integration.md § Where Lola installs](../automation-whitepaper/architecture/ai-forge-gac-integration.md#where-lola-installs-explicit).
@@ -64,7 +64,7 @@ Use these sections only if Lola is unavailable for your assistant.
 
 | Tool | Skill format | Setup (fallback) | How to invoke |
 |------|--------------|------------------|---------------|
-| **[Cursor](#cursor)** | `SKILL.md` in `.cursor/skills/` | [Cursor setup](#cursor) | Chat: `Use skill automation-auditor` · `@AGENTS.md` · `@gac/module/skills/.../SKILL.md` |
+| **[Cursor](#cursor)** | `SKILL.md` in `.cursor/skills/` | [Cursor setup](#cursor) | Chat: `Use skill automation-auditor` · `@AGENTS.md` · `@gac/gac-*/module/skills/.../SKILL.md` |
 | **[Claude](#claude)** (Desktop, Code, Projects, API) | Project knowledge / system context | [Claude setup](#claude) | Paste path or attach `AGENTS.md` + skill; name mode in prompt |
 | **[VS Code + Copilot](#github-copilot)** | Instructions / chat | [Copilot setup](#github-copilot) | Reference `AGENTS.md` in instructions; @-file if supported |
 | **[Other / generic](#generic-any-agent)** | Any agent with file + chat access | [Generic setup](#generic-any-agent) | Read `AGENTS.md`; explicit skill name + file paths in prompt |
@@ -106,7 +106,7 @@ See [ai-forge-gac-integration.md](../automation-whitepaper/architecture/ai-forge
 4. Optional: configure AAP MCP per [MCP setup](#mcp-aap-platform-skills).
 5. Optional project rule (Cursor Settings → Rules): *Read AGENTS.md; state Mode 1/2/3 before Ansible output.*
 
-**Invoke:** `Use skill automation-builder` · `Use skill aap-live-snapshot` · `@AGENTS.md` · `@gac/module/skills/automation-auditor/SKILL.md`
+**Invoke:** `Use skill automation-builder` · `Use skill aap-live-snapshot` · `@AGENTS.md` · `@gac/gac-governance/module/skills/automation-auditor/SKILL.md`
 
 **Refresh (manual):** After `git pull` adds or renames skills, re-run `lola install gac -a cursor` or prefer `lola install gac -a cursor`.
 
@@ -132,21 +132,21 @@ Claude has **no standard “skills folder”** shared with Cursor. Without Lola,
 # Project instructions
 
 Before Ansible or automation-whitepaper work, read AGENTS.md and declare
-Auditor / Builder / Librarian mode (human = Architect). Content skills: gac/module/skills/automation-*/SKILL.md.
-Platform skills: gac/module/skills/aap-*/SKILL.md (MCP required).
+Auditor / Builder / Librarian mode (human = Architect). Content skills: gac/gac-*/module/skills/*/SKILL.md.
+Platform skills: gac/gac-aap-platform/module/skills/aap-*/SKILL.md (MCP required).
 Delivery code: deliveries/automation/ ($AUTOMATION_REPO).
 ```
 
 ### Claude Desktop / Projects (upload or connector)
 
 1. Add **`AGENTS.md`** and relevant **`skills/<name>/SKILL.md`** files to project knowledge, **or**
-2. Paste the skill path and ask: *Read gac/module/skills/automation-auditor/SKILL.md and AGENTS.md, then …*
+2. Paste the skill path and ask: *Read gac/gac-governance/module/skills/automation-auditor/SKILL.md and AGENTS.md, then …*
 
 **Invoke (any Claude surface):**
 
 ```text
 Read AGENTS.md in this project. Operate in Mode 1: The Auditor.
-Follow gac/module/skills/automation-auditor/SKILL.md. Audit deliveries/automation/roles/rolename/.
+Follow gac/gac-governance/module/skills/automation-auditor/SKILL.md. Audit deliveries/automation/roles/rolename/.
 ```
 
 Do **not** rely on `.mdc` unless your Claude product documents that format; **`SKILL.md` here is markdown**.
@@ -196,14 +196,14 @@ Do **not** rely on `.mdc` unless your Claude product documents that format; **`S
 
 ## MCP (AAP platform skills)
 
-**When:** You use `gac/module/skills/aap-*` skills to operate or audit live Ansible Automation Platform via MCP.
+**When:** You use `gac/gac-aap-platform/module/skills/aap-*` skills to operate or audit live Ansible Automation Platform via MCP.
 
 Platform skills are **optional** — engineers without MCP follow [aap-platform-administration.md](../automation-whitepaper/operations/aap-platform-administration.md) and the Controller UI manually.
 
 1. Deploy AAP MCP servers in your environment (see upstream [AAP Skills Library](https://github.com/automationiberia/aap-skills-library)).
 2. Copy [config/mcp.json.example](../config/mcp.json.example) to your client config (e.g. `.cursor/mcp.json`). **Never commit secrets.**
 3. Set `AAP_MCP_TOKEN` or equivalent in your environment — not in Git.
-4. Link platform skills: `lola install gac -a <assistant>` (recommended) or `./lola install gac -a cursor` (Cursor manual) or reference `gac/module/skills/aap-*/SKILL.md` directly (Claude/Copilot/generic).
+4. Link platform skills: `lola install gac -a <assistant>` (recommended) or `./lola install gac -a cursor` (Cursor manual) or reference `gac/gac-aap-platform/module/skills/aap-*/SKILL.md` directly (Claude/Copilot/generic).
 
 **Invoke (read-only Phase 1 example):**
 
@@ -219,7 +219,7 @@ More prompts: [ai-prompt-examples.md](../automation-whitepaper/guides/ai-prompt-
 
 ## Adding a new skill (Librarian — all tools)
 
-1. Add `gac/module/skills/automation-<name>/SKILL.md` or `gac/module/skills/aap-<name>/SKILL.md` (see [SKILL_GUIDELINES.md](../gac/SKILL_GUIDELINES.md)).
+1. Add `gac/gac-<category>/module/skills/automation-<name>/SKILL.md` or `gac/gac-aap-platform/module/skills/aap-<name>/SKILL.md` (see [SKILL_GUIDELINES.md](../gac/SKILL_GUIDELINES.md)).
 2. Update white paper + catalog in `gac/README.md`.
 3. **Sync to assistants:**
    - **Lola (recommended):** `lola install gac -a <assistant>` (or `lola sync` if `.lola-req` lists the module)

@@ -9,8 +9,8 @@ Canonical metadata and body structure for **Agent Skills** — the layer that **
 ## File layout
 
 ```text
-gac/module/skills/automation-<name>/SKILL.md   # content governance
-gac/module/skills/aap-<name>/SKILL.md         # platform administration
+gac/gac-<category>/module/skills/automation-<name>/SKILL.md   # content governance
+gac/gac-aap-platform/module/skills/aap-<name>/SKILL.md      # platform administration
 ```
 
 Optional siblings: `reference.md`, `examples.md`, `scripts/` (only when scripts add real value).
@@ -100,13 +100,13 @@ Read-only default; human_gate enforcement; path variables ($AUTOMATION_HOME, $AU
 
 | Skill | Plane | Key metadata |
 |-------|-------|--------------|
-| [automation-auditor](automation-auditor/SKILL.md) | automation | `domain: content-governance`, `execution_modes: [mode-1-auditor]` |
-| [platform/aap-live-snapshot](platform/aap-live-snapshot/SKILL.md) | platform | `platform_areas: [audit]`, `write_capability: false` |
+| [automation-auditor](gac-governance/module/skills/automation-auditor/SKILL.md) | automation | `domain: content-governance`, `execution_modes: [mode-1-auditor]` |
+| [aap-live-snapshot](gac-aap-platform/module/skills/aap-live-snapshot/SKILL.md) | platform | `platform_areas: [audit]`, `write_capability: false` |
 
 ---
 
 ## Related
 
 - [README.md](README.md) — skill catalog
-- [automation-librarian/SKILL.md](automation-librarian/SKILL.md)
+- [automation-librarian/SKILL.md](gac-governance/module/skills/automation-librarian/SKILL.md)
 - [aap-platform-administration.md](../automation-whitepaper/operations/aap-platform-administration.md)

@@ -9,7 +9,7 @@ schema: v1
 rules:
   - >-
     Before technical Ansible work, read AGENTS.md at the workspace root and
-    open gac/module/skills/*/SKILL.md with the read file tool (never
+    open gac/gac-*/module/skills/*/SKILL.md with the read file tool (never
     read_skill). Declare Mode 1 Auditor, Mode 2 Builder, or Mode 3 Librarian
     as in AGENTS.md.
 
@@ -30,7 +30,7 @@ models:
     chatOptions:
       baseAgentSystemMessage: >-
         You are a Senior Lead Engineer for Ansible automation. Use the read file
-        tool for paths like gac/module/skills/*/SKILL.md — do not call
+        tool for paths like gac/gac-*/module/skills/*/SKILL.md — do not call
         read_skill for repo paths.
 
 tabAutocompleteModel:

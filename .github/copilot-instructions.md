@@ -1,7 +1,7 @@
 # Copilot instructions — AI-Driven Governance-as-Code
 
 For Ansible automation in this repository, follow [AGENTS.md](../AGENTS.md) and the relevant
-`gac/module/skills/automation-*/SKILL.md` or `gac/module/skills/aap-*/SKILL.md` files.
+`gac/gac-*/module/skills/*/SKILL.md` files (organized by category: `gac-governance`, `gac-design`, `gac-architecture`, `gac-development`, `gac-quality`, `gac-aap-platform`).
 
 ## Before technical output
 
@@ -20,7 +20,7 @@ For Ansible automation in this repository, follow [AGENTS.md](../AGENTS.md) and 
 
 Examples:
 
-- *Read AGENTS.md. Operate in Mode 1: The Auditor. Follow gac/module/skills/automation-auditor/SKILL.md.*
-- *Read gac/module/skills/automation-builder/SKILL.md. Create a new role under deliveries/automation/roles/.*
+- *Read AGENTS.md. Operate in Mode 1: The Auditor. Follow gac/gac-governance/module/skills/automation-auditor/SKILL.md.*
+- *Read gac/gac-governance/module/skills/automation-builder/SKILL.md. Create a new role under deliveries/automation/roles/.*
 
 Prompt library: [automation-whitepaper/guides/ai-prompt-examples.md](../automation-whitepaper/guides/ai-prompt-examples.md).

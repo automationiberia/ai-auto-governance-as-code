@@ -4,7 +4,7 @@
 
 Based on [Red Hat CoP Automation Good Practices](https://redhat-cop.github.io/automation-good-practices/) where this guide is silent. **On conflict, this white book wins.**
 
-AI agents do not invent policy here. Engineers and architects write these guides; the **Librarian** path translates them into [Agent Skills](../gac/README.md) (`gac/module/skills/`). Same rules apply whether work is **manual** or **AI-assisted** — see [governance-as-code-ai-enforcement.md](governance/governance-as-code-ai-enforcement.md).
+AI agents do not invent policy here. Engineers and architects write these guides; the **Librarian** path translates them into [Agent Skills](../gac/README.md) (`gac/gac-*/module/skills/`). Same rules apply whether work is **manual** or **AI-assisted** — see [governance-as-code-ai-enforcement.md](governance/governance-as-code-ai-enforcement.md).
 
 ---
 
@@ -24,7 +24,7 @@ AI agents do not invent policy here. Engineers and architects write these guides
 ## Governance flow
 
 ```text
-  automation-whitepaper/     gac/module/skills/        AI assistant
+  automation-whitepaper/     gac/gac-*/module/skills/  AI assistant
   (human rules)         →    (encoded skills)     →    (Auditor/Builder/…)
 ```
 
