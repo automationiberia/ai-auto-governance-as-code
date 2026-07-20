@@ -1,6 +1,7 @@
 ---
-# Alias of the repo root .devfile.yaml (same stack). Kept for factory URLs that use
-# ?devfilePath=.devfile/with-ollama.yaml — new workspaces should use the default devfile.
+# Alias of the repo root .devfile.yaml (same stack). Kept for factory URLs
+# that use ?devfilePath=.devfile/with-ollama.yaml — new workspaces should use
+# the default devfile.
 schemaVersion: 2.3.0
 metadata:
   name: automation-home
@@ -90,7 +91,8 @@ commands:
       component: automation-tools
       commandLine: >-
         sh -c 'mkdir -p .devfile &&
-        nohup bash .devfile/setup-workspace.sh </dev/null >>.devfile/setup-workspace.log 2>&1 &
+        nohup bash .devfile/setup-workspace.sh </dev/null
+        >>.devfile/setup-workspace.log 2>&1 &
         exit 0'
       workingDir: ${PROJECT_SOURCE}
 events:
