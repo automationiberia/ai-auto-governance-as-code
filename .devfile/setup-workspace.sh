@@ -136,16 +136,34 @@ raise SystemExit(0 if sys.version_info[:2] >= want else 1)
   if [[ -f "${_venv}/bin/activate" ]]; then
     # shellcheck source=/dev/null
     source "${_venv}/bin/activate"
-    if ! _py_ok "${_venv}/bin/python"; then
+    _venv_py="${_venv}/bin/python"
+    if ! _py_ok "${_venv_py}"; then
       _fail ".venv Python is below ${_min_py} after create"
-    elif pip install --upgrade pip \
-      && pip install -r "${AUTOMATION_HOME}/requirements-dev.txt"; then
-      echo "==> Python venv OK (${_venv}) — $("${_venv}/bin/python" --version 2>&1)"
-      echo "==> pre-commit: $(command -v pre-commit || echo missing)"
-      echo "==> ansible-lint: $(command -v ansible-lint || echo missing)"
-      echo "==> lola: $(command -v lola || echo missing)"
     else
-      _fail "pip install into .venv failed (network or requirements-dev.txt)"
+      # uv venv omits pip by default — never rely on bare `pip`/`pip3` on PATH.
+      _pip_ok=0
+      if command -v uv >/dev/null 2>&1; then
+        if uv pip install --python "${_venv_py}" --upgrade pip \
+          && uv pip install --python "${_venv_py}" -r "${AUTOMATION_HOME}/requirements-dev.txt"; then
+          _pip_ok=1
+        fi
+      else
+        if ! "${_venv_py}" -m pip --version >/dev/null 2>&1; then
+          "${_venv_py}" -m ensurepip --upgrade >/dev/null 2>&1 || true
+        fi
+        if "${_venv_py}" -m pip install --upgrade pip \
+          && "${_venv_py}" -m pip install -r "${AUTOMATION_HOME}/requirements-dev.txt"; then
+          _pip_ok=1
+        fi
+      fi
+      if [[ "${_pip_ok}" -eq 1 ]]; then
+        echo "==> Python venv OK (${_venv}) — $("${_venv_py}" --version 2>&1)"
+        echo "==> pre-commit: $(command -v pre-commit || echo missing)"
+        echo "==> ansible-lint: $(command -v ansible-lint || echo missing)"
+        echo "==> lola: $(command -v lola || echo missing)"
+      else
+        _fail "pip install into .venv failed (network or requirements-dev.txt)"
+      fi
     fi
   else
     _fail "venv activate script missing at ${_venv}/bin/activate"
