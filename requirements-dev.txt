@@ -1,7 +1,7 @@
 # Development tooling — install from <automation-home>
 pre-commit>=3.5.0
 ansible-lint>=24.12.0
-ansible-core>=2.15,<2.19
+ansible-core>=2.16,<2.20
 yamllint>=1.35.0
 black>=24.10.0
 pylint>=3.3.0

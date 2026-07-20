@@ -9,8 +9,8 @@ name: CI
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-  PYTHON_VERSION: "3.12"
-  ANSIBLE_VERSION: ">=2.15,<2.19"
+  PYTHON_VERSION: "3.13"
+  ANSIBLE_VERSION: ">=2.16,<2.20"
 
 jobs:
   pre-commit:
