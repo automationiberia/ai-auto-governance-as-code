@@ -32,8 +32,15 @@ After [repository prep](#repository-prep-every-tool):
 ```bash
 cd /path/to/ai-auto-governance-as-code   # repo root
 pip install lola-ai
+
+# ai-forge marketplace (SDLC — required by gac dependencies)
+lola market add ansible-content \
+  https://raw.githubusercontent.com/ansible-community/ai-forge/main/lola-market.yml
+
+# GaC marketplace (governance skills from this repo)
 lola market add gac \
   https://raw.githubusercontent.com/automationiberia/ai-auto-governance-as-code/main/lola-market.yml
+
 lola install gac -a <assistant>
 ```
 

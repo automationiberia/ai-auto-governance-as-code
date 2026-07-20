@@ -29,8 +29,10 @@ Run `lola install` from **repo root**, not inside `automation-whitepaper/`. Deta
 
 | Audience | Command | Working directory |
 |----------|---------|-------------------|
-| Contributors | `make install` after clone | **Repo root** |
-| AI assistant users | `lola install gac -a <assistant>` | **Repo root** |
+| Contributors | `make install` after clone (adds ansible-content market + `lola sync`) | **Repo root** |
+| AI assistant users | `lola market add ansible-content` + `lola market add gac` + `lola install gac -a <assistant>` | **Repo root** |
+
+`lola-market.yml` **`repository`** points to **this GaC repo** (governance skills). **ai-forge** is only via `dependencies` (`@ansible-content/ansible-collection-sdlc`).
 
 See [README.md](../../README.md) and the [full architecture doc](../architecture/ai-forge-gac-integration.md).
 

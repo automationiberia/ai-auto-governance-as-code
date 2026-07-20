@@ -179,6 +179,11 @@ Full detail: [Where content lives vs how you invoke it](#where-content-lives-vs-
 cd ai-auto-governance-as-code    # repo root — required
 pip install lola-ai
 
+# ai-forge marketplace (SDLC dependency)
+lola market add ansible-content \
+  https://raw.githubusercontent.com/ansible-community/ai-forge/main/lola-market.yml
+
+# GaC marketplace (this repo — repository in lola-market.yml, not ai-forge)
 lola market add gac \
   https://raw.githubusercontent.com/automationiberia/ai-auto-governance-as-code/main/lola-market.yml
 
@@ -187,9 +192,9 @@ lola install gac -a claude-code   # or: -a cursor
 
 Installing `gac`:
 
-1. Registers this repository as a Lola module (`path: .` in `lola-market.yml`).
-2. Pulls **ai-forge SDLC** as a dependency (not into `automation-whitepaper/`).
-3. Wires **GaC skills** from `skills/` into your assistant — still **not** into `automation-whitepaper/`.
+1. Registers **this repository** as the `gac` module (`repository` in `lola-market.yml` points here — not ai-forge).
+2. Pulls **ai-forge SDLC** via `dependencies: @ansible-content/ansible-collection-sdlc`.
+3. Wires **GaC skills** from `skills/` into your assistant — not into `automation-whitepaper/`.
 
 ### For GaC contributors
 

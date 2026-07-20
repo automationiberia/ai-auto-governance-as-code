@@ -84,8 +84,15 @@ Declare mode before any YAML.
 ```bash
 cd ai-auto-governance-as-code    # repo root — required
 pip install lola-ai
+
+# 1. ai-forge marketplace (SDLC dependency for gac)
+lola market add ansible-content \
+  https://raw.githubusercontent.com/ansible-community/ai-forge/main/lola-market.yml
+
+# 2. GaC marketplace (governance skills — this repo)
 lola market add gac \
   https://raw.githubusercontent.com/automationiberia/ai-auto-governance-as-code/main/lola-market.yml
+
 lola install gac -a <assistant>
 ```
 
