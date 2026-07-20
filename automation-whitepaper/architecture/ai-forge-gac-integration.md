@@ -174,29 +174,84 @@ make install
 
 ## Usage examples
 
-### Using ai-forge skills (via GaC / Lola)
+GaC and ai-forge use **different invocation styles**. ai-forge exposes **slash commands** in the assistant; GaC exposes **Agent Skills** and **white book guides** that the human or AI reads from the cloned repo.
+
+| Layer | How you invoke it | What it does |
+|-------|-------------------|----------------|
+| **ai-forge (SDLC)** | Slash commands in chat | Commit, PR, release, changelog |
+| **GaC (governance)** | Agent Skills + prompts | Audit, build, document Ansible to org standards |
+| **GaC (human manual)** | Read guides in `automation-whitepaper/guides/` | Same standards without AI |
+
+### ai-forge skills (via Lola)
+
+After `lola install gac -a <assistant>`, type these **in the assistant chat**:
 
 ```text
-/commit                  # Conventional commit (ai-forge)
-/create-pr               # Pull request with validation (ai-forge)
-/changelog-fragment      # Changelog fragment (ai-forge)
+/commit                  # Conventional commit with validation (ai-forge)
+/create-pr               # Open a PR with checks (ai-forge)
+/changelog-fragment      # Add a changelog fragment (ai-forge)
 /release                 # Release workflow (ai-forge)
 ```
 
-These skills come from ai-forge, consumed by GaC via Lola.
+These skills are **not** in this repo — they come from `@ansible-content/ansible-collection-sdlc` (ai-forge), installed by Lola as a dependency of the `gac` module.
 
-### Using GaC governance
+### GaC governance (skills + white book)
+
+GaC does **not** use slash commands for governance. Use **Agent Skills** (installed by Lola from `skills/`) and point the AI at files under `automation-whitepaper/` when needed.
+
+**1 — Audit existing Ansible (Mode 1 — Auditor)**
 
 ```text
-# Review against version-controlled CoP
-# (GaC Auditor mode + automation-good-practices submodule + white book)
-
-# Reference AAP architecture
-automation-whitepaper/architecture/aap-puppet-coexistence-evolution.md
-
-# Follow operational guides
-automation-whitepaper/guides/create-new-from-scratch.md
+Read AGENTS.md. I am operating in Mode 1: The Auditor.
+Use skill automation-auditor.
+Audit deliveries/automation/roles/<rolename>/ against the white book and
+the pinned CoP in automation-good-practices/.
 ```
+
+**2 — Build new automation (Mode 2 — Builder)**
+
+```text
+Read AGENTS.md. I am operating in Mode 2: The Builder.
+Use skill automation-builder and follow automation-whitepaper/guides/create-new-from-scratch.md.
+Create a new role for <capability> with L/T/F/C documented before YAML.
+```
+
+**3 — Read architecture or migration context (no mode — reference)**
+
+```text
+Read automation-whitepaper/architecture/aap-puppet-coexistence-evolution.md.
+Summarize Phase 1 coexistence constraints for our environment.
+```
+
+**4 — Human-only path (no AI)**
+
+Open the guide directly — same content the Builder skill references:
+
+| Goal | Guide |
+|------|-------|
+| First time in the repo | [getting-started.md](../guides/getting-started.md) |
+| Review or fix existing code | [evaluate-and-update-existing.md](../guides/evaluate-and-update-existing.md) |
+| Build something new | [create-new-from-scratch.md](../guides/create-new-from-scratch.md) |
+
+More copy-paste prompts: [ai-prompt-examples.md](../guides/ai-prompt-examples.md).
+
+### How the pieces connect
+
+```text
+You type a prompt or slash command
+        │
+        ├─ /commit, /create-pr …     → ai-forge (Lola → ai-forge SDLC module)
+        │
+        └─ "Use skill automation-builder" …
+                    │
+                    ├─ skills/automation-builder/SKILL.md   (installed by Lola)
+                    ├─ AGENTS.md                            (modes, bootstrap rules)
+                    ├─ automation-whitepaper/guides/…       (step-by-step standards)
+                    ├─ automation-good-practices/           (pinned CoP submodule)
+                    └─ deliveries/automation/                 ($AUTOMATION_REPO code)
+```
+
+**Rule of thumb:** slash commands = **ship** the change (SDLC). Skills + white book = **design and validate** the change (governance).
 
 ---
 
