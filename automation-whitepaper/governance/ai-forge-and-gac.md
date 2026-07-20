@@ -6,19 +6,26 @@ Full architecture: **[GaC Architecture: ai-forge Integration](../architecture/ai
 
 ## At a glance
 
-| From ai-forge (Lola) | From GaC (local, in git) |
-|----------------------|--------------------------|
-| `/commit`, `/create-pr`, `/release`, `/changelog-fragment` | `automation-good-practices/` submodule (pinned CoP) |
-| Optional: `/ansible-zen` | `automation-whitepaper/`, `AGENTS.md`, `skills/` |
+| Source | Type | Role |
+|--------|------|------|
+| `skills/vendor/ai-forge/` | Git submodule (pinned) | SDLC slash commands (`/commit`, `/create-pr`, …) — Lola marketplace served locally |
+| `gac/gac-*/module/` | Owned | Governance skills, white book encoding |
+| `automation-good-practices/` | Git submodule (pinned) | CoP baseline |
 
-GaC consumes ai-forge for **SDLC only**. CoP compliance stays **version-controlled** in the submodule — not via ai-forge's dynamic CoP fetch.
+| In git (not installed by Lola into the white book) | Path |
+|----------------------------------------------------|------|
+| White book | `automation-whitepaper/` |
+| Governance skills (source) | `gac/gac-*/module/skills/` |
+| AI Forge vendor (SDLC + standards) | `skills/vendor/ai-forge/` |
+| CoP baseline | `automation-good-practices/` |
+| Agent bootstrap | `AGENTS.md` |
 
-### Where Lola installs (not `automation-whitepaper/`)
+### Where Lola installs
 
 | Content | Installed into `automation-whitepaper/`? | Actual location |
 |---------|------------------------------------------|-----------------|
-| ai-forge SDLC slash commands | **No** | Assistant + Lola cache |
-| GaC skills (`skills/`) | **No** | Assistant (e.g. `.cursor/skills/`) |
+| SDLC slash commands | **No** | Assistant + Lola cache (from local submodule) |
+| Governance skills | **No** | Assistant (e.g. `.cursor/skills/`) |
 | White book guides, ADRs | **No** — read from git clone | `automation-whitepaper/` unchanged |
 
 Run `lola install` from **repo root**, not inside `automation-whitepaper/`. Details: [installation § Where Lola installs](../architecture/ai-forge-gac-integration.md#where-lola-installs-explicit).
@@ -29,10 +36,8 @@ Run `lola install` from **repo root**, not inside `automation-whitepaper/`. Deta
 
 | Audience | Command | Working directory |
 |----------|---------|-------------------|
-| Contributors | `make install` after clone (adds ansible-content market + `lola sync`) | **Repo root** |
-| AI assistant users | `lola market add ansible-content` + `lola market add gac` + `lola install gac -a <assistant>` | **Repo root** |
-
-`lola-market.yml` **`repository`** points to **this GaC repo** (governance skills). **ai-forge** is only via `dependencies` (`@ansible-content/ansible-collection-sdlc`).
+| Contributors | `make install` after clone (submodules + Lola from local ai-forge) | **Repo root** |
+| AI assistant users | `git submodule update --init --recursive` + `lola market add ansible-content skills/vendor/ai-forge/lola-market.yml` + `lola market add gac` + `lola install gac -a <assistant>` | **Repo root** |
 
 See [README.md](../../README.md) and the [full architecture doc](../architecture/ai-forge-gac-integration.md).
 
@@ -40,6 +45,8 @@ See [README.md](../../README.md) and the [full architecture doc](../architecture
 
 ## Related
 
+- [ai-forge-overrides.md](ai-forge-overrides.md)
+- [ADR-009](../adrs/ADR-009-ai-forge-submodule-governance.md)
 - [philosophy.md](philosophy.md)
 - [cop-overrides.md](cop-overrides.md)
 - [ADR-003](../adrs/ADR-003-enforcement-precedence.md)

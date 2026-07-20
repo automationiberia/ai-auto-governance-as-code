@@ -202,7 +202,7 @@ Expanded checklists: [quality/](quality/).
 | Pre-commit setup | [quality/pre-commit.md](quality/pre-commit.md) |
 | AI-Driven Governance-as-Code | [governance/governance-as-code-ai-enforcement.md](governance/governance-as-code-ai-enforcement.md), [../AGENTS.md](../AGENTS.md) |
 | AI prompt examples | [guides/ai-prompt-examples.md](guides/ai-prompt-examples.md) |
-| Agent skills setup | [../skills/TOOL-SETUP.md](../skills/TOOL-SETUP.md) · [../skills/README.md](../skills/README.md) |
+| Agent skills setup | [../skills/TOOL-SETUP.md](../skills/TOOL-SETUP.md) · [../gac/README.md](../gac/README.md) |
 | Who to involve and RACI | [governance/](governance/) |
 | Phase-by-phase lifecycle | [lifecycle/](lifecycle/) |
 | Monorepo layout (governance + delivery) | [architecture/monorepo-layout.md](architecture/monorepo-layout.md) |

@@ -46,7 +46,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Public variable naming: role/function prefix required (e.g. `nginx_max_connections`)
 - Runtime execution rule: agents declare mode and COP vs white book precedence evaluation
 - Reorganized `README.md` with visual hierarchy, quick start section, and repository structure overview
-- Shortened and enhanced `skills/README.md` with clearer mode distinctions and consolidated task skills
+- Shortened and enhanced `gac/README.md` with clearer mode distinctions and consolidated task skills
 - Improved `automation-whitepaper/README.md` with quick navigation table and grouped sections
 - Streamlined `automation-whitepaper/examples/README.md` with concise validation section
 - Overall README content reduced by 27 lines while improving clarity and navigation

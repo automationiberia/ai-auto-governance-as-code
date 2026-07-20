@@ -26,7 +26,9 @@ Production implementation code lives in a **separate delivery collection** (subm
 | Path | Content | Functional role | Source |
 |------|---------|-----------------|--------|
 | **`automation-whitepaper/`** | Guide-first white book: lifecycle, architecture, guides, optional `adrs/` | Authoritative enterprise standards (human-authored) | Internal |
-| **`skills/`** | Agent Skills (`SKILL.md`; tool mirrors optional) | AI enforcement layer (Librarian-synced) | Internal |
+| **`gac/gac-*/module/skills/`** | Lola module skills (`SKILL.md` per skill) | AI enforcement layer (Librarian-synced) | Internal |
+| **`gac/gac-*/module/commands/`** | Lola slash commands (`/audit`, `/build`, …) | Mode entry points | Internal |
+| **`skills/`** | `TOOL-SETUP.md`, `vendor/` submodule only | Install docs + AAPSL upstream reference | Internal |
 | **`AGENTS.md`** | Mode selection, Builder bootstrap, precedence confirmation | AI entry point | Internal |
 | **`automation-good-practices/`** | Red Hat CoP GPA reference (submodule pin) | Compliance baseline | Red Hat CoP (submodule) |
 | **`.lola-req`**, **`lola-market.yml`** | Lola manifests | SDLC via ai-forge; GaC installable as module | Internal + [ai-forge](https://github.com/ansible-community/ai-forge) |
@@ -61,7 +63,7 @@ White book folder map: [../governance/whitebook-folder-map.md](../governance/whi
 ┌──────────────────────────────────────────────────────────────┐
 │  Governance monorepo (ai-auto-governance-as-code)          │
 │  ┌────────────────────┐    ┌─────────────────────────────┐ │
-│  │ automation-whitepaper │──│ skills/ + AGENTS.md         │ │
+│  │ automation-whitepaper │──│ gac/gac-*/module/ + AGENTS.md │ │
 │  │ (Guide-first)        │    │ (AI operationalization)   │ │
 │  └────────────────────┘    └─────────────────────────────┘ │
 └──────────────────────────────┬───────────────────────────────┘

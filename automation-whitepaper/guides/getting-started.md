@@ -85,11 +85,14 @@ Declare mode before any YAML.
 cd ai-auto-governance-as-code    # repo root — required
 pip install lola-ai
 
-# 1. ai-forge marketplace (SDLC dependency for gac)
-lola market add ansible-content \
-  https://raw.githubusercontent.com/ansible-community/ai-forge/main/lola-market.yml
+# 1. Ensure submodules are initialized (includes ai-forge)
+git submodule update --init --recursive
 
-# 2. GaC marketplace (governance skills — this repo)
+# 2. ansible-content marketplace (from local ai-forge submodule)
+lola market add ansible-content \
+  skills/vendor/ai-forge/lola-market.yml
+
+# 3. gac marketplace (governance module)
 lola market add gac \
   https://raw.githubusercontent.com/automationiberia/ai-auto-governance-as-code/main/lola-market.yml
 
@@ -98,8 +101,8 @@ lola install gac -a <assistant>
 
 | What gets installed | Goes into `automation-whitepaper/`? | How you use it |
 |---------------------|-------------------------------------|----------------|
-| ai-forge SDLC | **No** | `/commit`, `/create-pr` in chat |
-| GaC skills (`skills/`) | **No** | `Use skill automation-builder` in chat |
+| SDLC (`ansible-collection-sdlc`) | **No** | `/commit`, `/create-pr` in chat |
+| Governance skills (`gac/gac-*/module/skills/`) | **No** | `Use skill automation-builder` in chat |
 | White book guides | **No** (read from clone) | `@automation-whitepaper/guides/…` or prompts |
 
 | Assistant | Command |
@@ -175,7 +178,7 @@ Full definitions: [glossary.md](glossary.md).
 | Pre-commit help | [PRE-COMMIT-GUIDE.md](PRE-COMMIT-GUIDE.md) |
 | Git workflow for delivery code | [git-automation-repository.md](git-automation-repository.md) |
 | Dev Spaces (browser IDE) | [devspaces-workspace.md](devspaces-workspace.md) |
-| Full skill catalog | [skills/README.md](../../skills/README.md) |
+| Full skill catalog | [gac/README.md](../../gac/README.md) |
 
 ---
 

@@ -8,3 +8,7 @@
 [submodule "skills/vendor/aap-skills-library"]
 	path = skills/vendor/aap-skills-library
 	url = https://github.com/automationiberia/aap-skills-library.git
+[submodule "skills/vendor/ai-forge"]
+	path = skills/vendor/ai-forge
+	url = https://github.com/ansible-community/ai-forge.git
+	branch = main

@@ -15,7 +15,7 @@ We adopt a **Guide-first white book + Agent Skills** model where:
 - Enterprise standards are **human-authored** in `automation-whitepaper/` (topic guides)
 - **Red Hat CoP** `automation-good-practices/` is the baseline where the white book is silent
 - On conflict, the **white book wins**
-- `skills/*/SKILL.md` operationalize the effective rule set for AI agents
+- `gac/gac-*/module/skills/*/SKILL.md` operationalize the effective rule set for AI agents
 - `AGENTS.md` provides mode selection and Builder bootstrap rules
 - **Mode 3 — Librarian** keeps the white book and skills in sync (propose diff → human approval → merge)
 - There is **no automated compile pipeline** to `.mdc` or other formats

@@ -79,39 +79,22 @@ The **authoritative source** for Ansible automation standards.
 3. Update related skills (see below)
 4. Add examples if appropriate
 
-### 2. Agent Skills (`skills/`)
+### 2. Agent Skills (`gac/gac-*/module/skills/`)
 
-AI-consumable encoding of white paper standards.
+AI-consumable **translation** of white paper standards into `SKILL.md` files. Skills encode human rules; they do not replace the white book.
 
 **When to contribute:**
 - White paper changes require skill updates
 - New task skills needed
 - Operating mode refinements
-- Tool integration improvements
 
 **Process:**
-1. Read [skills/README.md](skills/README.md) and [AGENTS.md](AGENTS.md)
-2. Update or create `SKILL.md` files (canonical format)
-3. Keep skills under ~500 lines for agent digestibility
-4. Maintain alignment with white paper source
-5. Update skill catalog in `skills/README.md`
-
-**Skill structure:**
-```markdown
-# Skill Name
-
-Brief description of skill purpose and when to use it.
-
-## Context
-- White paper reference: [section](../automation-whitepaper/...)
-- Operating mode: [1-Auditor / 2-Builder / 3-Librarian]
-
-## Instructions
-Clear, actionable steps for AI agents.
-
-## Examples
-Concrete code samples or command patterns.
-```
+1. Update **white paper** first ([ADR-004](automation-whitepaper/adrs/ADR-004-librarian-synchronization.md))
+2. Read [gac/README.md](gac/README.md), [gac/SKILL_GUIDELINES.md](gac/SKILL_GUIDELINES.md), and [AGENTS.md](AGENTS.md)
+3. Create or update `gac/gac-<category>/module/skills/<name>/SKILL.md`
+4. Keep skills under ~500 lines
+5. Update [gac/README.md](gac/README.md) catalog
+6. `lola install gac -a <assistant>` to refresh local assistant
 
 ### 3. Reference Examples (`automation-whitepaper/examples/`)
 
@@ -138,7 +121,7 @@ Runnable implementations demonstrating patterns.
 - Developer experience tools
 
 **Not accepted:**
-- Changes to submodule URLs in `.gitmodules`
+- Changes to submodule URLs in `.gitmodules` (`automation-good-practices`, `deliveries/automation`, `aap-skills-library`, `ai-forge`)
 - Hardcoded absolute paths (use `$AUTOMATION_HOME`)
 
 ## Development Workflow
@@ -329,7 +312,7 @@ Skills should declare which mode they support and provide mode-specific instruct
 ## Additional Resources
 
 - [AGENTS.md](AGENTS.md) - AI agent operating instructions
-- [skills/README.md](skills/README.md) - Skill catalog and setup
+- [gac/README.md](gac/README.md) - Skill catalog and setup
 - [automation-whitepaper/guides/ai-prompt-examples.md](automation-whitepaper/guides/ai-prompt-examples.md) - Prompt examples
 - [Red Hat CoP Automation Good Practices](https://github.com/redhat-cop/automation-good-practices) - Pinned CoP baseline (`automation-good-practices/` submodule)
 - [Ansible Community AI Forge](https://github.com/ansible-community/ai-forge) - SDLC skills consumed via Lola

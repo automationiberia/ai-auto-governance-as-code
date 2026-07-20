@@ -123,6 +123,6 @@ body:
             (see skills/TOOL-SETUP.md)
           required: false
         - label: >-
-            I will update skills/README.md catalog
+            I will update gac/README.md catalog
             if this is a new skill
           required: false

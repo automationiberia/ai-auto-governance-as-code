@@ -58,8 +58,8 @@ export AUTOMATION_REPO="$AUTOMATION_HOME/deliveries/automation"
 |-----------|---------|
 | **Name the skill** | `Use skill automation-auditor` |
 | **Name the mode** | `Operate in Mode 1: The Auditor` |
-| **Point to files** | `Read AGENTS.md and skills/automation-auditor/SKILL.md` |
-| **IDE attachment** | `@AGENTS.md` `@skills/automation-auditor/SKILL.md` `@deliveries/automation/roles/rolename/` |
+| **Point to files** | `Read AGENTS.md and gac/gac-governance/module/skills/automation-auditor/SKILL.md` |
+| **IDE attachment** | `@AGENTS.md` `@gac/gac-governance/module/skills/automation-auditor/SKILL.md` `@deliveries/automation/roles/rolename/` |
 | **Reference example** | `Align with standard-rsyslog-forwarding example role` |
 
 Expected reply prefix: *I am operating in Mode N: The …*
@@ -79,7 +79,7 @@ Use this **same chat thread** for delivery roles in `deliveries/automation/`.
 
 ### Step 1 — Role compliance review (Mode 1)
 
-Attach: `@AGENTS.md` `@skills/automation-auditor/SKILL.md` `@skills/automation-role-development/SKILL.md` `@deliveries/automation/roles/rolename/`
+Attach: `@AGENTS.md` `@gac/gac-governance/module/skills/automation-auditor/SKILL.md` `@gac/gac-development/module/skills/automation-role-development/SKILL.md` `@deliveries/automation/roles/rolename/`
 
 ```text
 Read AGENTS.md and use skills automation-auditor and automation-role-development.
@@ -110,7 +110,7 @@ Example: substitute `rolename` → `ntp_sync`.
 
 Same thread — use the findings table and refactor plan **already in context**.
 
-Attach: `@AGENTS.md` `@skills/automation-builder/SKILL.md` `@skills/automation-role-development/SKILL.md` `@deliveries/automation/roles/rolename/`
+Attach: `@AGENTS.md` `@gac/gac-governance/module/skills/automation-builder/SKILL.md` `@gac/gac-development/module/skills/automation-role-development/SKILL.md` `@deliveries/automation/roles/rolename/`
 
 ```text
 Read AGENTS.md. Use skills automation-builder and automation-role-development.
@@ -145,7 +145,7 @@ Use **only** when Steps 1–2 exposed a **recurring gap** or **new pattern** tha
 
 Same thread — use Auditor findings and Builder summary **already in context**.
 
-Attach: `@AGENTS.md` `@skills/automation-librarian/SKILL.md`
+Attach: `@AGENTS.md` `@gac/gac-governance/module/skills/automation-librarian/SKILL.md`
 
 ```text
 Read AGENTS.md. Use skill automation-librarian.
@@ -161,7 +161,7 @@ Propose a governance update only — do not edit delivery role files.
 
 Deliver:
 1. Rationale (why this belongs in standards, not only in one role)
-2. Diff plan: white paper → matching SKILL.md → AGENTS.md (if needed) → skills/README.md
+2. Diff plan: white paper → matching SKILL.md → AGENTS.md (if needed) → gac/README.md
 3. Skill sync table (section → file → under 500 lines)
 4. New rows for automation-auditor or automation-role-development checklists (if any)
 5. Breaking changes for existing repos (if any)
@@ -278,7 +278,7 @@ For **white book** and **skills** maintenance outside the [primary workflow](#3-
 Use skill automation-librarian. Mode 3 — The Librarian.
 
 We now require Molecule on Standard profile. Propose a diff plan:
-white paper → skills → AGENTS.md (if needed) → skills/README.md.
+white paper → skills → AGENTS.md (if needed) → gac/README.md.
 Do not edit files until I approve.
 ```
 
@@ -288,7 +288,7 @@ Do not edit files until I approve.
 Mode 3 — Librarian.
 
 I updated automation-whitepaper/quality/pre-commit.md. Sync
-skills/automation-pre-commit/SKILL.md (under 500 lines) and check skills/README.md catalog.
+gac/gac-quality/module/skills/automation-pre-commit/SKILL.md (under 500 lines) and check gac/README.md catalog.
 ```
 
 ### GPA submodule review
@@ -400,7 +400,7 @@ Step 3 (Auditor): automation-quality-gates checklist before PR.
 
 | Tool | Tip |
 |------|-----|
-| **Cursor** | `automation-home.code-workspace`; `link-cursor-skills.sh` after new skills |
+| **Cursor** | `automation-home.code-workspace`; `lola install gac -a cursor` after new skills |
 | **Claude** | `AGENTS.md` in project knowledge; no symlink script |
 | **Copilot** | `.github/copilot-instructions.md` → `AGENTS.md` |
 | **Generic** | File paths in prompt; same-thread context for Steps 2–4 |
@@ -449,6 +449,6 @@ Step 2 (Platform Audit): aap-live-snapshot — list job templates referencing pl
 
 - [AGENTS.md](../../AGENTS.md)
 - [skills/TOOL-SETUP.md](../../skills/TOOL-SETUP.md)
-- [skills/README.md](../../skills/README.md)
+- [gac/README.md](../../gac/README.md)
 - [governance-as-code-ai-enforcement.md](../governance/governance-as-code-ai-enforcement.md)
 - [create-new-from-scratch.md](create-new-from-scratch.md)

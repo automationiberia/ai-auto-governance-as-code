@@ -49,12 +49,12 @@ setup: install install-hooks ## Complete setup (Lola + submodules + pre-commit h
 install: ## Install Lola SDLC modules and initialize Git submodules
 	@echo "$(COLOR_BLUE)Installing Lola and syncing ai-forge SDLC modules...$(COLOR_RESET)"
 	@command -v lola >/dev/null 2>&1 || $(PIP) install lola-ai
-	@lola market add ansible-content \
-		https://raw.githubusercontent.com/ansible-community/ai-forge/main/lola-market.yml \
-		2>/dev/null || true
-	@lola sync
 	@git submodule sync --recursive
 	@git submodule update --init --recursive
+	@lola market add ansible-content \
+		$(REPO_ROOT)/skills/vendor/ai-forge/lola-market.yml \
+		2>/dev/null || true
+	@lola sync
 	@echo "$(COLOR_GREEN)✓ Install complete$(COLOR_RESET)"
 
 init-submodules: ## Initialize Git submodules (automation-good-practices, deliveries/automation)
