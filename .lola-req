@@ -1,8 +1,3 @@
-# GaC Lola requirements — declarative AI context for this repo
-# Install: lola sync  (after both marketplaces are registered)
-
-# Governance skills (this repo)
+# Declarative Lola modules — install with: lola sync
 @gac/gac
-
-# SDLC workflows from ai-forge
 @ansible-content/ansible-collection-sdlc

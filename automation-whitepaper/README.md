@@ -59,7 +59,7 @@ Folder map: [whitebook-folder-map.md](governance/whitebook-folder-map.md).
 
 - **[AI-Driven Governance](governance/governance-as-code-ai-enforcement.md)** — Human as Architect; manual path + AI modes
 - **[AI Mob Design](guides/ai-mob-design.md)** — Group designs, AI implements ([ADR-008](adrs/ADR-008-ai-mob-design.md))
-- **[GaC + ai-forge](architecture/ai-forge-gac-integration.md)** — SDLC from community; governance from this repo
+- **[GaC + ai-forge](architecture/ai-forge-gac-integration.md)** — SDLC and governance modules via Lola
 - **[Strategic Proposal](governance/strategic-proposal-aap-governance-evolution.md)** — AAP, Puppet, GenAI, Dev Spaces
 - [Organizational model](governance/organizational-model-and-stakeholders.md) · [Roles & responsibilities](governance/roles-and-responsibilities.md)
 

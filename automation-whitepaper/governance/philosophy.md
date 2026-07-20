@@ -16,7 +16,7 @@ Organization-specific principles live in the **automation-whitepaper** and [cop-
 
 ## CoP compliance
 
-**Mechanical CoP compliance** uses the pinned **`automation-good-practices/`** submodule — not ai-forge's dynamic CoP fetch. This supports audit trails and version control required for governance platforms.
+**Mechanical CoP compliance** uses the pinned **`automation-good-practices/`** submodule for audit trails and version control required for governance platforms.
 
 ## Related
 

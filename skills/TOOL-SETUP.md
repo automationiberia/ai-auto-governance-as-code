@@ -33,11 +33,11 @@ After [repository prep](#repository-prep-every-tool):
 cd /path/to/ai-auto-governance-as-code   # repo root
 pip install lola-ai
 
-# ai-forge marketplace (SDLC — required by gac dependencies)
+# ai-forge marketplace (SDLC)
 lola market add ansible-content \
   https://raw.githubusercontent.com/ansible-community/ai-forge/main/lola-market.yml
 
-# GaC marketplace (governance skills from this repo)
+# Governance as Code marketplace
 lola market add gac \
   https://raw.githubusercontent.com/automationiberia/ai-auto-governance-as-code/main/lola-market.yml
 
@@ -82,7 +82,7 @@ export AUTOMATION_REPO="$AUTOMATION_HOME/deliveries/automation"
 ```
 
 **SDLC from ai-forge (via Lola):** `/commit`, `/create-pr`, `/release`, `/changelog-fragment`.
-**CoP compliance:** `automation-good-practices/` submodule + GaC Auditor skills — not ai-forge `/ansible-cop-review`.
+**CoP compliance:** `automation-good-practices/` submodule + GaC Auditor skills.
 See [ai-forge-gac-integration.md](../automation-whitepaper/architecture/ai-forge-gac-integration.md).
 
 ---

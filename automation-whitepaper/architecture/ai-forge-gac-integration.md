@@ -155,9 +155,9 @@ Lola **does not copy skills into `automation-whitepaper/`**. The white book stay
 | Content | Source in git | Written to `automation-whitepaper/`? | Where Lola / the assistant puts it |
 |---------|---------------|--------------------------------------|-------------------------------------|
 | White book (guides, ADRs, architecture) | `automation-whitepaper/` | **No** — already in git; read via `@` or prompts | Stays in your clone; not modified by Lola |
-| GaC Agent Skills | `skills/` at repo root | **No** | Assistant skill dir (e.g. `.cursor/skills/` — gitignored) |
+| GaC Agent Skills | `gac/module/skills/` | **No** | Assistant skill dir (e.g. `.cursor/skills/` — gitignored) |
 | `AGENTS.md` bootstrap rules | repo root | **No** | Referenced by skills; loaded by assistant |
-| ai-forge SDLC (`/commit`, `/create-pr`, …) | **Not in this repo** — `@ansible-content/ansible-collection-sdlc` | **No** | Lola cache → translated into assistant format |
+| ai-forge SDLC (`/commit`, `/create-pr`, …) | `@ansible-content/ansible-collection-sdlc` (Lola dependency) | **No** | Lola cache → translated into assistant format |
 | CoP baseline | `automation-good-practices/` submodule | **No** | Submodule path in your clone (`make install` / `git submodule`) |
 | Delivery Ansible code | `deliveries/automation/` submodule | **No** | Submodule path (`$AUTOMATION_REPO`) |
 
@@ -179,11 +179,11 @@ Full detail: [Where content lives vs how you invoke it](#where-content-lives-vs-
 cd ai-auto-governance-as-code    # repo root — required
 pip install lola-ai
 
-# ai-forge marketplace (SDLC dependency)
+# ansible-content marketplace (SDLC)
 lola market add ansible-content \
   https://raw.githubusercontent.com/ansible-community/ai-forge/main/lola-market.yml
 
-# GaC marketplace (this repo — repository in lola-market.yml, not ai-forge)
+# gac marketplace (governance module)
 lola market add gac \
   https://raw.githubusercontent.com/automationiberia/ai-auto-governance-as-code/main/lola-market.yml
 
@@ -192,9 +192,9 @@ lola install gac -a claude-code   # or: -a cursor
 
 Installing `gac`:
 
-1. Registers **this repository** as the `gac` module (`repository` in `lola-market.yml` points here — not ai-forge).
-2. Pulls **ai-forge SDLC** via `dependencies: @ansible-content/ansible-collection-sdlc`.
-3. Wires **GaC skills** from `skills/` into your assistant — not into `automation-whitepaper/`.
+1. Registers the `gac` module from `lola-market.yml` (`repository` + `path: gac/module`).
+2. Resolves the `ansible-collection-sdlc` dependency for SDLC slash commands.
+3. Installs governance skills into the assistant's native paths (e.g. `.cursor/skills/`).
 
 ### For GaC contributors
 
@@ -234,11 +234,11 @@ After `lola install gac -a <assistant>`, type these **in the assistant chat**:
 /release                 # Release workflow (ai-forge)
 ```
 
-These skills are **not** in this repo — they come from `@ansible-content/ansible-collection-sdlc` (ai-forge), installed by Lola as a dependency of the `gac` module.
+SDLC slash commands are provided by the `ansible-collection-sdlc` module, installed automatically as a dependency of `gac`.
 
 ### GaC governance (skills + white book)
 
-GaC does **not** use slash commands for governance. Use **Agent Skills** (installed by Lola from `skills/`) and point the AI at files under `automation-whitepaper/` when needed.
+Governance uses **Agent Skills** (from `gac/module/skills/`, installed by Lola) and the white book under `automation-whitepaper/`.
 
 **1 — Audit existing Ansible (Mode 1 — Auditor)**
 
@@ -300,10 +300,10 @@ You type a prompt or slash command
 REPO (git — your clone)                    ASSISTANT (Lola install target)
 ─────────────────────────                  ─────────────────────────────────
 automation-whitepaper/  ← READ only        .cursor/skills/  (Cursor, gitignored)
-  guides/…              (human + AI @)       ├── automation-builder/  (from skills/)
+  guides/…              (human + AI @)       ├── automation-builder/  (from gac module)
   adrs/…                                     ├── automation-auditor/
-  architecture/…                             └── … ai-forge SDLC skills
-skills/                 ← SOURCE in git
+  architecture/…                             └── … SDLC skills (dependency)
+gac/module/skills/      ← SOURCE in git
 AGENTS.md               ← SOURCE in git    Slash commands in chat:
 automation-good-practices/  ← submodule        /commit  /create-pr  (ai-forge)
 deliveries/automation/      ← submodule
@@ -380,17 +380,17 @@ GaC may optionally reference:
 
 **GaC = governance platform**
 
-- Consumes ai-forge for generic SDLC
-- Owns governance-specific content
+- SDLC workflows via Lola dependency (`ansible-collection-sdlc`)
+- Owns governance-specific content (white book → skills)
 - Provides version-controlled compliance
 - Extends with organization patterns
 
-**Clean separation:**
+**Module roles:**
 
-| Layer | Role |
-|-------|------|
-| ai-forge | Generic, reusable SDLC skills |
-| GaC | Governance, compliance, organization-specific rules |
+| Module | Role |
+|--------|------|
+| `ansible-collection-sdlc` | SDLC slash commands |
+| `gac` | Governance, compliance, organization rules as Agent Skills |
 
 **Result:** Community-maintained SDLC plus governed, auditable compliance.
 

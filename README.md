@@ -39,7 +39,7 @@ On conflict: **white book wins** over CoP. Skills must match the white book — 
   Installed to assistants via Lola:  lola install gac -a <assistant>
 ```
 
-Generic **SDLC** workflows (`/commit`, `/create-pr`, …) come from [ai-forge](https://github.com/ansible-community/ai-forge). **Governance** skills (Auditor, Builder, Librarian, AAP patterns) come from **this repo** — see [ai-forge-gac-integration.md](automation-whitepaper/architecture/ai-forge-gac-integration.md).
+Generic **SDLC** workflows (`/commit`, `/create-pr`, …) are provided by the `ansible-collection-sdlc` dependency. **Governance** skills (Auditor, Builder, Librarian, AAP patterns) ship in the **`gac` module** — see [ai-forge-gac-integration.md](automation-whitepaper/architecture/ai-forge-gac-integration.md).
 
 ---
 

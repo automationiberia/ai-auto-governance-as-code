@@ -6,19 +6,24 @@ Full architecture: **[GaC Architecture: ai-forge Integration](../architecture/ai
 
 ## At a glance
 
-| From ai-forge (Lola) | From GaC (local, in git) |
-|----------------------|--------------------------|
-| `/commit`, `/create-pr`, `/release`, `/changelog-fragment` | `automation-good-practices/` submodule (pinned CoP) |
-| Optional: `/ansible-zen` | `automation-whitepaper/`, `AGENTS.md`, `skills/` |
+| Lola module | Role |
+|-------------|------|
+| `@ansible-content/ansible-collection-sdlc` | SDLC slash commands (`/commit`, `/create-pr`, …) |
+| `@gac/gac` | Governance skills, white book encoding, pinned CoP via submodule |
 
-GaC consumes ai-forge for **SDLC only**. CoP compliance stays **version-controlled** in the submodule — not via ai-forge's dynamic CoP fetch.
+| In git (not installed by Lola into the white book) | Path |
+|----------------------------------------------------|------|
+| White book | `automation-whitepaper/` |
+| Governance skills (source) | `gac/module/skills/` |
+| CoP baseline | `automation-good-practices/` |
+| Agent bootstrap | `AGENTS.md` |
 
-### Where Lola installs (not `automation-whitepaper/`)
+### Where Lola installs
 
 | Content | Installed into `automation-whitepaper/`? | Actual location |
 |---------|------------------------------------------|-----------------|
-| ai-forge SDLC slash commands | **No** | Assistant + Lola cache |
-| GaC skills (`skills/`) | **No** | Assistant (e.g. `.cursor/skills/`) |
+| SDLC slash commands | **No** | Assistant + Lola cache |
+| Governance skills | **No** | Assistant (e.g. `.cursor/skills/`) |
 | White book guides, ADRs | **No** — read from git clone | `automation-whitepaper/` unchanged |
 
 Run `lola install` from **repo root**, not inside `automation-whitepaper/`. Details: [installation § Where Lola installs](../architecture/ai-forge-gac-integration.md#where-lola-installs-explicit).
@@ -29,10 +34,8 @@ Run `lola install` from **repo root**, not inside `automation-whitepaper/`. Deta
 
 | Audience | Command | Working directory |
 |----------|---------|-------------------|
-| Contributors | `make install` after clone (adds ansible-content market + `lola sync`) | **Repo root** |
+| Contributors | `make install` after clone | **Repo root** |
 | AI assistant users | `lola market add ansible-content` + `lola market add gac` + `lola install gac -a <assistant>` | **Repo root** |
-
-`lola-market.yml` **`repository`** points to **this GaC repo** (governance skills). **ai-forge** is only via `dependencies` (`@ansible-content/ansible-collection-sdlc`).
 
 See [README.md](../../README.md) and the [full architecture doc](../architecture/ai-forge-gac-integration.md).
 
