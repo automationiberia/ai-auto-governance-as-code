@@ -12,6 +12,10 @@ AUTOMATION_REPO ?= $(AUTOMATION_HOME)/deliveries/automation
 
 # Python environment
 PYTHON := python3
+# Prefer 3.13+ when available (lola-ai). Override: make venv PYTHON=python3.13
+ifneq ($(shell command -v python3.13 2>/dev/null),)
+  PYTHON := python3.13
+endif
 PIP := $(PYTHON) -m pip
 VENV_DIR := .venv
 VENV_PYTHON := $(VENV_DIR)/bin/python

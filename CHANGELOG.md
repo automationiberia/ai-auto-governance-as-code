@@ -9,12 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Dev Spaces: enforce Python ≥ 3.13 for `.venv` / `lola-ai` via `uv` when the image ships 3.12
 - Guide-first governance alignment: [whitebook-folder-map.md](automation-whitepaper/governance/whitebook-folder-map.md), optional [adrs/](automation-whitepaper/adrs/README.md) with example ADR-001…006
 - Manual operating path documented alongside AI modes (Auditor / Builder / Librarian)
 - Four-tier rule of precedence (CoP → white book → skills → mechanical gates)
 
 ### Changed
 
+- `.devfile.yaml` / `base.yaml` / `with-ollama.yaml`: `PYTHON_MIN_VERSION=3.13`, `UV_PYTHON=3.13`
+- `pre-commit` / `pyproject.toml` / `CONTRIBUTING.md`: Python 3.13 baseline
 - Governance narrative: encode/sync (not compile); no `.mdc` pipeline; runtime rule clarifies pre-commit validates code only
 - `governance-as-code-ai-enforcement.md`, `monorepo-layout.md`, `AGENTS.md`, and skills catalog aligned with architecture definition
 

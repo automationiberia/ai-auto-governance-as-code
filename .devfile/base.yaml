@@ -35,6 +35,12 @@ components:
             /usr/share/ansible/collections
         - name: VSCODE_TRUSTED_EXTENSIONS
           value: redhat.devspaces-copilot-chat-integration
+        # lola-ai requires Python >= 3.13; setup-workspace.sh ensures this
+        # (ansible-devspaces image currently ships 3.12 — uv installs 3.13).
+        - name: PYTHON_MIN_VERSION
+          value: "3.13"
+        - name: UV_PYTHON
+          value: "3.13"
 commands:
   - id: setup-workspace
     exec:

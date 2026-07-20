@@ -23,8 +23,8 @@ This project adheres to professional standards of collaboration. Be respectful, 
 ### Prerequisites
 
 - Git with SSH access to required submodules
-- Python 3.12+
-- Ansible Core 2.15+
+- Python 3.13+ (required by `lola-ai`; Dev Spaces setup enforces this)
+- Ansible Core 2.16+
 - pre-commit 3.5.0+
 
 ### Initial Setup

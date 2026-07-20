@@ -19,3 +19,4 @@ __pycache__/
 .cursor/
 .devfile/setup-workspace.log
 .devfile/ollama-pull.log
+.devfile/.tools/

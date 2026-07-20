@@ -1,6 +1,6 @@
 [tool.black]
 line-length = 88
-target-version = ["py312"]
+target-version = ["py313"]
 extend-exclude = '''
 /(
   automation-good-practices
@@ -14,7 +14,7 @@ extend-exclude = '''
 '''
 
 [tool.pylint.main]
-py-version = "3.12"
+py-version = "3.13"
 recursive = true
 ignore-paths = [
   "^automation-good-practices/.*$",
