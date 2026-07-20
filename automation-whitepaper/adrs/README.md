@@ -34,6 +34,7 @@ ADRs **supplement** the white book; they do not replace Guide-first standards.
 | [ADR-006](ADR-006-ltfc-mandatory.md) | L/T/F/C mandatory classification |
 | [ADR-007](ADR-007-aap-platform-skills-plane.md) | AAP platform skills as second plane |
 | [ADR-008](ADR-008-ai-mob-design.md) | AI Mob Design |
+| [ADR-009](ADR-009-ai-forge-submodule-governance.md) | AI Forge as governed submodule |
 
 ## Related
 

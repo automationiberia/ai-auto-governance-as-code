@@ -85,11 +85,14 @@ Declare mode before any YAML.
 cd ai-auto-governance-as-code    # repo root — required
 pip install lola-ai
 
-# 1. ansible-content marketplace (SDLC dependency)
-lola market add ansible-content \
-  https://raw.githubusercontent.com/ansible-community/ai-forge/main/lola-market.yml
+# 1. Ensure submodules are initialized (includes ai-forge)
+git submodule update --init --recursive
 
-# 2. gac marketplace (governance module)
+# 2. ansible-content marketplace (from local ai-forge submodule)
+lola market add ansible-content \
+  skills/vendor/ai-forge/lola-market.yml
+
+# 3. gac marketplace (governance module)
 lola market add gac \
   https://raw.githubusercontent.com/automationiberia/ai-auto-governance-as-code/main/lola-market.yml
 

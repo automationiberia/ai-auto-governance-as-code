@@ -121,7 +121,7 @@ Runnable implementations demonstrating patterns.
 - Developer experience tools
 
 **Not accepted:**
-- Changes to submodule URLs in `.gitmodules`
+- Changes to submodule URLs in `.gitmodules` (`automation-good-practices`, `deliveries/automation`, `aap-skills-library`, `ai-forge`)
 - Hardcoded absolute paths (use `$AUTOMATION_HOME`)
 
 ## Development Workflow

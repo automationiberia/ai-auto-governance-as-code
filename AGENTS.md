@@ -96,14 +96,15 @@ Both planes share white book precedence and human Architect approval. **Mode 2 B
 
 | Priority | Source | Rule |
 |----------|--------|------|
-| **1 — Foundation** | Red Hat CoP `automation-good-practices/` | Default baseline where white book is silent |
+| **1a — Foundation (CoP)** | Red Hat CoP `automation-good-practices/` | Default baseline where white book is silent |
+| **1b — Foundation (SDLC)** | AI Forge `skills/vendor/ai-forge/` | SDLC baseline where white book is silent |
 | **2 — Supreme override** | Enterprise white book (`automation-whitepaper/`) | On conflict, white book wins |
 | **3 — AI encoding** | `gac/module/skills/*/SKILL.md` + this file | Operationalizes 1–2 for AI; must match white book |
 | **4 — Mechanical** | pre-commit, ansible-lint, CI | Validates code artifacts |
 
-Optional ADRs in `automation-whitepaper/adrs/` document exceptions; they do not sit above the white book.
+Both foundation sources (CoP and AI Forge) are pinned git submodules — version-controlled, auditable, offline-capable. Optional ADRs in `automation-whitepaper/adrs/` document exceptions; they do not sit above the white book.
 
-Details: [governance-as-code-ai-enforcement.md](automation-whitepaper/governance/governance-as-code-ai-enforcement.md#rule-of-precedence).
+Details: [governance-as-code-ai-enforcement.md](automation-whitepaper/governance/governance-as-code-ai-enforcement.md#rule-of-precedence) · [ADR-009](automation-whitepaper/adrs/ADR-009-ai-forge-submodule-governance.md).
 
 ---
 

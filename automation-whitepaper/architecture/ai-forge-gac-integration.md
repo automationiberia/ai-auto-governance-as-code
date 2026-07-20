@@ -9,7 +9,7 @@
 - AI agents (Auditor, Builder, Librarian)
 - Organization-specific governance via `automation-whitepaper/`
 
-GaC **consumes** the [ai-forge](https://github.com/ansible-community/ai-forge) skills library for generic SDLC workflows while maintaining its own governance-specific content.
+GaC **absorbs** the [ai-forge](https://github.com/ansible-community/ai-forge) skills library as a pinned git submodule for generic SDLC workflows while maintaining its own governance-specific content. AI Forge is governed under the same model as CoP — version-controlled, auditable, offline-capable.
 
 ---
 
@@ -27,9 +27,10 @@ GaC **consumes** the [ai-forge](https://github.com/ansible-community/ai-forge) s
 │  ├── automation-whitepaper/guides/ (Operational workflows)  │
 │  └── gac/module/skills/        (Org-specific skills)        │
 │                                                             │
-│  Consumes via Lola:                                         │
-│  └── @ansible-content/ansible-collection-sdlc (ai-forge)    │
-│      └── Skills: commit, create-pr, release, changelog      │
+│  Vendor submodules (pinned — governed by white book):        │
+│  ├── skills/vendor/ai-forge/   (SDLC + standards + roles)   │
+│  │   └── Lola marketplace served from local submodule       │
+│  └── skills/vendor/aap-skills-library/ (AAP platform)       │
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
@@ -40,26 +41,30 @@ GaC **consumes** the [ai-forge](https://github.com/ansible-community/ai-forge) s
 
 ### Problem
 
-Previously, GaC and ai-forge had overlapping functionality:
+Previously, GaC consumed ai-forge as a remote Lola dependency:
 
-- Both provided installation mechanisms
-- Unclear separation of responsibilities
-- Potential duplication of SDLC workflows
+- Two independent marketplaces with separate lifecycle
+- Skills fetched from remote GitHub — version could drift between runs
+- No audit trail of which ai-forge version was used when
+- Required internet to resolve the dependency
+- No unified governance model over SDLC content
 
 ### Solution
 
-Clear separation of concerns:
+AI Forge absorbed as a **pinned git submodule** under GaC governance:
 
-- **ai-forge** → Generic, reusable SDLC skills
-- **GaC** → Governance platform with version-controlled compliance
+- **ai-forge** → Vendor submodule at `skills/vendor/ai-forge/` (pinned commit)
+- **GaC** → Single governance platform; white book prevails over ai-forge defaults
+- **Lola marketplace** → Served from local submodule, not remote GitHub
+- Same pattern as `automation-good-practices/` — see [ADR-009](../adrs/ADR-009-ai-forge-submodule-governance.md)
 
 ---
 
 ## What comes from where
 
-### From ai-forge (consumed via Lola)
+### From ai-forge (pinned submodule at `skills/vendor/ai-forge/`)
 
-**SDLC skills:**
+**SDLC skills (active):**
 
 | Skill / command | Purpose |
 |-----------------|---------|
@@ -68,15 +73,22 @@ Clear separation of concerns:
 | `/release` | Release workflow |
 | `/changelog-fragment` | Changelog management |
 
-**Why consume these:**
+**Why a submodule:**
 
-- Generic functionality applicable to any Ansible project
-- Maintained by the community
-- Updates available via Lola
+- Pinned to a specific commit — exact version in git history
+- Audit trail: which ai-forge version was used when
+- Offline access — no network dependency
+- Single governance model under GaC
+- Updates are deliberate: bump submodule via PR when ready
 
-**Optional reference** (not used for CoP compliance):
+**Available modules (pending evaluation):**
 
-- `/ansible-zen` — philosophical guidance (complementary to CoP)
+- `ansible-collection-standards` — CoP review, scaffolding, `/ansible-zen`
+- `ansible-role` — Role scaffolding tools
+- `ansible-content-development` — Content authoring and testing
+- `ansible-documentation` — Documentation generation
+
+See [ai-forge-overrides.md](../governance/ai-forge-overrides.md) for activation status and enterprise overrides.
 
 ### From GaC (owned and maintained)
 
@@ -117,30 +129,32 @@ Implemented in `AGENTS.md` and `gac/module/skills/automation-{auditor,builder,li
 
 ---
 
-## Key design decision: CoP handling
+## Key design decision: vendor submodule model
 
-### Why GaC keeps the `automation-good-practices` submodule
+### Why GaC pins external sources as submodules
 
-**GaC requirement:** Version-controlled, auditable CoP compliance.
+**GaC requirement:** Version-controlled, auditable governance over all consumed content.
 
-**ai-forge approach** (dynamic CoP fetch):
+This applies to **both** CoP and AI Forge:
 
-- Rules fetched from GitHub at runtime
-- Rules can change between runs
-- No version control in the consumer repo
-- Requires internet
+| Concern | Remote fetch (rejected) | Git submodule (adopted) |
+|---------|-------------------------|-------------------------|
+| Version control | Content can change between runs | Pinned to specific commit |
+| Audit trail | No record of version used | Exact version in git history |
+| Offline access | Requires internet | Works offline |
+| Governance | External lifecycle | White book prevails on conflict |
 
-**GaC approach** (git submodule):
+**Pinned vendor submodules:**
 
-- Submodule pinned to a specific commit
-- Exact version recorded in git history
-- Audit trail: which CoP version was used when
-- Offline access
-- Compliance-ready
+| Submodule | Path | Purpose |
+|-----------|------|---------|
+| `automation-good-practices` | `automation-good-practices/` | Red Hat CoP baseline |
+| `ai-forge` | `skills/vendor/ai-forge/` | SDLC workflows and standards |
+| `aap-skills-library` | `skills/vendor/aap-skills-library/` | AAP platform administration |
 
-**Conclusion:** GaC's submodule is **not** duplication — it is a governance requirement.
+**Conclusion:** Submodules are **not** duplication — they are a governance requirement.
 
-Details: [cop-overrides.md](../governance/cop-overrides.md) · [ADR-003](../adrs/ADR-003-enforcement-precedence.md)
+Details: [cop-overrides.md](../governance/cop-overrides.md) · [ai-forge-overrides.md](../governance/ai-forge-overrides.md) · [ADR-003](../adrs/ADR-003-enforcement-precedence.md) · [ADR-009](../adrs/ADR-009-ai-forge-submodule-governance.md)
 
 ---
 
@@ -157,7 +171,7 @@ Lola **does not copy skills into `automation-whitepaper/`**. The white book stay
 | White book (guides, ADRs, architecture) | `automation-whitepaper/` | **No** — already in git; read via `@` or prompts | Stays in your clone; not modified by Lola |
 | GaC Agent Skills | `gac/module/skills/` | **No** | Assistant skill dir (e.g. `.cursor/skills/` — gitignored) |
 | `AGENTS.md` bootstrap rules | repo root | **No** | Referenced by skills; loaded by assistant |
-| ai-forge SDLC (`/commit`, `/create-pr`, …) | `@ansible-content/ansible-collection-sdlc` (Lola dependency) | **No** | Lola cache → translated into assistant format |
+| ai-forge SDLC (`/commit`, `/create-pr`, …) | `skills/vendor/ai-forge/` submodule → Lola dependency | **No** | Lola cache → translated into assistant format |
 | CoP baseline | `automation-good-practices/` submodule | **No** | Submodule path in your clone (`make install` / `git submodule`) |
 | Delivery Ansible code | `deliveries/automation/` submodule | **No** | Submodule path (`$AUTOMATION_REPO`) |
 
@@ -179,9 +193,12 @@ Full detail: [Where content lives vs how you invoke it](#where-content-lives-vs-
 cd ai-auto-governance-as-code    # repo root — required
 pip install lola-ai
 
-# ansible-content marketplace (SDLC)
+# Initialize submodules (includes ai-forge)
+git submodule update --init --recursive
+
+# ansible-content marketplace (from local ai-forge submodule)
 lola market add ansible-content \
-  https://raw.githubusercontent.com/ansible-community/ai-forge/main/lola-market.yml
+  skills/vendor/ai-forge/lola-market.yml
 
 # gac marketplace (governance module)
 lola market add gac \
@@ -193,7 +210,7 @@ lola install gac -a claude-code   # or: -a cursor
 Installing `gac`:
 
 1. Registers the `gac` module from `lola-market.yml` (`repository` + `path: gac/module`).
-2. Resolves the `ansible-collection-sdlc` dependency for SDLC slash commands.
+2. Resolves the `ansible-collection-sdlc` dependency from the local ai-forge submodule.
 3. Installs governance skills into the assistant's native paths (e.g. `.cursor/skills/`).
 
 ### For GaC contributors
@@ -205,7 +222,7 @@ cd ai-auto-governance-as-code    # repo root
 make install
 ```
 
-`make install` runs `lola sync` (ai-forge SDLC from `.lola-req` only) and `git submodule update --init --recursive` (CoP + delivery). It does **not** modify `automation-whitepaper/`.
+`make install` initializes all git submodules (CoP, ai-forge, AAPSL, delivery), registers the local ai-forge marketplace, and runs `lola sync`. It does **not** modify `automation-whitepaper/`.
 
 After `make install`, run `lola install gac -a <assistant>` once per machine to wire GaC skills into your IDE.
 
@@ -223,7 +240,7 @@ GaC and ai-forge use **different invocation styles**. ai-forge exposes **slash c
 | **GaC (governance)** | Agent Skills + prompts | Audit, build, document Ansible to org standards |
 | **GaC (human manual)** | Read guides in `automation-whitepaper/guides/` | Same standards without AI |
 
-### ai-forge skills (via Lola)
+### ai-forge skills (pinned submodule → Lola)
 
 After `lola install gac -a <assistant>`, type these **in the assistant chat**:
 
@@ -234,7 +251,7 @@ After `lola install gac -a <assistant>`, type these **in the assistant chat**:
 /release                 # Release workflow (ai-forge)
 ```
 
-SDLC slash commands are provided by the `ansible-collection-sdlc` module, installed automatically as a dependency of `gac`.
+SDLC slash commands are provided by the `ansible-collection-sdlc` module from the pinned ai-forge submodule, installed automatically as a dependency of `gac`.
 
 ### GaC governance (skills + white book)
 
@@ -281,7 +298,7 @@ More copy-paste prompts: [ai-prompt-examples.md](../guides/ai-prompt-examples.md
 ```text
 You type a prompt or slash command
         │
-        ├─ /commit, /create-pr …     → ai-forge (Lola → ai-forge SDLC module)
+        ├─ /commit, /create-pr …     → ai-forge (pinned submodule → Lola)
         │
         └─ "Use skill automation-builder" …
                     │
@@ -289,6 +306,7 @@ You type a prompt or slash command
                     ├─ AGENTS.md                            (modes, bootstrap rules)
                     ├─ automation-whitepaper/guides/…       (step-by-step standards)
                     ├─ automation-good-practices/           (pinned CoP submodule)
+                    ├─ skills/vendor/ai-forge/              (pinned SDLC submodule)
                     └─ deliveries/automation/                 ($AUTOMATION_REPO code)
 ```
 
@@ -302,10 +320,11 @@ REPO (git — your clone)                    ASSISTANT (Lola install target)
 automation-whitepaper/  ← READ only        .cursor/skills/  (Cursor, gitignored)
   guides/…              (human + AI @)       ├── automation-builder/  (from gac module)
   adrs/…                                     ├── automation-auditor/
-  architecture/…                             └── … SDLC skills (dependency)
+  architecture/…                             └── … SDLC skills (from ai-forge submodule)
 gac/module/skills/      ← SOURCE in git
 AGENTS.md               ← SOURCE in git    Slash commands in chat:
-automation-good-practices/  ← submodule        /commit  /create-pr  (ai-forge)
+automation-good-practices/  ← submodule        /commit  /create-pr  (ai-forge submodule)
+skills/vendor/ai-forge/     ← submodule
 deliveries/automation/      ← submodule
 ```
 
@@ -322,24 +341,26 @@ deliveries/automation/      ← submodule
 
 ### For developers
 
-- One installation command (`lola install gac` or `make install`)
-- Access to community SDLC skills (ai-forge)
+- One installation command (`make install`)
+- All content from pinned, version-controlled sources — no external fetches
+- Access to community SDLC skills (ai-forge submodule)
 - Access to organization governance (GaC)
-- ai-forge SDLC updates via Lola
+- Offline-capable from first clone
 
 ### For governance
 
-- Version-controlled CoP (git submodule)
-- Audit trail (exact rules version in git history)
-- Offline capable
-- Controlled updates (bump submodule when ready)
+- Single source of truth: GaC governs all consumed content
+- Version-controlled CoP and SDLC (both pinned submodules)
+- Audit trail (exact version of every dependency in git history)
+- Controlled updates (bump submodule via PR when ready)
+- One marketplace origin instead of two
 
 ### For maintainers
 
-- No SDLC duplication (consume from ai-forge)
+- No SDLC duplication (consume from ai-forge submodule)
 - Focus on governance content (AAP, whitepaper, agents)
-- Simpler installation (Lola handles SDLC)
 - Clear boundaries: ai-forge = SDLC, GaC = governance
+- Enterprise overrides tracked in [ai-forge-overrides.md](../governance/ai-forge-overrides.md)
 
 ---
 
@@ -347,12 +368,14 @@ deliveries/automation/      ← submodule
 
 ```yaml
 # .lola-req
-@ansible-content/ansible-collection-sdlc   # From ai-forge
+@ansible-content/ansible-collection-sdlc   # From ai-forge (local submodule)
 ```
 
 ```text
-# Git submodule
-automation-good-practices/   # Red Hat CoP (version-controlled)
+# Git submodules
+automation-good-practices/          # Red Hat CoP (version-controlled)
+skills/vendor/ai-forge/             # AI Forge SDLC + standards (version-controlled)
+skills/vendor/aap-skills-library/   # AAP platform skills (version-controlled)
 ```
 
 See also: [lola-market.yml](../../lola-market.yml)
@@ -361,18 +384,21 @@ See also: [lola-market.yml](../../lola-market.yml)
 
 ## Future considerations
 
-### Optional ai-forge consumption
+### Module activation
 
-GaC may optionally reference:
+Four ai-forge modules are pending evaluation — see [ai-forge-overrides.md](../governance/ai-forge-overrides.md):
 
-- `/ansible-zen` — philosophical guidance (complementary to CoP)
-- Other ai-forge modules as they become relevant
+- `ansible-collection-standards` — CoP review, scaffolding, `/ansible-zen`
+- `ansible-role` — Role scaffolding with interactive builders
+- `ansible-content-development` — Content authoring and Molecule testing
+- `ansible-documentation` — Documentation generation
 
-### GaC evolution
+### Enterprise wrapping
 
-- GaC may wrap ai-forge skills with organization-specific extensions (e.g. org-commit wraps `/commit` + JIRA integration)
+- GaC may wrap ai-forge skills with organization-specific extensions (e.g. `org-commit` wraps `/commit` + JIRA integration)
 - GaC agents may consume ai-forge skills internally
 - GaC maintains independence for governance-critical functionality
+- Override status tracked in [ai-forge-overrides.md](../governance/ai-forge-overrides.md)
 
 ---
 
@@ -387,18 +413,20 @@ GaC may optionally reference:
 
 **Module roles:**
 
-| Module | Role |
-|--------|------|
-| `ansible-collection-sdlc` | SDLC slash commands |
-| `gac` | Governance, compliance, organization rules as Agent Skills |
+| Module | Source | Role |
+|--------|--------|------|
+| `ansible-collection-sdlc` | `skills/vendor/ai-forge/` submodule | SDLC slash commands |
+| `gac` | `gac/module/` (owned) | Governance, compliance, organization rules as Agent Skills |
 
-**Result:** Community-maintained SDLC plus governed, auditable compliance.
+**Result:** Community-maintained SDLC absorbed under governed, auditable, single-source-of-truth compliance.
 
 ---
 
 ## Related documents
 
 - [ai-forge and GaC (quick reference)](../governance/ai-forge-and-gac.md)
+- [ai-forge-overrides.md](../governance/ai-forge-overrides.md)
+- [ADR-009](../adrs/ADR-009-ai-forge-submodule-governance.md)
 - [Monorepo layout](monorepo-layout.md)
 - [philosophy.md](../governance/philosophy.md)
 - [cop-overrides.md](../governance/cop-overrides.md)

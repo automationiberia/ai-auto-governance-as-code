@@ -25,9 +25,10 @@ Add organization-specific overrides as your enterprise profile requires.
 | Concern | Source |
 |---------|--------|
 | **CoP compliance rules** | `automation-good-practices/` submodule |
-| **SDLC workflows** (commit, PR, release) | ai-forge via Lola — see [ai-forge-and-gac.md](ai-forge-and-gac.md) |
+| **SDLC workflows** (commit, PR, release) | `skills/vendor/ai-forge/` submodule — see [ai-forge-overrides.md](ai-forge-overrides.md) |
 
 ## Related
 
+- [ai-forge-overrides.md](ai-forge-overrides.md)
 - [ai-forge and GaC](ai-forge-and-gac.md)
 - [philosophy.md](philosophy.md)

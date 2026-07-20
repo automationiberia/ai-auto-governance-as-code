@@ -33,9 +33,9 @@ After [repository prep](#repository-prep-every-tool):
 cd /path/to/ai-auto-governance-as-code   # repo root
 pip install lola-ai
 
-# ai-forge marketplace (SDLC)
+# ai-forge marketplace (from local submodule)
 lola market add ansible-content \
-  https://raw.githubusercontent.com/ansible-community/ai-forge/main/lola-market.yml
+  skills/vendor/ai-forge/lola-market.yml
 
 # Governance as Code marketplace
 lola market add gac \

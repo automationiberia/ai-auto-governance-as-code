@@ -60,8 +60,11 @@ Run from **repository root**. Lola writes to your **assistant** (e.g. `.cursor/s
 ```bash
 pip install lola-ai
 
+# Ensure submodules are initialized (includes ai-forge)
+git submodule update --init --recursive
+
 lola market add ansible-content \
-  https://raw.githubusercontent.com/ansible-community/ai-forge/main/lola-market.yml
+  skills/vendor/ai-forge/lola-market.yml
 
 lola market add gac \
   https://raw.githubusercontent.com/automationiberia/ai-auto-governance-as-code/main/lola-market.yml
