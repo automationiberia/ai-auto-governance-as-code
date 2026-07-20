@@ -66,17 +66,27 @@ AUTOMATION_REPO=${PROJECT_SOURCE}/deliveries/automation
 PATH=${PROJECT_SOURCE}/.venv/bin:...       # pre-commit, ansible-lint, black, etc.
 ```
 
-### Dev tools (pre-commit, ansible-lint, …)
+### Dev tools (pre-commit, ansible-lint, lola, …)
 
-`setup-workspace` creates a project **virtualenv** at `.venv/` and installs [requirements-dev.txt](../../requirements-dev.txt). This avoids `pip install --user` (packages in `~/.local/bin` were **not** on PATH for Copilot Agent or devfile commands).
+`setup-workspace` creates a project **virtualenv** at `.venv/` with **Python ≥ 3.13** (required by [`lola-ai`](https://pypi.org/project/lola-ai/)) and installs [requirements-dev.txt](../../requirements-dev.txt). The `ghcr.io/ansible/ansible-devspaces` image currently ships Python 3.12; when the system interpreter is below 3.13, setup installs a portable 3.13 via [`uv`](https://docs.astral.sh/uv/) under `.devfile/.tools/` (no root / no `dnf`).
 
 | Tool | Path after setup |
 |------|------------------|
 | `pre-commit` | `${AUTOMATION_HOME}/.venv/bin/pre-commit` |
 | `ansible-lint` | `${AUTOMATION_HOME}/.venv/bin/ansible-lint` |
+| `lola` | `${AUTOMATION_HOME}/.venv/bin/lola` |
 | `ansible-playbook` | `/usr/bin/ansible-playbook` (image) + venv `ansible-core` |
 
+Devfile env: `PYTHON_MIN_VERSION=3.13`, `UV_PYTHON=3.13`.
+
 The workspace file sets `python.defaultInterpreterPath` and `terminal.integrated.env.linux.PATH` to `.venv/bin`.
+
+Verify after setup:
+
+```bash
+.venv/bin/python --version   # expect Python 3.13.x or newer
+which lola                   # .../.venv/bin/lola after new terminal
+```
 
 If an agent or terminal reports `pre-commit: command not found`:
 
@@ -518,7 +528,10 @@ After pulling this change, run **Developer: Reload Window** (or recreate the wor
 Activate manually in the terminal:
 
 ```bash
-python3 -m venv .venv && source .venv/bin/activate
+# Prefer Python 3.13+ (lola-ai). In Dev Spaces, re-run setup-workspace.sh instead.
+python3.13 -m venv .venv 2>/dev/null || python3 -m venv .venv
+source .venv/bin/activate
+python --version   # must be >= 3.13 before pip install lola-ai
 pip install -r requirements-dev.txt
 ```
 
@@ -528,7 +541,7 @@ Or Command Palette → **Python: Select Interpreter** → choose `.venv/bin/pyth
 
 ## Base image
 
-`ghcr.io/ansible/ansible-devspaces:latest` — Ansible VS Code extension, `ansible-core`, `ansible-lint`, and related ADT tools ([ansible-devspaces](https://github.com/redhat-cop/ansible-devspaces)).
+`ghcr.io/ansible/ansible-devspaces:latest` — Ansible VS Code extension, `ansible-core`, `ansible-lint`, and related ADT tools ([ansible-devspaces](https://github.com/redhat-cop/ansible-devspaces)). The image currently provides **Python 3.12**; workspace setup installs **Python ≥ 3.13** into `.venv` (via `uv` when needed) so `lola-ai` can install.
 
 ### Dual stack (AAP + Puppet strategy)
 

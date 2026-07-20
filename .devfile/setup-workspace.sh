@@ -70,21 +70,80 @@ _run_setup() {
     _fail "git submodule update failed (configure Git/SSH in Dev Spaces User Preferences)"
   fi
 
-  echo "==> Installing Python dev dependencies (.venv)"
+  echo "==> Ensuring Python >= ${PYTHON_MIN_VERSION:-3.13} for .venv (required by lola-ai)"
   _venv="${AUTOMATION_HOME}/.venv"
+  _tools_dir="${AUTOMATION_HOME}/.devfile/.tools"
+  _min_py="${PYTHON_MIN_VERSION:-3.13}"
+  mkdir -p "${_tools_dir}"
+  export PATH="${_tools_dir}:${PATH}"
+
+  _py_ok() {
+    # Args: interpreter path — return 0 if version >= PYTHON_MIN_VERSION
+    local _interp="$1"
+    [[ -x "${_interp}" ]] || return 1
+    "${_interp}" -c "
+import sys
+want = tuple(int(x) for x in '${_min_py}'.split('.')[:2])
+raise SystemExit(0 if sys.version_info[:2] >= want else 1)
+" 2>/dev/null
+  }
+
+  _python_bin=""
+  for _cand in python3.13 python3; do
+    if command -v "${_cand}" >/dev/null 2>&1 && _py_ok "$(command -v "${_cand}")"; then
+      _python_bin="$(command -v "${_cand}")"
+      break
+    fi
+  done
+
+  if [[ -z "${_python_bin}" ]]; then
+    echo "==> System Python is below ${_min_py}; installing via uv (portable, no root)"
+    if ! command -v uv >/dev/null 2>&1; then
+      if curl -fsSL https://astral.sh/uv/install.sh \
+        | env UV_INSTALL_DIR="${_tools_dir}" UV_NO_MODIFY_PATH=1 sh; then
+        echo "==> uv installed under ${_tools_dir}"
+      else
+        _fail "uv install failed (network/egress). Need Python ${_min_py}+ for lola-ai"
+      fi
+    fi
+    if command -v uv >/dev/null 2>&1; then
+      if uv python install "${_min_py}"; then
+        _python_bin="$(uv python find "${_min_py}" 2>/dev/null || true)"
+      fi
+    fi
+  fi
+
+  if [[ -z "${_python_bin}" ]] || ! _py_ok "${_python_bin}"; then
+    _fail "Python ${_min_py}+ not available (lola-ai requirement). Image python: $(python3 --version 2>&1 || true)"
+  else
+    echo "==> Using ${_python_bin} ($("${_python_bin}" --version 2>&1))"
+  fi
+
+  echo "==> Installing Python dev dependencies (.venv)"
+  if [[ -d "${_venv}" ]] && ! _py_ok "${_venv}/bin/python"; then
+    echo "==> Existing .venv uses older Python — recreating with ${_min_py}+"
+    rm -rf "${_venv}"
+  fi
   if [[ ! -d "${_venv}" ]]; then
-    if ! python3 -m venv "${_venv}"; then
-      _fail "python3 -m venv failed (install python3-virtualenv in image?)"
+    if command -v uv >/dev/null 2>&1 && [[ -n "${_python_bin}" ]]; then
+      if ! uv venv "${_venv}" --python "${_python_bin}"; then
+        _fail "uv venv failed with ${_python_bin}"
+      fi
+    elif ! "${_python_bin}" -m venv "${_venv}"; then
+      _fail "python -m venv failed (install python3-virtualenv in image?)"
     fi
   fi
   if [[ -f "${_venv}/bin/activate" ]]; then
     # shellcheck source=/dev/null
     source "${_venv}/bin/activate"
-    if pip install --upgrade pip \
+    if ! _py_ok "${_venv}/bin/python"; then
+      _fail ".venv Python is below ${_min_py} after create"
+    elif pip install --upgrade pip \
       && pip install -r "${AUTOMATION_HOME}/requirements-dev.txt"; then
-      echo "==> Python venv OK (${_venv})"
+      echo "==> Python venv OK (${_venv}) — $("${_venv}/bin/python" --version 2>&1)"
       echo "==> pre-commit: $(command -v pre-commit || echo missing)"
       echo "==> ansible-lint: $(command -v ansible-lint || echo missing)"
+      echo "==> lola: $(command -v lola || echo missing)"
     else
       _fail "pip install into .venv failed (network or requirements-dev.txt)"
     fi
