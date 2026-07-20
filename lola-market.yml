@@ -1,4 +1,7 @@
 ---
+# GaC marketplace — publishes the `gac` module from THIS repo (not ai-forge).
+# ai-forge SDLC is pulled via dependencies (ansible-collection-sdlc).
+# Before install: add ansible-content market from ai-forge lola-market.yml
 name: Governance as Code
 description: Governance as Code platform for Ansible automation
 version: 1.0.0
@@ -12,5 +15,5 @@ modules:
     repository: https://github.com/automationiberia/ai-auto-governance-as-code.git
     path: .
     dependencies:
-      - @ansible-content/ansible-collection-sdlc
+      - "@ansible-content/ansible-collection-sdlc"
     tags: [governance, aap, automation, compliance]

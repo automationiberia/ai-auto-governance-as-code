@@ -30,12 +30,24 @@ Optional: `pre-commit install` · set `AUTOMATION_HOME` and `AUTOMATION_REPO` �
 
 ### Lola install (AI assistant only)
 
+Run from **repository root**. Skills go to your **assistant** (e.g. `.cursor/skills/`), **not** into `automation-whitepaper/`.
+
 ```bash
+cd ai-auto-governance-as-code    # repo root
 pip install lola-ai
+
+# ai-forge SDLC (dependency of gac module)
+lola market add ansible-content \
+  https://raw.githubusercontent.com/ansible-community/ai-forge/main/lola-market.yml
+
+# GaC governance (this repo — not ai-forge)
 lola market add gac \
   https://raw.githubusercontent.com/automationiberia/ai-auto-governance-as-code/main/lola-market.yml
-lola install gac -a claude-code
+
+lola install gac -a claude-code   # or: -a cursor
 ```
+
+See [Where Lola installs](automation-whitepaper/architecture/ai-forge-gac-integration.md#where-lola-installs-explicit) for the full table.
 
 ---
 

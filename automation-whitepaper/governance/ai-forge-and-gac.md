@@ -6,21 +6,33 @@ Full architecture: **[GaC Architecture: ai-forge Integration](../architecture/ai
 
 ## At a glance
 
-| From ai-forge (Lola) | From GaC (local) |
-|----------------------|------------------|
+| From ai-forge (Lola) | From GaC (local, in git) |
+|----------------------|--------------------------|
 | `/commit`, `/create-pr`, `/release`, `/changelog-fragment` | `automation-good-practices/` submodule (pinned CoP) |
 | Optional: `/ansible-zen` | `automation-whitepaper/`, `AGENTS.md`, `skills/` |
 
 GaC consumes ai-forge for **SDLC only**. CoP compliance stays **version-controlled** in the submodule — not via ai-forge's dynamic CoP fetch.
 
+### Where Lola installs (not `automation-whitepaper/`)
+
+| Content | Installed into `automation-whitepaper/`? | Actual location |
+|---------|------------------------------------------|-----------------|
+| ai-forge SDLC slash commands | **No** | Assistant + Lola cache |
+| GaC skills (`skills/`) | **No** | Assistant (e.g. `.cursor/skills/`) |
+| White book guides, ADRs | **No** — read from git clone | `automation-whitepaper/` unchanged |
+
+Run `lola install` from **repo root**, not inside `automation-whitepaper/`. Details: [installation § Where Lola installs](../architecture/ai-forge-gac-integration.md#where-lola-installs-explicit).
+
 ---
 
 ## Install
 
-| Audience | Command |
-|----------|---------|
-| Contributors | `make install` after clone |
-| AI assistant users | `lola install gac -a <assistant>` |
+| Audience | Command | Working directory |
+|----------|---------|-------------------|
+| Contributors | `make install` after clone (adds ansible-content market + `lola sync`) | **Repo root** |
+| AI assistant users | `lola market add ansible-content` + `lola market add gac` + `lola install gac -a <assistant>` | **Repo root** |
+
+`lola-market.yml` **`repository`** points to **this GaC repo** (governance skills). **ai-forge** is only via `dependencies` (`@ansible-content/ansible-collection-sdlc`).
 
 See [README.md](../../README.md) and the [full architecture doc](../architecture/ai-forge-gac-integration.md).
 

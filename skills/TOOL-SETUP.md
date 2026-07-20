@@ -3,20 +3,71 @@
 **Canonical source (all tools):** `skills/*/SKILL.md` and [AGENTS.md](../AGENTS.md) in the **`ai-auto-governance-as-code`** repository.
 Do not fork skill text into tool-specific copies unless your platform requires it — link or load from here.
 
-**Which tool are you using?** Follow exactly one row below, then use [prompt examples](../automation-whitepaper/guides/ai-prompt-examples.md).
+**Recommended:** Install skills with **[Lola](#lola-recommended)** — one command per assistant. Manual per-tool setup below is a fallback.
+
+Prompt copy-paste library (tool-neutral): [ai-prompt-examples.md](../automation-whitepaper/guides/ai-prompt-examples.md).
 
 ---
 
-## Choose your AI environment
+## Lola (recommended)
 
-| Tool | Skill format | Setup (this repo) | How to invoke |
-|------|--------------|-------------------|---------------|
+[Lola](https://lobstertrap.org/lola/) is the package manager for AI context. It installs GaC governance skills (and ai-forge SDLC skills via the `gac` module) into Cursor, Claude Code, and other supported assistants.
+
+### Where Lola installs (explicit)
+
+**Run from the repository root** (`ai-auto-governance-as-code/`, where `lola-market.yml` is). **Never** from `automation-whitepaper/`.
+
+| Content | Lola writes to `automation-whitepaper/`? | Where it goes |
+|---------|------------------------------------------|---------------|
+| ai-forge SDLC (`/commit`, …) | **No** | Lola cache → assistant-native format |
+| GaC skills (`skills/`) | **No** | e.g. `.cursor/skills/` (gitignored) |
+| White book (`automation-whitepaper/`) | **No** — read only | Stays in your git clone |
+
+Full table: [ai-forge-gac-integration.md § Where Lola installs](../automation-whitepaper/architecture/ai-forge-gac-integration.md#where-lola-installs-explicit).
+
+### Install GaC into your assistant
+
+After [repository prep](#repository-prep-every-tool):
+
+```bash
+cd /path/to/ai-auto-governance-as-code   # repo root
+pip install lola-ai
+
+# ai-forge marketplace (SDLC — required by gac dependencies)
+lola market add ansible-content \
+  https://raw.githubusercontent.com/ansible-community/ai-forge/main/lola-market.yml
+
+# GaC marketplace (governance skills from this repo)
+lola market add gac \
+  https://raw.githubusercontent.com/automationiberia/ai-auto-governance-as-code/main/lola-market.yml
+
+lola install gac -a <assistant>
+```
+
+| Assistant | Command |
+|-----------|---------|
+| **Cursor** | `lola install gac -a cursor` |
+| **Claude Code** | `lola install gac -a claude-code` |
+| **Multiple / unsure** | `lola install gac` — select assistants when prompted |
+
+**Verify:** `lola list` — skills should appear under your assistant for this project.
+
+**Refresh:** After `git pull` changes skills or `.lola-req`, run `lola sync` and/or `lola install gac -a <assistant>` again.
+
+**Invoke:** `Use skill automation-builder` · `@AGENTS.md` · ai-forge SDLC slash commands (`/commit`, `/create-pr`, …).
+
+---
+
+## Choose your AI environment (manual fallback)
+
+Use these sections only if Lola is unavailable for your assistant.
+
+| Tool | Skill format | Setup (fallback) | How to invoke |
+|------|--------------|------------------|---------------|
 | **[Cursor](#cursor)** | `SKILL.md` in `.cursor/skills/` | [Cursor setup](#cursor) | Chat: `Use skill automation-auditor` · `@AGENTS.md` · `@skills/.../SKILL.md` |
 | **[Claude](#claude)** (Desktop, Code, Projects, API) | Project knowledge / system context | [Claude setup](#claude) | Paste path or attach `AGENTS.md` + skill; name mode in prompt |
 | **[VS Code + Copilot](#github-copilot)** | Instructions / chat | [Copilot setup](#github-copilot) | Reference `AGENTS.md` in instructions; @-file if supported |
 | **[Other / generic](#generic-any-agent)** | Any agent with file + chat access | [Generic setup](#generic-any-agent) | Read `AGENTS.md`; explicit skill name + file paths in prompt |
-
-Prompt copy-paste library (tool-neutral): [ai-prompt-examples.md](../automation-whitepaper/guides/ai-prompt-examples.md).
 
 ---
 
@@ -40,6 +91,10 @@ See [ai-forge-gac-integration.md](../automation-whitepaper/architecture/ai-forge
 
 **When:** You use Cursor IDE with Agent / Chat on this repo.
 
+**Prefer:** [Lola](#lola-recommended) — `lola install gac -a cursor`.
+
+**Manual fallback:**
+
 1. Clone `ai-auto-governance-as-code` and run repository prep above.
 2. Link skills into Cursor’s project skill directory:
 
@@ -55,7 +110,7 @@ See [ai-forge-gac-integration.md](../automation-whitepaper/architecture/ai-forge
 
 **Invoke:** `Use skill automation-builder` · `Use skill aap-live-snapshot` · `@AGENTS.md` · `@skills/automation-auditor/SKILL.md`
 
-**Refresh:** After `git pull` adds or renames skills, re-run `link-cursor-skills.sh`.
+**Refresh (manual):** After `git pull` adds or renames skills, re-run `link-cursor-skills.sh` or prefer `lola install gac -a cursor`.
 
 ---
 
@@ -63,7 +118,9 @@ See [ai-forge-gac-integration.md](../automation-whitepaper/architecture/ai-forge
 
 **When:** Claude Desktop, Claude Code, Claude Projects, or API agents working against this repo.
 
-Claude has **no standard “skills folder”** shared with Cursor. Configure **context** instead:
+**Prefer:** [Lola](#lola-recommended) — `lola install gac -a claude-code`.
+
+Claude has **no standard “skills folder”** shared with Cursor. Without Lola, configure **context** instead:
 
 ### Claude Code / CLI (repo on disk)
 
@@ -102,6 +159,10 @@ Do **not** rely on `.mdc` unless your Claude product documents that format; **`S
 
 **When:** VS Code / Visual Studio with Copilot Chat on this workspace (including **OpenShift Dev Spaces**).
 
+**Prefer:** [Lola](#lola-recommended) if your Copilot build is supported; otherwise manual setup below.
+
+**Manual fallback:**
+
 1. Repository prep above.
 2. **Dev Spaces — Copilot:** [devspaces-workspace.md § Copilot Agent](../automation-whitepaper/guides/devspaces-workspace.md#github-copilot-agent--setup-and-authentication).
 3. **Dev Spaces — Continue + Ollama:** same guide, [§ Continue + Ollama](../automation-whitepaper/guides/devspaces-workspace.md#continue--ollama-local-llm-same-workspace) (local `qwen2.5-coder:7b`, no GPU).
@@ -117,7 +178,9 @@ Do **not** rely on `.mdc` unless your Claude product documents that format; **`S
 
 **When:** ChatGPT, Gemini, internal LLM gateways, CI agents, or any tool that can read files.
 
-**Minimum viable setup:**
+**Prefer:** [Lola](#lola-recommended) when available for your agent.
+
+**Manual fallback:**
 
 1. Provide the agent read access to the cloned repo (or paste/upload `AGENTS.md` + one `SKILL.md`).
 2. Start every automation task with:
@@ -129,7 +192,7 @@ Do **not** rely on `.mdc` unless your Claude product documents that format; **`S
 
 3. Use **paths**, not pasted YAML — e.g. `deliveries/automation/roles/rolename/tasks/main.yml`.
 
-**No extra scripts required** — skip `link-cursor-skills.sh` unless you also use Cursor.
+**No extra scripts required** when using Lola. Skip `link-cursor-skills.sh` unless you use the Cursor manual fallback.
 
 ---
 
@@ -142,7 +205,7 @@ Platform skills are **optional** — engineers without MCP follow [aap-platform-
 1. Deploy AAP MCP servers in your environment (see upstream [AAP Skills Library](https://github.com/automationiberia/aap-skills-library)).
 2. Copy [config/mcp.json.example](../config/mcp.json.example) to your client config (e.g. `.cursor/mcp.json`). **Never commit secrets.**
 3. Set `AAP_MCP_TOKEN` or equivalent in your environment — not in Git.
-4. Link platform skills: `./skills/scripts/link-cursor-skills.sh` (Cursor) or reference `skills/platform/aap-*/SKILL.md` directly (Claude/Copilot/generic).
+4. Link platform skills: `lola install gac -a <assistant>` (recommended) or `./skills/scripts/link-cursor-skills.sh` (Cursor manual) or reference `skills/platform/aap-*/SKILL.md` directly (Claude/Copilot/generic).
 
 **Invoke (read-only Phase 1 example):**
 
@@ -160,8 +223,9 @@ More prompts: [ai-prompt-examples.md](../automation-whitepaper/guides/ai-prompt-
 
 1. Add `skills/automation-<name>/SKILL.md` or `skills/platform/aap-<name>/SKILL.md` (see [SKILL-TEMPLATE.md](SKILL-TEMPLATE.md)).
 2. Update white paper + catalog in `skills/README.md`.
-3. **Tool-specific sync:**
-   - **Cursor:** `./skills/scripts/link-cursor-skills.sh`
+3. **Sync to assistants:**
+   - **Lola (recommended):** `lola install gac -a <assistant>` (or `lola sync` if `.lola-req` lists the module)
+   - **Cursor (manual):** `./skills/scripts/link-cursor-skills.sh`
    - **Claude / Copilot / generic:** Update project knowledge or instruction file if you mirror paths there
 
 For platform skills sourced from AAPSL: update white book first, merge from `skills/vendor/aap-skills-library/`, run `./skills/scripts/sync-aapsl-skills.sh --diff`.

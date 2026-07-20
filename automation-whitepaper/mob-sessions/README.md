@@ -8,4 +8,4 @@ Completed [AI Mob Design](../guides/ai-mob-design.md) sessions are stored here.
 |---------|-------|
 | [2026-07-10-lola-integration](2026-07-10-lola-integration.md) | Lola + ai-forge integration into GaC |
 
-See [ADR-007](../adrs/ADR-007-ai-mob-design.md).
+See [ADR-008](../adrs/ADR-008-ai-mob-design.md).

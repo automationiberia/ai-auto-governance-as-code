@@ -2,9 +2,9 @@
 
 > **Evolution of mob programming for the AI era:** multiple humans design together; AI implements what the group decides. Everyone — humans and AI — receives proper credit.
 
-**Normative record:** [ADR-007](../docs/adrs/ADR-007-ai-mob-design.md)
-**AI facilitation:** [skills/ai-mob-design/SKILL.md](../skills/ai-mob-design/SKILL.md)
-**Template:** [docs/templates/ai-mob-design-session-template.md](../docs/templates/ai-mob-design-session-template.md)
+**Normative record:** [ADR-008](../adrs/ADR-008-ai-mob-design.md)
+**AI facilitation:** [skills/ai-mob-design/SKILL.md](../../skills/ai-mob-design/SKILL.md)
+**Template:** [templates/ai-mob-design-session-template.md](../templates/ai-mob-design-session-template.md)
 
 ---
 
@@ -90,9 +90,9 @@
 
 ### After
 
-1. AI generates **session summary** and saves notes under `docs/mob-sessions/`
+1. AI generates **session summary** and saves notes under `automation-whitepaper/mob-sessions/`
 2. Create **PR** with all participants as co-authors
-3. Document key decisions (**ADR** if architectural)
+3. Document key decisions (**ADR** in `automation-whitepaper/adrs/` if architectural)
 4. Schedule follow-up if implementation continues beyond the session
 
 ---
@@ -115,7 +115,7 @@
 
 **Result:** PR with all four participants as co-authors.
 
-See [docs/mob-sessions/2026-07-10-lola-integration.md](../docs/mob-sessions/2026-07-10-lola-integration.md).
+See [mob-sessions/2026-07-10-lola-integration.md](../mob-sessions/2026-07-10-lola-integration.md).
 
 ---
 
@@ -139,8 +139,8 @@ Assisted-by: Claude Sonnet 4.6
 ### Optional trailers
 
 ```text
-Session-Notes: docs/mob-sessions/2026-07-10-lola-integration.md
-Architecture-Decision: docs/adrs/ADR-005-lola-integration.md
+Session-Notes: automation-whitepaper/mob-sessions/2026-07-10-lola-integration.md
+Architecture-Decision: automation-whitepaper/adrs/ADR-008-ai-mob-design.md
 ```
 
 ### Tag reference
@@ -196,15 +196,15 @@ Architecture-Decision: docs/adrs/ADR-005-lola-integration.md
 
 | Artifact | Location |
 |----------|----------|
-| Practice ADR | `docs/adrs/ADR-007-ai-mob-design.md` |
-| Session notes | `docs/mob-sessions/` |
-| Session template | `docs/templates/ai-mob-design-session-template.md` |
+| Practice ADR | `automation-whitepaper/adrs/ADR-008-ai-mob-design.md` |
+| Session notes | `automation-whitepaper/mob-sessions/` |
+| Session template | `automation-whitepaper/templates/ai-mob-design-session-template.md` |
 | Facilitation skill | `skills/ai-mob-design/SKILL.md` |
-| Resulting ADRs | `docs/adrs/` or `automation-whitepaper/adrs/` |
+| Resulting ADRs | `automation-whitepaper/adrs/` |
 
 ---
 
 ## Related
 
-- [AGENTS.md](../AGENTS.md) — Operating paths and AI modes
-- [automation-builder skill](../skills/automation-builder/SKILL.md) — Implementation standards during mob coding phase
+- [AGENTS.md](../../AGENTS.md) — Operating paths and AI modes
+- [automation-builder skill](../../skills/automation-builder/SKILL.md) — Implementation standards during mob coding phase

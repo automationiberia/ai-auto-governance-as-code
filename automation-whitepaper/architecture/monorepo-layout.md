@@ -45,6 +45,8 @@ White book folder map: [../governance/whitebook-folder-map.md](../governance/whi
 
 **GaC vs ai-forge:** [ai-forge-gac-integration.md](ai-forge-gac-integration.md) — SDLC from ai-forge; CoP from submodule.
 
+**Lola install target:** `lola install gac` wires skills into the **AI assistant** (e.g. `.cursor/skills/`), **not** into `automation-whitepaper/`. The white book is read from the git clone. See [Where Lola installs](ai-forge-gac-integration.md#where-lola-installs-explicit).
+
 ---
 
 ## Data and control flow

@@ -126,7 +126,7 @@ Design and implement how Governance-as-Code (GaC) integrates Lola and ai-forge w
 | Artifact | Link |
 |----------|------|
 | PR | (example — link when opened) |
-| ADR | [ADR-007](../adrs/ADR-007-ai-mob-design.md) (practice); feature ADR optional |
+| ADR | [ADR-008](../adrs/ADR-008-ai-mob-design.md) (practice); feature ADR optional |
 
 ---
 
@@ -142,4 +142,4 @@ Co-Authored-by: Carol White <carol@example.com>
 Assisted-by: Claude Sonnet 4.6
 ```
 
-See [AI Mob Design guide](../../guides/ai-mob-design.md).
+See [AI Mob Design guide](../guides/ai-mob-design.md).

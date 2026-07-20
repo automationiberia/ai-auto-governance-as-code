@@ -29,7 +29,8 @@ models:
     chatOptions:
       baseAgentSystemMessage: >-
         You are a Senior Lead Engineer for Ansible automation. Use the read file
-        tool for paths like skills/*/SKILL.md — do not call read_skill for repo paths.
+        tool for paths like skills/*/SKILL.md — do not call read_skill for
+        repo paths.
 
 tabAutocompleteModel:
   name: Qwen2.5 Coder 7B

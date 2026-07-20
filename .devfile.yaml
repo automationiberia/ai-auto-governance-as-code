@@ -5,7 +5,8 @@ metadata:
   displayName: Automation Home
   description: >-
     AI-Driven Governance-as-Code for Ansible Automation — Copilot Agent,
-    Continue + Ollama (qwen2.5-coder:7b, CPU), white paper, skills, and delivery submodule.
+    Continue + Ollama (qwen2.5-coder:7b, CPU), white paper, skills, and
+    delivery submodule.
   tags:
     - ansible
     - automation
@@ -32,9 +33,10 @@ components:
           value: >-
             ${PROJECT_SOURCE}/deliveries/automation/.ansible/collections:
             /usr/share/ansible/collections
-        # Do NOT set DEFAULT_EXTENSIONS or PATH here — paths under ${PROJECT_SOURCE}
-        # do not exist during the DWO-injected postStart hook and can fail automation-tools.
-        # Copilot: extensions.json + setup-workspace VSIX; PATH → automation-home.code-workspace.
+        # Do NOT set DEFAULT_EXTENSIONS or PATH here — paths under
+        # ${PROJECT_SOURCE} do not exist during the DWO-injected postStart hook
+        # and can fail automation-tools. Copilot: extensions.json +
+        # setup-workspace VSIX; PATH → automation-home.code-workspace.
         - name: VSCODE_TRUSTED_EXTENSIONS
           value: redhat.devspaces-copilot-chat-integration
   - name: ollama
@@ -93,7 +95,8 @@ commands:
       component: automation-tools
       commandLine: >-
         sh -c 'mkdir -p .devfile &&
-        nohup bash .devfile/setup-workspace.sh </dev/null >>.devfile/setup-workspace.log 2>&1 &
+        nohup bash .devfile/setup-workspace.sh </dev/null
+        >>.devfile/setup-workspace.log 2>&1 &
         exit 0'
       workingDir: ${PROJECT_SOURCE}
       label: Setup workspace (background, postStart)

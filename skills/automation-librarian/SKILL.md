@@ -33,7 +33,7 @@ Before technical output, state:
 2. skills/<matching>/SKILL.md   ← encoded enforcement (automation-* or platform/aap-*)
 3. AGENTS.md                    ← if mode/bootstrap rules change
 4. skills/README.md             ← catalog + mode matrix
-5. TOOL-SETUP.md sync          ← Cursor: link-cursor-skills.sh; other tools: per TOOL-SETUP
+5. TOOL-SETUP.md sync          ← Lola: `lola install gac -a <assistant>`; manual fallback per TOOL-SETUP
 6. AAPSL upstream (optional)   ← vendor/aap-skills-library → diff → platform/aap-*
 ```
 

@@ -11,6 +11,7 @@ automation-whitepaper/
 ├── governance/     WHO   — RACI, AI modes, program rules
 ├── operations/     RUN   — Controller, inventory in production
 ├── guides/         DO    — step-by-step (best start for new users)
+├── mob-sessions/   LOG   — AI Mob Design session notes
 ├── examples/       SEE   — sample compliant code
 ├── templates/      COPY  — bootstrap files for new repos
 └── adrs/           WHY   — optional; exceptions and major decisions only

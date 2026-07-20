@@ -35,7 +35,7 @@ Mob programming evolved: **group designs, AI implements** — all participants c
 |-------|------|
 | [ai-mob-design](ai-mob-design/SKILL.md) | Complex design + same-session implementation with a human mob |
 
-Guide: [guides/ai-mob-design.md](../guides/ai-mob-design.md) · ADR: [docs/adrs/ADR-007](../docs/adrs/ADR-007-ai-mob-design.md)
+Guide: [automation-whitepaper/guides/ai-mob-design.md](../automation-whitepaper/guides/ai-mob-design.md) · ADR: [automation-whitepaper/adrs/ADR-008](../automation-whitepaper/adrs/ADR-008-ai-mob-design.md)
 
 ## 🛠️ Task Skills
 
@@ -104,7 +104,7 @@ Use **Mode 3 — Librarian** when updating:
 1. Update white paper markdown first
 2. Sync corresponding `SKILL.md` (keep under ~500 lines) — `automation-*` or `platform/aap-*`
 3. Update [AGENTS.md](../AGENTS.md) if modes or skill planes change
-4. Run tool-specific sync per [TOOL-SETUP.md](TOOL-SETUP.md) (e.g. `link-cursor-skills.sh` **only for Cursor**)
+4. Run Lola sync per [TOOL-SETUP.md](TOOL-SETUP.md) (`lola install gac -a <assistant>`; manual `link-cursor-skills.sh` only as fallback)
 5. Add entry to catalog above (content and/or platform tables)
 6. For AAPSL upstream: `git submodule update --remote skills/vendor/aap-skills-library` then `sync-aapsl-skills.sh --diff`
 6. Ask the user before committing; never push or open PRs automatically — after a commit, show push commands and a draft PR body per [AGENTS.md](../AGENTS.md#git-workflow-agents). Use a branch from up-to-date `main`.
@@ -133,7 +133,7 @@ Use **Mode 3 — Librarian** when updating:
 | [automation-governance](automation-governance/SKILL.md) | Stakeholders, CAB | [governance/](../automation-whitepaper/governance/) |
 | [automation-controller-ops](automation-controller-ops/SKILL.md) | Controller, SSOT | [operations/](../automation-whitepaper/operations/) |
 | [automation-puppet-orchestrate](automation-puppet-orchestrate/SKILL.md) | Phase 1 Puppet wrappers via AAP | [aap-puppet-coexistence-evolution.md](../automation-whitepaper/architecture/aap-puppet-coexistence-evolution.md) |
-| [ai-mob-design](ai-mob-design/SKILL.md) | AI Mob Design | [guides/ai-mob-design.md](../guides/ai-mob-design.md) |
+| [ai-mob-design](ai-mob-design/SKILL.md) | AI Mob Design | [automation-whitepaper/guides/ai-mob-design.md](../automation-whitepaper/guides/ai-mob-design.md) |
 
 ### Platform skills (Phase 1)
 

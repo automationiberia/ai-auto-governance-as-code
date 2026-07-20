@@ -1,5 +1,6 @@
 # Red Hat Developer Hub / Backstage catalog entry.
-# Register this repo in the Software Catalog (location: catalog-info.yaml at repo root).
+# Register this repo in the Software Catalog
+# (location: catalog-info.yaml at repo root).
 # Platform team: adjust spec.owner to your Backstage Group entity.
 ---
 apiVersion: backstage.io/v1alpha1
