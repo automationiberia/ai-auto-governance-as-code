@@ -14,7 +14,7 @@ Canonical narrative: [automation-whitepaper/governance/governance-as-code-ai-enf
 Strategic proposal (AAP, Puppet, Dev Spaces, GenAI): [automation-whitepaper/governance/strategic-proposal-aap-governance-evolution.md](automation-whitepaper/governance/strategic-proposal-aap-governance-evolution.md).
 Monorepo layout: [automation-whitepaper/architecture/monorepo-layout.md](automation-whitepaper/architecture/monorepo-layout.md).
 
-**Skill setup (choose tool):** [skills/TOOL-SETUP.md](skills/TOOL-SETUP.md) — Cursor, Claude, Copilot, or generic.
+**Skill setup (Lola):** [guides/getting-started.md](automation-whitepaper/guides/getting-started.md#step-4--optional-configure-ai-with-lola) · [skills/TOOL-SETUP.md](skills/TOOL-SETUP.md).
 **Copy-paste prompts:** [automation-whitepaper/guides/ai-prompt-examples.md](automation-whitepaper/guides/ai-prompt-examples.md)
 
 **AI Mob Design:** [guides/ai-mob-design.md](guides/ai-mob-design.md) · [skills/ai-mob-design/SKILL.md](skills/ai-mob-design/SKILL.md).

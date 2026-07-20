@@ -73,21 +73,36 @@ Declare mode before any YAML.
 
 ---
 
-## Step 4 — Optional: configure AI (pick one tool)
+## Step 4 — Optional: configure AI with Lola
 
-| Tool | Do this once |
-|------|----------------|
-| **Cursor** | `./skills/scripts/link-cursor-skills.sh` — see [TOOL-SETUP.md](../../skills/TOOL-SETUP.md#cursor) |
-| **Claude / Copilot / other** | Point the agent at `AGENTS.md` + one `skills/*/SKILL.md` — see [TOOL-SETUP.md](../../skills/TOOL-SETUP.md) |
+[Lola](https://lobstertrap.org/lola/) installs GaC governance skills and ai-forge SDLC workflows into your AI assistant — one setup path instead of per-tool manual wiring. Details: [TOOL-SETUP.md](../../skills/TOOL-SETUP.md).
+
+**One-time setup** (from repo root, after Steps 1–2):
+
+```bash
+pip install lola-ai
+lola market add gac \
+  https://raw.githubusercontent.com/automationiberia/ai-auto-governance-as-code/main/lola-market.yml
+lola install gac -a <assistant>
+```
+
+| Assistant | Command |
+|-----------|---------|
+| **Cursor** | `lola install gac -a cursor` |
+| **Claude Code** | `lola install gac -a claude-code` |
+| **Other** | `lola install gac` — select assistants when prompted |
+
+After `git pull` adds or renames skills, run `lola install gac -a <assistant>` again (or `lola sync` if the repo uses `.lola-req`).
 
 In every AI session, the agent must **declare its mode** before writing YAML.
 
 **AI shortcut (first session):**
 
 ```text
-Read AGENTS.md and skills/TOOL-SETUP.md.
+Read AGENTS.md.
 AUTOMATION_HOME and AUTOMATION_REPO are set.
-Confirm my tool (Cursor / Claude / Copilot) is configured. List available skills for my goal.
+Confirm Lola installed the gac module for my assistant. List available skills for my goal.
+Declare mode before any YAML.
 ```
 
 ---

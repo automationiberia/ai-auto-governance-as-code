@@ -204,7 +204,7 @@ Humans may request a mode explicitly:
 2. Sync the matching **`skills/<name>/SKILL.md`** (keep each skill under ~500 lines).
 3. Update [AGENTS.md](../../AGENTS.md) if mode or bootstrap rules change.
 4. Update [skills/README.md](../../skills/README.md) catalog if skills are added or renamed.
-5. Sync skills in your AI tool per [skills/TOOL-SETUP.md](../../skills/TOOL-SETUP.md) (Cursor: `link-cursor-skills.sh`; others: project knowledge / instructions).
+5. Sync skills via [Lola](../../skills/TOOL-SETUP.md#lola-recommended) (`lola install gac -a <assistant>`) per [skills/TOOL-SETUP.md](../../skills/TOOL-SETUP.md).
 6. Record rationale in PR description; pin `automation-good-practices` submodule when adopting GPA changes.
 
 Example ADR: [ADR-004](../adrs/ADR-004-librarian-synchronization.md).

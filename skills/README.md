@@ -104,7 +104,7 @@ Use **Mode 3 — Librarian** when updating:
 1. Update white paper markdown first
 2. Sync corresponding `SKILL.md` (keep under ~500 lines) — `automation-*` or `platform/aap-*`
 3. Update [AGENTS.md](../AGENTS.md) if modes or skill planes change
-4. Run tool-specific sync per [TOOL-SETUP.md](TOOL-SETUP.md) (e.g. `link-cursor-skills.sh` **only for Cursor**)
+4. Run Lola sync per [TOOL-SETUP.md](TOOL-SETUP.md) (`lola install gac -a <assistant>`; manual `link-cursor-skills.sh` only as fallback)
 5. Add entry to catalog above (content and/or platform tables)
 6. For AAPSL upstream: `git submodule update --remote skills/vendor/aap-skills-library` then `sync-aapsl-skills.sh --diff`
 6. Ask the user before committing; never push or open PRs automatically — after a commit, show push commands and a draft PR body per [AGENTS.md](../AGENTS.md#git-workflow-agents). Use a branch from up-to-date `main`.
