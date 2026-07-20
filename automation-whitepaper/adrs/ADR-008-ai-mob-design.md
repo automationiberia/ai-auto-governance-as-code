@@ -1,4 +1,4 @@
-# ADR-007: AI Mob Design
+# ADR-008: AI Mob Design
 
 **Status:** Accepted
 **Type:** GOVERNANCE_RULE
@@ -83,8 +83,8 @@ Assisted-by: Claude Sonnet 4.6
 **Optional trailers:**
 
 ```text
-Session-Notes: docs/mob-sessions/2026-07-10-lola-integration.md
-Architecture-Decision: docs/adrs/ADR-005-lola-integration.md
+Session-Notes: automation-whitepaper/mob-sessions/2026-07-10-lola-integration.md
+Architecture-Decision: automation-whitepaper/adrs/ADR-005-native-first-execution.md
 ```
 
 **Guidelines:**
@@ -92,18 +92,18 @@ Architecture-Decision: docs/adrs/ADR-005-lola-integration.md
 - List **all** mob participants in `Session-Participants:` and the session notes
 - Use `Co-Authored-by` for every human who participated in the mob design (unless org policy defines a narrower rule)
 - Use `Assisted-by` for the AI — distinct from human co-authors
-- Store session notes under `docs/mob-sessions/`
-- Link to ADRs when the mob produced architectural decisions
+- Store session notes under `automation-whitepaper/mob-sessions/`
+- Link to ADRs in `automation-whitepaper/adrs/` when the mob produced architectural decisions
 
-See [AI Mob Design guide](../../guides/ai-mob-design.md).
+See [AI Mob Design guide](../guides/ai-mob-design.md).
 
 ### Skill and guide
 
 | Artifact | Path |
 |----------|------|
 | Mob facilitation skill | [skills/ai-mob-design/SKILL.md](../../skills/ai-mob-design/SKILL.md) |
-| Practitioner guide | [guides/ai-mob-design.md](../../guides/ai-mob-design.md) |
-| Session template | [docs/templates/ai-mob-design-session-template.md](../templates/ai-mob-design-session-template.md) |
+| Practitioner guide | [guides/ai-mob-design.md](../guides/ai-mob-design.md) |
+| Session template | [templates/ai-mob-design-session-template.md](../templates/ai-mob-design-session-template.md) |
 
 ## Consequences
 
@@ -125,4 +125,4 @@ See [AI Mob Design guide](../../guides/ai-mob-design.md).
 
 ## Related decisions
 
-- [ADR-002: AI modes and manual path](../../automation-whitepaper/adrs/ADR-002-ai-modes-and-manual-path.md) — Builder mode during implementation phase
+- [ADR-002: AI modes and manual path](ADR-002-ai-modes-and-manual-path.md) — Builder mode during implementation phase

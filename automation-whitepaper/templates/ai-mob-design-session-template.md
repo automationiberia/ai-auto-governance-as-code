@@ -1,6 +1,6 @@
 # AI Mob Design Session: [Topic]
 
-> Copy this template for each mob session. Store completed notes under `docs/mob-sessions/YYYY-MM-DD-<topic-slug>.md`.
+> Copy this template for each mob session. Store completed notes under `automation-whitepaper/mob-sessions/YYYY-MM-DD-<topic-slug>.md`.
 
 **Date:** YYYY-MM-DD
 **Duration:** [actual time]
@@ -136,8 +136,8 @@ Assisted-by: Claude Sonnet 4.6
 **Optional:**
 
 ```text
-Session-Notes: docs/mob-sessions/YYYY-MM-DD-<topic-slug>.md
-Architecture-Decision: docs/adrs/ADR-XXX-<topic>.md
+Session-Notes: automation-whitepaper/mob-sessions/YYYY-MM-DD-<topic-slug>.md
+Architecture-Decision: automation-whitepaper/adrs/ADR-XXX-<topic>.md
 ```
 
 ---

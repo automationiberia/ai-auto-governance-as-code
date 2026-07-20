@@ -35,7 +35,7 @@ Mob programming evolved: **group designs, AI implements** — all participants c
 |-------|------|
 | [ai-mob-design](ai-mob-design/SKILL.md) | Complex design + same-session implementation with a human mob |
 
-Guide: [guides/ai-mob-design.md](../guides/ai-mob-design.md) · ADR: [docs/adrs/ADR-007](../docs/adrs/ADR-007-ai-mob-design.md)
+Guide: [automation-whitepaper/guides/ai-mob-design.md](../automation-whitepaper/guides/ai-mob-design.md) · ADR: [automation-whitepaper/adrs/ADR-008](../automation-whitepaper/adrs/ADR-008-ai-mob-design.md)
 
 ## 🛠️ Task Skills
 
@@ -133,7 +133,7 @@ Use **Mode 3 — Librarian** when updating:
 | [automation-governance](automation-governance/SKILL.md) | Stakeholders, CAB | [governance/](../automation-whitepaper/governance/) |
 | [automation-controller-ops](automation-controller-ops/SKILL.md) | Controller, SSOT | [operations/](../automation-whitepaper/operations/) |
 | [automation-puppet-orchestrate](automation-puppet-orchestrate/SKILL.md) | Phase 1 Puppet wrappers via AAP | [aap-puppet-coexistence-evolution.md](../automation-whitepaper/architecture/aap-puppet-coexistence-evolution.md) |
-| [ai-mob-design](ai-mob-design/SKILL.md) | AI Mob Design | [guides/ai-mob-design.md](../guides/ai-mob-design.md) |
+| [ai-mob-design](ai-mob-design/SKILL.md) | AI Mob Design | [automation-whitepaper/guides/ai-mob-design.md](../automation-whitepaper/guides/ai-mob-design.md) |
 
 ### Platform skills (Phase 1)
 

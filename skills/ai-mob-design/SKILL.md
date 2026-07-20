@@ -12,9 +12,9 @@ user-invocable: true
 
 **Role:** Equal mob participant — question asker, alternative explorer, **implementer**, and documenter. The **group** decides; you implement their design.
 
-**Normative practice:** [ADR-007](../../docs/adrs/ADR-007-ai-mob-design.md)
-**Practitioner guide:** [guides/ai-mob-design.md](../../guides/ai-mob-design.md)
-**Session template:** [docs/templates/ai-mob-design-session-template.md](../../docs/templates/ai-mob-design-session-template.md)
+**Normative practice:** [ADR-008](../../automation-whitepaper/adrs/ADR-008-ai-mob-design.md)
+**Practitioner guide:** [automation-whitepaper/guides/ai-mob-design.md](../../automation-whitepaper/guides/ai-mob-design.md)
+**Session template:** [automation-whitepaper/templates/ai-mob-design-session-template.md](../../automation-whitepaper/templates/ai-mob-design-session-template.md)
 
 ---
 
@@ -111,7 +111,7 @@ Produce:
 
 1. **Session summary** — decisions, rejected options, trade-offs
 2. **Action items** — human owners for follow-up outside the session
-3. **Session notes** — offer to save as `docs/mob-sessions/<session-id>.md`
+3. **Session notes** — offer to save as `automation-whitepaper/mob-sessions/<session-id>.md`
 4. **PR draft** with full attribution block (below)
 5. **ADR pointer** if architectural decisions need a formal record
 
@@ -146,8 +146,8 @@ Assisted-by: Claude Sonnet 4.6
 **Optional:**
 
 ```text
-Session-Notes: docs/mob-sessions/YYYY-MM-DD-<topic-slug>.md
-Architecture-Decision: docs/adrs/ADR-XXX-<topic>.md
+Session-Notes: automation-whitepaper/mob-sessions/YYYY-MM-DD-<topic-slug>.md
+Architecture-Decision: automation-whitepaper/adrs/ADR-XXX-<topic>.md
 ```
 
 **Rules:**
@@ -195,4 +195,4 @@ Architecture-Decision: docs/adrs/ADR-XXX-<topic>.md
 | Builder implementation | [automation-builder](../automation-builder/SKILL.md) |
 | L/T/F/C | [automation-architecture](../automation-architecture/SKILL.md) |
 | AI modes | [AGENTS.md](../../AGENTS.md) |
-| ADR practice | [ADR-007](../../docs/adrs/ADR-007-ai-mob-design.md) |
+| ADR practice | [ADR-008](../../automation-whitepaper/adrs/ADR-008-ai-mob-design.md) |

@@ -154,7 +154,7 @@ Full definitions: [glossary.md](glossary.md).
 | Task | Command / doc |
 |------|----------------|
 | List make targets | `make help` |
-| Pre-commit help | [docs/PRE-COMMIT-GUIDE.md](../../docs/PRE-COMMIT-GUIDE.md) |
+| Pre-commit help | [PRE-COMMIT-GUIDE.md](PRE-COMMIT-GUIDE.md) |
 | Git workflow for delivery code | [git-automation-repository.md](git-automation-repository.md) |
 | Dev Spaces (browser IDE) | [devspaces-workspace.md](devspaces-workspace.md) |
 | Full skill catalog | [skills/README.md](../../skills/README.md) |

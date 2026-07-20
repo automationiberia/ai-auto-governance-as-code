@@ -17,7 +17,7 @@ Monorepo layout: [automation-whitepaper/architecture/monorepo-layout.md](automat
 **Skill setup (Lola):** [guides/getting-started.md](automation-whitepaper/guides/getting-started.md#step-4--optional-configure-ai-with-lola) · [skills/TOOL-SETUP.md](skills/TOOL-SETUP.md).
 **Copy-paste prompts:** [automation-whitepaper/guides/ai-prompt-examples.md](automation-whitepaper/guides/ai-prompt-examples.md)
 
-**AI Mob Design:** [guides/ai-mob-design.md](guides/ai-mob-design.md) · [skills/ai-mob-design/SKILL.md](skills/ai-mob-design/SKILL.md).
+**AI Mob Design:** [automation-whitepaper/guides/ai-mob-design.md](automation-whitepaper/guides/ai-mob-design.md) · [skills/ai-mob-design/SKILL.md](skills/ai-mob-design/SKILL.md).
 
 ---
 
@@ -32,7 +32,7 @@ The **human engineer is the Architect** — strategic design, Red Lines, and fin
 | Path | Operator | Use |
 |------|----------|-----|
 | **Manual** | Human engineer | Follow `automation-whitepaper/guides/` and examples; no AI mode declaration |
-| **AI Mob Design** | Human mob + AI implementer | Group designs together; AI implements in session — see [guides/ai-mob-design.md](guides/ai-mob-design.md); mob co-authors resulting PR |
+| **AI Mob Design** | Human mob + AI implementer | Group designs together; AI implements in session — see [automation-whitepaper/guides/ai-mob-design.md](automation-whitepaper/guides/ai-mob-design.md); mob co-authors resulting PR |
 | **Mode 1 — Auditor** | AI agent | Review and remediate existing code |
 | **Mode 2 — Builder** | AI agent | Greenfield or refactor to compliance |
 | **Mode 3 — Librarian** | AI agent (+ human approval) | Evolve white book and `SKILL.md` |
