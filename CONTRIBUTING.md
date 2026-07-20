@@ -90,11 +90,11 @@ AI-consumable encoding of white paper standards.
 - Tool integration improvements
 
 **Process:**
-1. Read [skills/README.md](skills/README.md) and [AGENTS.md](AGENTS.md)
+1. Read [gac/README.md](gac/README.md) and [AGENTS.md](AGENTS.md)
 2. Update or create `SKILL.md` files (canonical format)
 3. Keep skills under ~500 lines for agent digestibility
 4. Maintain alignment with white paper source
-5. Update skill catalog in `skills/README.md`
+5. Update skill catalog in `gac/README.md`
 
 **Skill structure:**
 ```markdown
@@ -329,7 +329,7 @@ Skills should declare which mode they support and provide mode-specific instruct
 ## Additional Resources
 
 - [AGENTS.md](AGENTS.md) - AI agent operating instructions
-- [skills/README.md](skills/README.md) - Skill catalog and setup
+- [gac/README.md](gac/README.md) - Skill catalog and setup
 - [automation-whitepaper/guides/ai-prompt-examples.md](automation-whitepaper/guides/ai-prompt-examples.md) - Prompt examples
 - [Red Hat CoP Automation Good Practices](https://github.com/redhat-cop/automation-good-practices) - Pinned CoP baseline (`automation-good-practices/` submodule)
 - [Ansible Community AI Forge](https://github.com/ansible-community/ai-forge) - SDLC skills consumed via Lola

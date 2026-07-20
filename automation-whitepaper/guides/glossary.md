@@ -100,5 +100,5 @@ Do not use alternate spellings (`<fn>`, `<function>`, `<rolename>`).
 |-------|----------|
 | Stakeholders and RACI | [governance/roles-and-responsibilities.md](../governance/roles-and-responsibilities.md) |
 | Promotion stage (incl. CAB) | [lifecycle/test-and-promote.md](../lifecycle/test-and-promote.md) |
-| Governance by profile | [skills/automation-governance/SKILL.md](../../skills/automation-governance/SKILL.md) |
+| Governance by profile | [gac/module/skills/automation-governance/SKILL.md](../../gac/module/skills/automation-governance/SKILL.md) |
 | Light vs standard (CAB contrast) | [example-light-walkthrough-dev-packages.md](../examples/example-light-walkthrough-dev-packages.md) |

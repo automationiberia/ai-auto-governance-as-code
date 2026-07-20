@@ -3,7 +3,7 @@
 > **Evolution of mob programming for the AI era:** multiple humans design together; AI implements what the group decides. Everyone — humans and AI — receives proper credit.
 
 **Normative record:** [ADR-008](../adrs/ADR-008-ai-mob-design.md)
-**AI facilitation:** [skills/ai-mob-design/SKILL.md](../../skills/ai-mob-design/SKILL.md)
+**AI facilitation:** [gac/module/skills/ai-mob-design/SKILL.md](../../gac/module/skills/ai-mob-design/SKILL.md)
 **Template:** [templates/ai-mob-design-session-template.md](../templates/ai-mob-design-session-template.md)
 
 ---
@@ -199,7 +199,7 @@ Architecture-Decision: automation-whitepaper/adrs/ADR-008-ai-mob-design.md
 | Practice ADR | `automation-whitepaper/adrs/ADR-008-ai-mob-design.md` |
 | Session notes | `automation-whitepaper/mob-sessions/` |
 | Session template | `automation-whitepaper/templates/ai-mob-design-session-template.md` |
-| Facilitation skill | `skills/ai-mob-design/SKILL.md` |
+| Facilitation skill | `gac/module/skills/ai-mob-design/SKILL.md` |
 | Resulting ADRs | `automation-whitepaper/adrs/` |
 
 ---
@@ -207,4 +207,4 @@ Architecture-Decision: automation-whitepaper/adrs/ADR-008-ai-mob-design.md
 ## Related
 
 - [AGENTS.md](../../AGENTS.md) — Operating paths and AI modes
-- [automation-builder skill](../../skills/automation-builder/SKILL.md) — Implementation standards during mob coding phase
+- [automation-builder skill](../../gac/module/skills/automation-builder/SKILL.md) — Implementation standards during mob coding phase

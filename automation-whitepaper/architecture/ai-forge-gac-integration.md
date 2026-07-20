@@ -25,7 +25,7 @@ GaC **consumes** the [ai-forge](https://github.com/ansible-community/ai-forge) s
 │  ├── automation-whitepaper/      (AAP governance)           │
 │  ├── AGENTS.md + skills/         (Auditor/Builder/Librarian)│
 │  ├── automation-whitepaper/guides/ (Operational workflows)  │
-│  └── skills/automation-*/        (Org-specific skills)      │
+│  └── gac/module/skills/automation-*/        (Org-specific skills)      │
 │                                                             │
 │  Consumes via Lola:                                         │
 │  └── @ansible-content/ansible-collection-sdlc (ai-forge)    │
@@ -100,7 +100,7 @@ Clear separation of concerns:
 - **Builder** — content creation following governance
 - **Librarian** — documentation and skill synchronization
 
-Implemented in `AGENTS.md` and `skills/automation-{auditor,builder,librarian}/`.
+Implemented in `AGENTS.md` and `gac/module/skills/automation-{auditor,builder,librarian}/`.
 
 **Operational guides:**
 
@@ -285,7 +285,7 @@ You type a prompt or slash command
         │
         └─ "Use skill automation-builder" …
                     │
-                    ├─ skills/automation-builder/SKILL.md   (installed by Lola)
+                    ├─ gac/module/skills/automation-builder/SKILL.md   (installed by Lola)
                     ├─ AGENTS.md                            (modes, bootstrap rules)
                     ├─ automation-whitepaper/guides/…       (step-by-step standards)
                     ├─ automation-good-practices/           (pinned CoP submodule)

@@ -175,7 +175,7 @@ Full definitions: [glossary.md](glossary.md).
 | Pre-commit help | [PRE-COMMIT-GUIDE.md](PRE-COMMIT-GUIDE.md) |
 | Git workflow for delivery code | [git-automation-repository.md](git-automation-repository.md) |
 | Dev Spaces (browser IDE) | [devspaces-workspace.md](devspaces-workspace.md) |
-| Full skill catalog | [skills/README.md](../../skills/README.md) |
+| Full skill catalog | [gac/README.md](../../gac/README.md) |
 
 ---
 

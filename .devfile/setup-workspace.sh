@@ -102,9 +102,9 @@ _run_setup() {
     (cd "${AUTOMATION_REPO}" && "${_venv}/bin/pre-commit" install) || true
   fi
 
-  if [[ -x "${AUTOMATION_HOME}/skills/scripts/link-cursor-skills.sh" ]]; then
-    echo "==> Linking Cursor skills (optional — see skills/TOOL-SETUP.md for Claude/Copilot/other)"
-    "${AUTOMATION_HOME}/skills/scripts/link-cursor-skills.sh" || true
+  if command -v lola >/dev/null 2>&1; then
+    echo "==> Installing GaC skills via Lola (cursor)"
+    (cd "${AUTOMATION_HOME}" && lola install gac -a cursor) || true
   fi
 
   _continue_home="${_HOME}/.continue"

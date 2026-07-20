@@ -64,7 +64,7 @@ Existing Puppet manifests and modules remain active (tight integration with para
 
 AAP is the **master scheduler and auditor**, invoking Puppet agents from Ansible playbooks using the certified **`community.general.puppet`** module.
 
-**Skill for AI/humans:** [automation-puppet-orchestrate](../../skills/automation-puppet-orchestrate/SKILL.md).
+**Skill for AI/humans:** [automation-puppet-orchestrate](../../gac/module/skills/automation-puppet-orchestrate/SKILL.md).
 
 ### Native operational mapping
 
@@ -168,10 +168,10 @@ All new content lives in **`ai-auto-deliveries`** (`deliveries/automation/`). Do
 
 | Phase | Activity | Mode | Skill |
 |-------|----------|------|-------|
-| 1 | Wrapper playbooks | Builder | [automation-puppet-orchestrate](../../skills/automation-puppet-orchestrate/SKILL.md) |
-| 2 | Puppet → Ansible refactor | Builder | [automation-new-automation](../../skills/automation-new-automation/SKILL.md) |
-| 2 | PR / policy scan | Auditor | [automation-auditor](../../skills/automation-auditor/SKILL.md) |
-| Any | Update strategy | Librarian | [automation-librarian](../../skills/automation-librarian/SKILL.md) |
+| 1 | Wrapper playbooks | Builder | [automation-puppet-orchestrate](../../gac/module/skills/automation-puppet-orchestrate/SKILL.md) |
+| 2 | Puppet → Ansible refactor | Builder | [automation-new-automation](../../gac/module/skills/automation-new-automation/SKILL.md) |
+| 2 | PR / policy scan | Auditor | [automation-auditor](../../gac/module/skills/automation-auditor/SKILL.md) |
+| Any | Update strategy | Librarian | [automation-librarian](../../gac/module/skills/automation-librarian/SKILL.md) |
 
 Prompts: [ai-prompt-examples.md](../guides/ai-prompt-examples.md).
 
@@ -187,8 +187,8 @@ Prompts: [ai-prompt-examples.md](../guides/ai-prompt-examples.md).
 | **Puppet works fine, no change needed?** | Phase 1 — keep wrapper indefinitely. |
 | **Module for wrapper playbooks?** | `community.general.puppet` with FQCN, `summarize: true`, `noop: "{{ ansible_check_mode }}"`. |
 | **Where do wrappers live?** | `$AUTOMATION_REPO` (deliveries/automation/). |
-| **AI skill for wrappers?** | [automation-puppet-orchestrate](../../skills/automation-puppet-orchestrate/SKILL.md). |
-| **AI skill for refactoring?** | [automation-new-automation](../../skills/automation-new-automation/SKILL.md) + human review. |
+| **AI skill for wrappers?** | [automation-puppet-orchestrate](../../gac/module/skills/automation-puppet-orchestrate/SKILL.md). |
+| **AI skill for refactoring?** | [automation-new-automation](../../gac/module/skills/automation-new-automation/SKILL.md) + human review. |
 
 ---
 

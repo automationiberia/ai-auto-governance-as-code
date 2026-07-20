@@ -17,7 +17,7 @@ Monorepo layout: [automation-whitepaper/architecture/monorepo-layout.md](automat
 **Skill setup (Lola):** [guides/getting-started.md](automation-whitepaper/guides/getting-started.md#step-4--optional-configure-ai-with-lola) · [skills/TOOL-SETUP.md](skills/TOOL-SETUP.md).
 **Copy-paste prompts:** [automation-whitepaper/guides/ai-prompt-examples.md](automation-whitepaper/guides/ai-prompt-examples.md)
 
-**AI Mob Design:** [automation-whitepaper/guides/ai-mob-design.md](automation-whitepaper/guides/ai-mob-design.md) · [skills/ai-mob-design/SKILL.md](skills/ai-mob-design/SKILL.md).
+**AI Mob Design:** [automation-whitepaper/guides/ai-mob-design.md](automation-whitepaper/guides/ai-mob-design.md) · [gac/module/skills/ai-mob-design/SKILL.md](gac/module/skills/ai-mob-design/SKILL.md).
 
 ---
 
@@ -63,21 +63,21 @@ If the task spans modes (e.g. audit then build), state the **current** mode for 
 
 | Mode | Type | Agent responsibility | Specific actions |
 |------|------|----------------------|----------------|
-| **1 — The Auditor** | Retroactive | Scan existing playbooks and roles for technical debt. | Gap analysis: legacy patterns (e.g. `with_items`), missing variable prefixes, bare `item`, non-FQCN modules; output findings and remediating diffs aligned with `skills/*/SKILL.md` and the white paper. |
-| **2 — The Builder** | Proactive | Generate net-new automation or refactor to full compliance. | Bootstrap from **this file** and [skills/automation-builder/SKILL.md](skills/automation-builder/SKILL.md); ensure FQCN, L/T/F/C placement, and collection layout from the first line of YAML. |
+| **1 — The Auditor** | Retroactive | Scan existing playbooks and roles for technical debt. | Gap analysis: legacy patterns (e.g. `with_items`), missing variable prefixes, bare `item`, non-FQCN modules; output findings and remediating diffs aligned with `gac/module/skills/*/SKILL.md` and the white paper. |
+| **2 — The Builder** | Proactive | Generate net-new automation or refactor to full compliance. | Bootstrap from **this file** and [gac/module/skills/automation-builder/SKILL.md](gac/module/skills/automation-builder/SKILL.md); ensure FQCN, L/T/F/C placement, and collection layout from the first line of YAML. |
 | **3 — The Librarian** | Maintenance | Continuous evolution of the governance layer. | Propose updates to white paper markdown and matching `SKILL.md` when the team adopts new patterns (e.g. Molecule for testing) or when [Red Hat CoP GPA](https://github.com/redhat-cop/automation-good-practices) upstream changes. |
 
 ### Mode selection
 
 | User intent | Mode | Primary skill |
 |-------------|------|----------------|
-| Review, lint fix, refactor, PR comment on existing YAML | **1 — Auditor** | [automation-auditor](skills/automation-auditor/SKILL.md) |
-| New capability, greenfield role/playbook, extend OS platform | **2 — Builder** | [automation-builder](skills/automation-builder/SKILL.md) + task skills below |
-| Sync skills with white paper, GPA submodule, new governance pattern | **3 — Librarian** | [automation-librarian](skills/automation-librarian/SKILL.md) |
+| Review, lint fix, refactor, PR comment on existing YAML | **1 — Auditor** | [automation-auditor](gac/module/skills/automation-auditor/SKILL.md) |
+| New capability, greenfield role/playbook, extend OS platform | **2 — Builder** | [automation-builder](gac/module/skills/automation-builder/SKILL.md) + task skills below |
+| Sync skills with white paper, GPA submodule, new governance pattern | **3 — Librarian** | [automation-librarian](gac/module/skills/automation-librarian/SKILL.md) |
 
-Task skills (use **inside** Builder or Auditor modes as needed): see [skills/README.md](skills/README.md).
+Task skills (use **inside** Builder or Auditor modes as needed): see [gac/README.md](gac/README.md).
 
-**Platform administration** (live AAP via MCP): `skills/platform/aap-*` — see [aap-platform-administration.md](automation-whitepaper/operations/aap-platform-administration.md). Declare **platform area** (Audit / Operate / Build / Maintain) in addition to content modes when operating live AAP.
+**Platform administration** (live AAP via MCP): `gac/module/skills/aap-*` — see [aap-platform-administration.md](automation-whitepaper/operations/aap-platform-administration.md). Declare **platform area** (Audit / Operate / Build / Maintain) in addition to content modes when operating live AAP.
 
 ---
 
@@ -85,8 +85,8 @@ Task skills (use **inside** Builder or Auditor modes as needed): see [skills/REA
 
 | Plane | Path | Domain |
 |-------|------|--------|
-| **Content governance** | `skills/automation-*` | Ansible in Git (roles, playbooks, collections) |
-| **Platform administration** | `skills/platform/aap-*` | Live AAP objects via MCP |
+| **Content governance** | `gac/module/skills/automation-*` | Ansible in Git (roles, playbooks, collections) |
+| **Platform administration** | `gac/module/skills/aap-*` | Live AAP objects via MCP |
 
 Both planes share white book precedence and human Architect approval. **Mode 2 Builder** writes Ansible content; platform **Build** area wires Controller objects (later adoption phases).
 
@@ -98,7 +98,7 @@ Both planes share white book precedence and human Architect approval. **Mode 2 B
 |----------|--------|------|
 | **1 — Foundation** | Red Hat CoP `automation-good-practices/` | Default baseline where white book is silent |
 | **2 — Supreme override** | Enterprise white book (`automation-whitepaper/`) | On conflict, white book wins |
-| **3 — AI encoding** | `skills/*/SKILL.md` + this file | Operationalizes 1–2 for AI; must match white book |
+| **3 — AI encoding** | `gac/module/skills/*/SKILL.md` + this file | Operationalizes 1–2 for AI; must match white book |
 | **4 — Mechanical** | pre-commit, ansible-lint, CI | Validates code artifacts |
 
 Optional ADRs in `automation-whitepaper/adrs/` document exceptions; they do not sit above the white book.
@@ -189,8 +189,8 @@ automation-good-practices/   ← Red Hat CoP baseline (where white book silent)
         ↓
 automation-whitepaper/     ← Guide-first standards (human-authored; wins on conflict)
         ↓ Librarian sync
-skills/automation-*/       ← content AI operationalization
-skills/platform/aap-*/     ← platform AI operationalization (MCP)
+gac/module/skills/automation-*/       ← content AI operationalization
+gac/module/skills/aap-*/     ← platform AI operationalization (MCP)
 skills/vendor/aap-skills-library/  ← upstream reference (submodule)
 AGENTS.md (this file)      ← mode selection + Builder bootstrap
         ↓

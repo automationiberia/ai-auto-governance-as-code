@@ -56,7 +56,7 @@ Findings only — do not edit files yet.
 Output: summary by severity, findings table, refactor plan.
 ```
 
-Attach: `@AGENTS.md` `@skills/automation-auditor/SKILL.md` `@deliveries/automation/roles/rolename/`
+Attach: `@AGENTS.md` `@gac/module/skills/automation-auditor/SKILL.md` `@deliveries/automation/roles/rolename/`
 
 More prompts: [ai-prompt-examples.md § Primary workflow](ai-prompt-examples.md#3-primary-workflow--review-refactor-governance).
 

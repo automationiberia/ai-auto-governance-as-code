@@ -81,9 +81,9 @@ The `skills/` directory hosts **system blueprints**, structural context, and gua
 
 | Skill type | Examples |
 |------------|----------|
-| **Mode skills** | [automation-auditor](../../skills/automation-auditor/SKILL.md), [automation-builder](../../skills/automation-builder/SKILL.md), [automation-librarian](../../skills/automation-librarian/SKILL.md) |
-| **Phase 1 Puppet orchestration** | [automation-puppet-orchestrate](../../skills/automation-puppet-orchestrate/SKILL.md) |
-| **Task skills** | [skills/README.md](../../skills/README.md) catalog |
+| **Mode skills** | [automation-auditor](../../gac/module/skills/automation-auditor/SKILL.md), [automation-builder](../../gac/module/skills/automation-builder/SKILL.md), [automation-librarian](../../gac/module/skills/automation-librarian/SKILL.md) |
+| **Phase 1 Puppet orchestration** | [automation-puppet-orchestrate](../../gac/module/skills/automation-puppet-orchestrate/SKILL.md) |
+| **Task skills** | [gac/README.md](../../gac/README.md) catalog |
 
 Tool setup (agnostic): [TOOL-SETUP.md](../../skills/TOOL-SETUP.md).
 
@@ -98,7 +98,7 @@ AI is an **operational accelerator** with explicit boundaries.
 | Initial design drafting (skeleton roles) | **Builder** (human Architect approves) |
 | Phase 2 refactoring (Puppet DSL → Ansible YAML, **human review**) | **Builder** + peer review |
 | Automated CI/CD gatekeeping (PR policy scan) | **Auditor** |
-| Phase 1 wrapper playbook generation | **Builder** + [automation-puppet-orchestrate](../../skills/automation-puppet-orchestrate/SKILL.md) |
+| Phase 1 wrapper playbook generation | **Builder** + [automation-puppet-orchestrate](../../gac/module/skills/automation-puppet-orchestrate/SKILL.md) |
 | Standards / skill maintenance | **Librarian** |
 
 #### How to use AI (human-in-the-loop)
@@ -160,6 +160,6 @@ Onboarding path:
 |---------|-----------------|
 | §2 Phases | [aap-puppet-coexistence-evolution.md](../architecture/aap-puppet-coexistence-evolution.md) |
 | §3 Governance-as-Code | [governance-as-code-ai-enforcement.md](governance-as-code-ai-enforcement.md) |
-| §3 Puppet wrappers | [automation-puppet-orchestrate](../../skills/automation-puppet-orchestrate/SKILL.md) |
+| §3 Puppet wrappers | [automation-puppet-orchestrate](../../gac/module/skills/automation-puppet-orchestrate/SKILL.md) |
 | §4 Dev Spaces | [devspaces-workspace.md](../guides/devspaces-workspace.md) |
 | Monorepo | [monorepo-layout.md](../architecture/monorepo-layout.md) |

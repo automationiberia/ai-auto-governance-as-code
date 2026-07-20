@@ -13,7 +13,7 @@ modules:
       AAP architecture patterns, and AI agents. Consumes ai-forge for SDLC.
     version: 1.0.0
     repository: https://github.com/automationiberia/ai-auto-governance-as-code.git
-    path: .
+    path: gac/module
     dependencies:
       - "@ansible-content/ansible-collection-sdlc"
     tags: [governance, aap, automation, compliance]

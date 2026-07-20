@@ -10,8 +10,8 @@ Governance for **live Ansible Automation Platform (AAP)** operations via Agent S
 
 | Plane | Path prefix | Domain | System of record |
 |-------|-------------|--------|------------------|
-| **Content governance** | `skills/automation-*` | Roles, playbooks, collections in Git | `$AUTOMATION_REPO` |
-| **Platform administration** | `skills/platform/aap-*` | Controller objects, jobs, RBAC via MCP | Live AAP |
+| **Content governance** | `gac/module/skills/automation-*` | Roles, playbooks, collections in Git | `$AUTOMATION_REPO` |
+| **Platform administration** | `gac/module/skills/aap-*` | Controller objects, jobs, RBAC via MCP | Live AAP |
 
 Both planes share the same monorepo, white book precedence, and human Architect approval gates. Platform skills **do not** replace content skills or GPA rules for YAML authoring.
 
@@ -31,7 +31,7 @@ Platform skills require **AAP MCP servers** registered in the AI client. See [sk
 
 | Layer | Role |
 |-------|------|
-| **Skills** (`skills/platform/aap-*`) | What to do; enterprise constraints |
+| **Skills** (`gac/module/skills/aap-*`) | What to do; enterprise constraints |
 | **MCP** | Protocol boundary to AAP APIs |
 | **AAP** | System of record for platform objects |
 
@@ -100,14 +100,14 @@ Recommend `aap-live-snapshot` (or targeted read) **before** production template 
 
 ## Upstream sync (Librarian)
 
-Reference upstream skills live in `skills/vendor/aap-skills-library/` (git submodule). Enterprise-adapted skills live in `skills/platform/aap-*/`.
+Reference upstream skills live in `skills/vendor/aap-skills-library/` (git submodule). Enterprise-adapted skills live in `gac/module/skills/aap-*/`.
 
-**Do not** symlink vendor skills directly into AI clients. Librarian merges upstream changes into `skills/platform/` per [ADR-007](../adrs/ADR-007-aap-platform-skills-plane.md).
+**Do not** symlink vendor skills directly into AI clients. Librarian merges upstream changes into `gac/module/skills/` per [ADR-007](../adrs/ADR-007-aap-platform-skills-plane.md).
 
 ```bash
 git submodule update --remote skills/vendor/aap-skills-library
-./skills/scripts/sync-aapsl-skills.sh --diff   # review only
-./skills/scripts/sync-aapsl-skills.sh          # after Librarian approval
+./gac/scripts/sync-aapsl-skills.sh --diff   # review only
+./gac/scripts/sync-aapsl-skills.sh          # after Librarian approval
 ```
 
 ---
@@ -116,9 +116,9 @@ git submodule update --remote skills/vendor/aap-skills-library
 
 | Skill | Area | Profile min |
 |-------|------|-------------|
-| [aap-live-snapshot](../../skills/platform/aap-live-snapshot/SKILL.md) | Audit | light |
-| [aap-rbac-review](../../skills/platform/aap-rbac-review/SKILL.md) | Audit | standard |
-| [aap-job-status](../../skills/platform/aap-job-status/SKILL.md) | Operate | light |
+| [aap-live-snapshot](../../gac/module/skills/aap-live-snapshot/SKILL.md) | Audit | light |
+| [aap-rbac-review](../../gac/module/skills/aap-rbac-review/SKILL.md) | Audit | standard |
+| [aap-job-status](../../gac/module/skills/aap-job-status/SKILL.md) | Operate | light |
 
 Write skills (`aap-job-executor`, `aap-inventory-create`, `aap-job-template-create`, maintain skills) follow in later adoption phases.
 
@@ -126,7 +126,7 @@ Write skills (`aap-job-executor`, `aap-inventory-create`, `aap-job-template-crea
 
 ## Related documents
 
-- [skills/platform/README.md](../../skills/platform/README.md) — platform skill catalog
-- [skills/SKILL-TEMPLATE.md](../../skills/SKILL-TEMPLATE.md) — unified skill metadata
-- [automation-controller-ops](../../skills/automation-controller-ops/SKILL.md) — router to platform skills
+- [gac/module/gac/README.md](../../gac/module/gac/README.md) — platform skill catalog
+- [gac/SKILL_GUIDELINES.md](../../gac/SKILL_GUIDELINES.md) — unified skill metadata
+- [automation-controller-ops](../../gac/module/skills/automation-controller-ops/SKILL.md) — router to platform skills
 - [governance-as-code-ai-enforcement.md](../governance/governance-as-code-ai-enforcement.md)

@@ -15,7 +15,7 @@ Approved white book changes are synchronized to `SKILL.md` through the **Librari
 1. Update `automation-whitepaper/*.md` (human-authored source)
 2. Sync matching `skills/<name>/SKILL.md`
 3. Update `AGENTS.md` if mode or bootstrap rules change
-4. Update `skills/README.md` catalog if skills are added or renamed
+4. Update `gac/README.md` catalog if skills are added or renamed
 5. Apply tool-specific sync per [skills/TOOL-SETUP.md](../../skills/TOOL-SETUP.md) (e.g. Cursor skill links)
 
 We **do not** operate an automated ADR → `.mdc` compile pipeline. Canonical skill format is **`SKILL.md`**.

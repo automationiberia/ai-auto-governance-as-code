@@ -1,5 +1,8 @@
-# GaC consumes ai-forge for SDLC skills only
-# Install: make install  (or: lola sync)
+# GaC Lola requirements — declarative AI context for this repo
+# Install: lola sync  (after both marketplaces are registered)
 
-# SDLC workflows: commit, PR, release, changelog
+# Governance skills (this repo)
+@gac/gac
+
+# SDLC workflows from ai-forge
 @ansible-content/ansible-collection-sdlc
