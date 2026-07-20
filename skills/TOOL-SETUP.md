@@ -13,11 +13,24 @@ Prompt copy-paste library (tool-neutral): [ai-prompt-examples.md](../automation-
 
 [Lola](https://lobstertrap.org/lola/) is the package manager for AI context. It installs GaC governance skills (and ai-forge SDLC skills via the `gac` module) into Cursor, Claude Code, and other supported assistants.
 
+### Where Lola installs (explicit)
+
+**Run from the repository root** (`ai-auto-governance-as-code/`, where `lola-market.yml` is). **Never** from `automation-whitepaper/`.
+
+| Content | Lola writes to `automation-whitepaper/`? | Where it goes |
+|---------|------------------------------------------|---------------|
+| ai-forge SDLC (`/commit`, …) | **No** | Lola cache → assistant-native format |
+| GaC skills (`skills/`) | **No** | e.g. `.cursor/skills/` (gitignored) |
+| White book (`automation-whitepaper/`) | **No** — read only | Stays in your git clone |
+
+Full table: [ai-forge-gac-integration.md § Where Lola installs](../automation-whitepaper/architecture/ai-forge-gac-integration.md#where-lola-installs-explicit).
+
 ### Install GaC into your assistant
 
 After [repository prep](#repository-prep-every-tool):
 
 ```bash
+cd /path/to/ai-auto-governance-as-code   # repo root
 pip install lola-ai
 lola market add gac \
   https://raw.githubusercontent.com/automationiberia/ai-auto-governance-as-code/main/lola-market.yml

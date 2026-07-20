@@ -6,13 +6,13 @@ One-page path from zero to productive. Deep reference: [01-main-guide.md](../01-
 
 ## What this repo is
 
-| Piece | Folder | You use it to… |
-|-------|--------|----------------|
-| **Standards** | `automation-whitepaper/` | Read how we build and ship Ansible |
-| **AI rules** | `skills/` + `AGENTS.md` | Let agents audit, build, or update standards |
-| **CoP baseline** | `automation-good-practices/` | Pinned Red Hat CoP (submodule) |
-| **SDLC skills** | ai-forge via Lola | `/commit`, `/create-pr`, `/release` — run `make install` |
-| **Real Ansible code** | `deliveries/automation/` | Roles and playbooks in production (submodule) |
+| Piece | Folder | You use it to… | Lola installs here? |
+|-------|--------|----------------|---------------------|
+| **Standards** | `automation-whitepaper/` | Read how we build and ship Ansible | **No** — read from git clone |
+| **AI rules** | `skills/` + `AGENTS.md` | Let agents audit, build, or update standards | Skills wired to **assistant** (not whitepaper) |
+| **CoP baseline** | `automation-good-practices/` | Pinned Red Hat CoP (submodule) | **No** — `git submodule` |
+| **SDLC skills** | ai-forge via Lola | `/commit`, `/create-pr`, `/release` | **No** — assistant + Lola cache |
+| **Real Ansible code** | `deliveries/automation/` | Roles and playbooks in production (submodule) | **No** — submodule |
 
 **You are the Architect** (design + approval). AI agents work in **Auditor**, **Builder**, or **Librarian** mode — see [AGENTS.md](../../AGENTS.md). You can also work **manually** (no AI): same standards, no mode declaration.
 
@@ -75,16 +75,25 @@ Declare mode before any YAML.
 
 ## Step 4 — Optional: configure AI with Lola
 
-[Lola](https://lobstertrap.org/lola/) installs GaC governance skills and ai-forge SDLC workflows into your AI assistant — one setup path instead of per-tool manual wiring. Details: [TOOL-SETUP.md](../../skills/TOOL-SETUP.md).
+[Lola](https://lobstertrap.org/lola/) installs GaC governance skills and ai-forge SDLC workflows into your **AI assistant** — not into `automation-whitepaper/`. The white book stays markdown in git; the assistant **reads** it when skills or prompts reference it.
 
-**One-time setup** (from repo root, after Steps 1–2):
+**Run from repo root** (`ai-auto-governance-as-code/`, where `lola-market.yml` is). Details: [Where Lola installs](../architecture/ai-forge-gac-integration.md#where-lola-installs-explicit).
+
+**One-time setup** (after Steps 1–2):
 
 ```bash
+cd ai-auto-governance-as-code    # repo root — required
 pip install lola-ai
 lola market add gac \
   https://raw.githubusercontent.com/automationiberia/ai-auto-governance-as-code/main/lola-market.yml
 lola install gac -a <assistant>
 ```
+
+| What gets installed | Goes into `automation-whitepaper/`? | How you use it |
+|---------------------|-------------------------------------|----------------|
+| ai-forge SDLC | **No** | `/commit`, `/create-pr` in chat |
+| GaC skills (`skills/`) | **No** | `Use skill automation-builder` in chat |
+| White book guides | **No** (read from clone) | `@automation-whitepaper/guides/…` or prompts |
 
 | Assistant | Command |
 |-----------|---------|
@@ -95,6 +104,8 @@ lola install gac -a <assistant>
 After `git pull` adds or renames skills, run `lola install gac -a <assistant>` again (or `lola sync` if the repo uses `.lola-req`).
 
 In every AI session, the agent must **declare its mode** before writing YAML.
+
+More setup: [TOOL-SETUP.md](../../skills/TOOL-SETUP.md).
 
 **AI shortcut (first session):**
 

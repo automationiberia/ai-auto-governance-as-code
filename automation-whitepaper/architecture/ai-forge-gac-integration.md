@@ -146,35 +146,71 @@ Details: [cop-overrides.md](../governance/cop-overrides.md) · [ADR-003](../adrs
 
 ## Installation
 
+**Run all Lola commands from the repository root** (`ai-auto-governance-as-code/`, where `lola-market.yml` lives). **Do not** run them inside `automation-whitepaper/` or any subfolder.
+
+### Where Lola installs (explicit)
+
+Lola **does not copy skills into `automation-whitepaper/`**. The white book stays human-authored markdown in git. Lola wires skills into your **AI assistant's native paths** for the current project.
+
+| Content | Source in git | Written to `automation-whitepaper/`? | Where Lola / the assistant puts it |
+|---------|---------------|--------------------------------------|-------------------------------------|
+| White book (guides, ADRs, architecture) | `automation-whitepaper/` | **No** — already in git; read via `@` or prompts | Stays in your clone; not modified by Lola |
+| GaC Agent Skills | `skills/` at repo root | **No** | Assistant skill dir (e.g. `.cursor/skills/` — gitignored) |
+| `AGENTS.md` bootstrap rules | repo root | **No** | Referenced by skills; loaded by assistant |
+| ai-forge SDLC (`/commit`, `/create-pr`, …) | **Not in this repo** — `@ansible-content/ansible-collection-sdlc` | **No** | Lola cache → translated into assistant format |
+| CoP baseline | `automation-good-practices/` submodule | **No** | Submodule path in your clone (`make install` / `git submodule`) |
+| Delivery Ansible code | `deliveries/automation/` submodule | **No** | Submodule path (`$AUTOMATION_REPO`) |
+
+**Verify after install:**
+
+```bash
+cd ai-auto-governance-as-code    # repo root
+lola list                        # modules installed for this project
+ls .cursor/skills 2>/dev/null    # Cursor: GaC + ai-forge skills (gitignored)
+```
+
+**Common mistake:** expecting `/commit` or `automation-builder` to appear as files under `automation-whitepaper/`. They do not — you invoke them in the assistant chat; the white book is **referenced**, not **installed into**.
+
+Full detail: [Where content lives vs how you invoke it](#where-content-lives-vs-how-you-invoke-it) below.
+
 ### For end users (AI assistant)
 
 ```bash
+cd ai-auto-governance-as-code    # repo root — required
 pip install lola-ai
 
 lola market add gac \
   https://raw.githubusercontent.com/automationiberia/ai-auto-governance-as-code/main/lola-market.yml
 
-lola install gac -a claude-code
+lola install gac -a claude-code   # or: -a cursor
 ```
 
-Installing `gac` pulls ai-forge SDLC skills via the dependency declared in `lola-market.yml`.
+Installing `gac`:
+
+1. Registers this repository as a Lola module (`path: .` in `lola-market.yml`).
+2. Pulls **ai-forge SDLC** as a dependency (not into `automation-whitepaper/`).
+3. Wires **GaC skills** from `skills/` into your assistant — still **not** into `automation-whitepaper/`.
 
 ### For GaC contributors
 
 ```bash
 git clone --recurse-submodules \
   https://github.com/automationiberia/ai-auto-governance-as-code.git
-cd ai-auto-governance-as-code
+cd ai-auto-governance-as-code    # repo root
 make install
 ```
 
-`make install` runs `lola sync` (SDLC from ai-forge) and `git submodule update --init --recursive` (CoP + delivery submodules).
+`make install` runs `lola sync` (ai-forge SDLC from `.lola-req` only) and `git submodule update --init --recursive` (CoP + delivery). It does **not** modify `automation-whitepaper/`.
+
+After `make install`, run `lola install gac -a <assistant>` once per machine to wire GaC skills into your IDE.
 
 ---
 
 ## Usage examples
 
-GaC and ai-forge use **different invocation styles**. ai-forge exposes **slash commands** in the assistant; GaC exposes **Agent Skills** and **white book guides** that the human or AI reads from the cloned repo.
+See also: [Where Lola installs (explicit)](#where-lola-installs-explicit).
+
+GaC and ai-forge use **different invocation styles**. ai-forge exposes **slash commands** in the assistant; GaC exposes **Agent Skills** and **white book guides** that the human or AI **reads from the cloned repo** (not copied into `automation-whitepaper/` by Lola).
 
 | Layer | How you invoke it | What it does |
 |-------|-------------------|----------------|
@@ -252,6 +288,28 @@ You type a prompt or slash command
 ```
 
 **Rule of thumb:** slash commands = **ship** the change (SDLC). Skills + white book = **design and validate** the change (governance).
+
+### Where content lives vs how you invoke it
+
+```text
+REPO (git — your clone)                    ASSISTANT (Lola install target)
+─────────────────────────                  ─────────────────────────────────
+automation-whitepaper/  ← READ only        .cursor/skills/  (Cursor, gitignored)
+  guides/…              (human + AI @)       ├── automation-builder/  (from skills/)
+  adrs/…                                     ├── automation-auditor/
+  architecture/…                             └── … ai-forge SDLC skills
+skills/                 ← SOURCE in git
+AGENTS.md               ← SOURCE in git    Slash commands in chat:
+automation-good-practices/  ← submodule        /commit  /create-pr  (ai-forge)
+deliveries/automation/      ← submodule
+```
+
+| You want to… | Do this | Touches `automation-whitepaper/`? |
+|--------------|---------|-----------------------------------|
+| Commit / open PR (SDLC) | `/commit`, `/create-pr` in chat | **No** |
+| Audit a role (governance) | `Use skill automation-auditor` + read white book | **Read only** |
+| Build new automation | `Use skill automation-builder` + `automation-whitepaper/guides/create-new-from-scratch.md` | **Read only** |
+| Learn standards without AI | Open `automation-whitepaper/guides/` in the browser/IDE | **Read only** |
 
 ---
 
