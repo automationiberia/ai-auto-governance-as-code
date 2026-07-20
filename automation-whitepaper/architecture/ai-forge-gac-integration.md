@@ -23,9 +23,9 @@ GaC **consumes** the [ai-forge](https://github.com/ansible-community/ai-forge) s
 │  Governance content (GaC-owned):                            │
 │  ├── automation-good-practices/  (CoP submodule — pinned)   │
 │  ├── automation-whitepaper/      (AAP governance)           │
-│  ├── AGENTS.md + skills/         (Auditor/Builder/Librarian)│
+│  ├── AGENTS.md + gac/module/   (rules → skills for AI)      │
 │  ├── automation-whitepaper/guides/ (Operational workflows)  │
-│  └── gac/module/skills/automation-*/        (Org-specific skills)      │
+│  └── gac/module/skills/        (Org-specific skills)        │
 │                                                             │
 │  Consumes via Lola:                                         │
 │  └── @ansible-content/ansible-collection-sdlc (ai-forge)    │

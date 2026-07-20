@@ -1,6 +1,6 @@
 # Deliveries — shared automation collection
 
-Git submodule inside the **`ai-auto-governance-as-code`** governance monorepo. Production **roles** and **type playbooks** live here — separate from the white book and Agent Skills.
+Git submodule inside the **`ai-auto-governance-as-code`** governance monorepo. Production **roles** and **type playbooks** live here — separate from the white book and from governance skills (`gac/module/skills/`).
 
 | Item | Value |
 |------|--------|

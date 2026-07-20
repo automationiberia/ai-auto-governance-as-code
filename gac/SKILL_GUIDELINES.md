@@ -1,8 +1,8 @@
-# Skill template (content and platform)
+# Skill authoring guidelines
 
-Canonical metadata and body structure for all Agent Skills in this repository. Librarian uses this when adding or syncing skills.
+Canonical metadata and body structure for **Agent Skills** — the layer that **translates** human-authored white book rules into instructions AI agents execute. Skills do not define policy; they encode it. Librarian uses this document when adding or syncing skills.
 
-**Update order:** white paper section first → `SKILL.md` → catalog → tool sync ([ADR-004](../automation-whitepaper/adrs/ADR-004-librarian-synchronization.md)).
+**Update order:** white paper section first → `SKILL.md` → [gac/README.md](README.md) catalog → `lola install gac` ([ADR-004](../automation-whitepaper/adrs/ADR-004-librarian-synchronization.md)).
 
 ---
 

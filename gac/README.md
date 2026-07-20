@@ -1,33 +1,42 @@
-# GaC Lola module — governance skills
+# Governance skills — Lola module `gac`
 
-> Lola module `gac` — skills that encode [automation white paper](../automation-whitepaper/) standards for AI agents.
+> **Human rules → Agent Skills.** This module encodes [Automation White Paper](../automation-whitepaper/) standards so AI assistants enforce the same governance your engineers follow manually.
 
-**Install:** [skills/TOOL-SETUP.md](../skills/TOOL-SETUP.md) · **Layout:** [LobsterTrap/lola](https://github.com/LobsterTrap/lola) · **Reference:** [ansible-community/ai-forge](https://github.com/ansible-community/ai-forge)
+The white book (`automation-whitepaper/`) is the **source of truth**. Each `SKILL.md` here is a **translation** of those rules into instructions an agent can execute. Update the white paper first; then sync skills (Librarian). See [ADR-004](../automation-whitepaper/adrs/ADR-004-librarian-synchronization.md).
+
+**Install:** [skills/TOOL-SETUP.md](../skills/TOOL-SETUP.md) · **Authoring:** [SKILL_GUIDELINES.md](SKILL_GUIDELINES.md) · **Lola:** [LobsterTrap/lola](https://github.com/LobsterTrap/lola) · **Pattern:** [ansible-community/ai-forge](https://github.com/ansible-community/ai-forge)
+
+---
+
+## Paradigm: Human as the Architect
+
+| Role | Responsibility |
+|------|----------------|
+| **Human (Architect)** | Strategy, Red Lines, white book, final approval |
+| **Mode 1 — Auditor** | Scan existing code against encoded rules |
+| **Mode 2 — Builder** | Create automation to full compliance |
+| **Mode 3 — Librarian** | Evolve white book **and** matching skills |
+
+Manual work without AI uses the same white book — [getting-started](../automation-whitepaper/guides/getting-started.md). Entry point for agents: [AGENTS.md](../AGENTS.md).
+
+---
 
 ## Module layout (Lola standard)
 
 ```text
 gac/
   README.md                 ← this catalog
-  SKILL_GUIDELINES.md       ← Librarian template
+  SKILL_GUIDELINES.md       ← Librarian template for new skills
+  PLATFORM_SKILLS.md        ← live AAP (MCP) skills
   module/
-    skills/<name>/SKILL.md  ← auto-discovered skills
-    commands/*.md           ← slash commands (modes)
-  scripts/                  ← maintainer helpers (not installed by Lola)
+    skills/<name>/SKILL.md  ← auto-discovered by Lola
+    commands/*.md           ← slash commands for modes
+  scripts/                  ← maintainer tools (not installed by Lola)
 ```
 
-**Canonical skill source:** `gac/module/skills/*/SKILL.md`
+Canonical paths in git: `gac/module/skills/*/SKILL.md`
 
-## Paradigm
-
-The **human is the Architect** (strategy, Red Lines, approval). AI agents operate in three **execution modes** — or work **manually** via white book guides. See [AGENTS.md](../AGENTS.md).
-
-| Path | When |
-|------|------|
-| **Manual** | [getting-started](../automation-whitepaper/guides/getting-started.md) without AI |
-| **Mode 1 — Auditor** | Review and fix existing code |
-| **Mode 2 — Builder** | Create new automation |
-| **Mode 3 — Librarian** | Update white book + skills |
+---
 
 ## Mode skills
 
@@ -41,28 +50,30 @@ The **human is the Architect** (strategy, Red Lines, approval). AI agents operat
 
 | Skill | When |
 |-------|------|
-| [ai-mob-design](module/skills/ai-mob-design/SKILL.md) | Complex design + same-session implementation |
+| [ai-mob-design](module/skills/ai-mob-design/SKILL.md) | Humans mob on design; AI implements in session |
 
-Guide: [ai-mob-design.md](../automation-whitepaper/guides/ai-mob-design.md) · ADR: [ADR-008](../automation-whitepaper/adrs/ADR-008-ai-mob-design.md) · Command: `/mob-design`
+[Guide](../automation-whitepaper/guides/ai-mob-design.md) · [ADR-008](../automation-whitepaper/adrs/ADR-008-ai-mob-design.md) · `/mob-design`
 
 ## Task skills
 
-| Skill | When to Use |
-|-------|-------------|
-| [automation-new-automation](module/skills/automation-new-automation/SKILL.md) | New automation end-to-end |
-| [automation-role-development](module/skills/automation-role-development/SKILL.md) | Ansible roles |
-| [automation-playbook-inventory](module/skills/automation-playbook-inventory/SKILL.md) | Playbooks & inventory |
-| [automation-quality-gates](module/skills/automation-quality-gates/SKILL.md) | Code review & validation |
-| [automation-pre-commit](module/skills/automation-pre-commit/SKILL.md) | Pre-commit hooks |
-| [automation-architecture](module/skills/automation-architecture/SKILL.md) | L/T/F/C patterns |
+Used inside Auditor or Builder modes.
+
+| Skill | Encodes |
+|-------|---------|
+| [automation-new-automation](module/skills/automation-new-automation/SKILL.md) | End-to-end new capability |
+| [automation-role-development](module/skills/automation-role-development/SKILL.md) | Role structure and vars |
+| [automation-playbook-inventory](module/skills/automation-playbook-inventory/SKILL.md) | Playbooks and inventory |
+| [automation-quality-gates](module/skills/automation-quality-gates/SKILL.md) | Review and idempotency |
+| [automation-pre-commit](module/skills/automation-pre-commit/SKILL.md) | Hooks and lint |
+| [automation-architecture](module/skills/automation-architecture/SKILL.md) | L/T/F/C and collections |
 | [automation-lifecycle](module/skills/automation-lifecycle/SKILL.md) | Six-stage lifecycle |
-| [automation-governance](module/skills/automation-governance/SKILL.md) | Stakeholder & CAB |
-| [automation-controller-ops](module/skills/automation-controller-ops/SKILL.md) | Controller operations |
+| [automation-governance](module/skills/automation-governance/SKILL.md) | Stakeholders and CAB |
+| [automation-controller-ops](module/skills/automation-controller-ops/SKILL.md) | Controller and SSOT |
 | [automation-puppet-orchestrate](module/skills/automation-puppet-orchestrate/SKILL.md) | Phase 1 Puppet wrappers |
 
 ## Platform skills (live AAP via MCP)
 
-Phase 1 catalog — detail: [PLATFORM_SKILLS.md](PLATFORM_SKILLS.md)
+Enterprise-adapted operations skills — [PLATFORM_SKILLS.md](PLATFORM_SKILLS.md)
 
 | Skill | Area |
 |-------|------|
@@ -70,12 +81,15 @@ Phase 1 catalog — detail: [PLATFORM_SKILLS.md](PLATFORM_SKILLS.md)
 | [aap-rbac-review](module/skills/aap-rbac-review/SKILL.md) | Audit |
 | [aap-job-status](module/skills/aap-job-status/SKILL.md) | Operate |
 
-## Maintaining skills (Librarian)
+---
 
-1. Update white paper markdown first
-2. Sync `gac/module/skills/<name>/SKILL.md` (see [SKILL_GUIDELINES.md](SKILL_GUIDELINES.md))
-3. Update [AGENTS.md](../AGENTS.md) and this catalog if modes change
-4. `lola install gac -a <assistant>` or `lola sync`
-5. AAPSL upstream: `git submodule update --remote skills/vendor/aap-skills-library` then `./gac/scripts/sync-aapsl-skills.sh --diff`
+## Librarian workflow (maintaining the translation)
 
-Vendor submodule stays at `skills/vendor/aap-skills-library/` (not part of the Lola module tree).
+1. Change **white paper** markdown (`automation-whitepaper/`)
+2. Update matching **`gac/module/skills/<name>/SKILL.md`** ([SKILL_GUIDELINES.md](SKILL_GUIDELINES.md))
+3. Update [AGENTS.md](../AGENTS.md) if modes or bootstrap rules change
+4. Refresh this catalog if skills are added or renamed
+5. `lola install gac -a <assistant>` or `lola sync`
+6. AAPSL upstream: `git submodule update --remote skills/vendor/aap-skills-library` then `./gac/scripts/sync-aapsl-skills.sh --diff`
+
+Vendor reference only: `skills/vendor/aap-skills-library/` — never symlink vendor skills directly into assistants.

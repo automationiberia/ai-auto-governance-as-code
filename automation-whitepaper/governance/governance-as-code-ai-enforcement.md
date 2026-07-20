@@ -19,7 +19,7 @@ Implementation in this monorepo:
 | Component | Path | Content | Functional role | Source |
 |-----------|------|---------|-----------------|--------|
 | White book | `automation-whitepaper/` | Guide-first topic guides, lifecycle, architecture, examples | Authoritative enterprise standards (human-authored) | Internal |
-| Agent Skills | `skills/` (`SKILL.md`; tool mirrors optional) | Behavioral logic for AI agents | AI enforcement layer (Librarian-synced) | Internal |
+| Agent Skills | `gac/module/skills/` | `SKILL.md` per skill (Lola module) | Translation of white book rules for AI agents | Internal (Librarian-synced) |
 | Agent bootstrap | `AGENTS.md` | Mode selection, Builder rules, precedence confirmation | AI entry point | Internal |
 | GPA baseline | `automation-good-practices/` | Red Hat CoP reference standards | Compliance baseline | Red Hat CoP (submodule) |
 | Delivery collection | `deliveries/automation/` | Production roles and playbooks (`ai-auto-deliveries`) | Production execution | Internal (submodule) |

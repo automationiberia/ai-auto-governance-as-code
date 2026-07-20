@@ -20,6 +20,7 @@ automation-whitepaper/
 | Start here if you want to… | Open |
 |----------------------------|------|
 | Onboard (manual, no AI) | [guides/getting-started.md](../guides/getting-started.md) |
+| See how rules become AI skills | [../gac/README.md](../../gac/README.md) |
 | Write compliant YAML | [development/coding-style.md](../development/coding-style.md) |
 | Classify new work (L/T/F/C) | [architecture/landscape-type-function-component.md](../architecture/landscape-type-function-component.md) |
 | Record an approved exception | [adrs/](../adrs/README.md) (optional) |

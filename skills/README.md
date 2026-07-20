@@ -1,18 +1,22 @@
-# AI Agent Skills
+# Skills directory
 
-> **Moved:** Skills now live in the **Lola module** at [gac/README.md](../gac/README.md).
+This folder is **not** where governance skills live in source control.
 
-Governance skills follow the [Lola module layout](https://github.com/LobsterTrap/lola#module-structure) (same pattern as [ansible-community/ai-forge](https://github.com/ansible-community/ai-forge)):
+## Governance = white book → skills
+
+Your organisation’s **human rules** are written in [`automation-whitepaper/`](../automation-whitepaper/). They are **encoded** as Agent Skills under:
 
 ```text
 gac/module/skills/<name>/SKILL.md
 ```
 
-**Setup:** [TOOL-SETUP.md](TOOL-SETUP.md) · **Catalog:** [gac/README.md](../gac/README.md)
+Catalog and Librarian workflow: **[gac/README.md](../gac/README.md)**
 
-This directory retains:
+Install into Cursor, Claude Code, or other assistants with **Lola**: **[TOOL-SETUP.md](TOOL-SETUP.md)**
+
+## What stays here
 
 | Path | Purpose |
 |------|---------|
-| [TOOL-SETUP.md](TOOL-SETUP.md) | Install skills with Lola per assistant |
-| `vendor/aap-skills-library/` | Upstream AAP skills submodule (reference only) |
+| [TOOL-SETUP.md](TOOL-SETUP.md) | Lola install and assistant configuration |
+| `vendor/aap-skills-library/` | Upstream AAP platform skills (submodule; reference for Librarian merges) |
