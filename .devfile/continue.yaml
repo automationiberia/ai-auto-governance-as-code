@@ -1,6 +1,7 @@
 ---
 # Legacy optional devfile — UDI only, external LLM via secrets.
-# Prefer the default .devfile.yaml (Automation Home): Copilot + Continue + Ollama sidecar.
+# Prefer the default .devfile.yaml (Automation Home):
+# Copilot + Continue + Ollama sidecar.
 # Use this file only with: ?devfilePath=.devfile/continue.yaml
 schemaVersion: 2.3.0
 metadata:
@@ -20,9 +21,11 @@ commands:
       component: vscode-editor
       commandLine: |
         sh -c "
-        echo '[postStart] Copying full .continue folder to ~/.continue (resolving env placeholders)...'
+        echo '[postStart] Copying .continue to ~/.continue (env placeholders)...'
         mkdir -p /home/user/.continue
-        cp -r \"$PROJECT_SOURCE/.continue/\"* /home/user/.continue/
+        dst=/home/user/.continue
+        src=\"$PROJECT_SOURCE/.continue\"
+        cp -r \"$src/\"* \"$dst/\"
         name=\"$CONTINUE_MODEL_NAME\"
         key=\"$CONTINUE_MODEL_API_KEY\"
         url=\"$CONTINUE_MODEL_API_URL\"
@@ -39,15 +42,15 @@ commands:
             gsub(/\\\$\{CONTINUE_MODEL_API_URL\}/, u)
             print
           }
-        ' \"$PROJECT_SOURCE/.continue/config.yaml\" > /home/user/.continue/config.yaml
+        ' \"$src/config.yaml\" > \"$dst/config.yaml\"
         awk -v c7=\"\$ctx7key\" '
           BEGIN {
             gsub(/\\\\/, \"\\\\\\\\\", c7)
             gsub(/\"/, \"\\\\\\\"\", c7)
           }
           { gsub(/\\\$\{CONTEXT7_API_KEY\}/, c7); print }
-        ' \"$PROJECT_SOURCE/.continue/mcpServers/mcp.json\" > /home/user/.continue/mcpServers/mcp.json
-        echo '[postStart] Done: .continue copied with Continue and MCP placeholders resolved from workspace env'
+        ' \"$src/mcpServers/mcp.json\" > \"$dst/mcpServers/mcp.json\"
+        echo '[postStart] Done: .continue copied; Continue and MCP env resolved'
         "
       workingDir: ${PROJECT_SOURCE}
       label: Copy Continue config to home
